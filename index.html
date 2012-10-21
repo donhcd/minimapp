@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="ui-mobile-rendering">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.0.1.min.css"/>
+    <link rel="stylesheet" href="css/jqm-datebox.css"/>
+
+    <!-- The Templates -->
+    <script type="text/template" id="home">
+
+        <div data-role="header">
+            <h1>Minimapp</h1>
+        </div>
+
+        <div data-role="content">
+            <h3>Application Template for using Backbone.js and jQuery Mobile.</h3>
+            <p>Backbone.js is used for code organization (Models, Views) and "routing".</p>
+            <p>jQuery Mobile is used for its mobile styles and widgets. The routing and navigation capabilities of jQuery Mobile are disbled to let Backbone.js handle these requirements.</p>
+            <p>This is the Home page. It was created dynamically using an underscore.js template.</p>
+            <p>Navigate to:</p>
+            <ul data-role="listview"  data-inset="true">
+                <li><a href="#/login">Login</a></li>
+                <li><a href="#/page1">Page 1</a></li>
+                <li><a href="#/page2">Page 2</a></li>
+            </ul>
+        </div>
+
+    </script>
+
+    <script type="text/template" id="login">
+        <!-- Header -->
+        <div data-role="header" data-theme = "a">
+            <h1>New/Existing User</h1>
+            <!-- <a href="index.html" data-icon="check" data-theme="a">Save</a> -->
+        </div>
+        <!-- Content -->
+        <center>
+            <div data-role="content" data-theme="c" style="margin-bottom:100px;">
+                <form class="login-form">
+                    <h2>Log In</h2>
+                    <div class="error" style="display:none"></div>
+                    <input type="text" id="login-username" placeholder="Username"/>
+                    <input type="password" id="login-password" placeholder="Password"/>
+                    <button a href="#">Log In</button>
+                </form>
+                <form class="signup-form">
+                    <h2>Sign Up</h2>
+                    <div class="error" style="display:none"></div>
+                    <input type="text" id="signup-username" placeholder="Username"/>
+                    <input
+                      type="password"
+                      id="signup-password"
+                      placeholder="Create a Password"/>
+                    <button a href="#">Sign Up</button>
+                </form>
+            </div>
+        </center>
+    </script>
+
+    <!-- map page-->
+    <script type="text/template" id="mappage">
+        <!-- Header -->
+        <div id="header" data-role="header" data-theme="a">
+            <h1>Welcome, <%= user %>!</h1>
+            <a href="#/logout" data-role="button" class="ui-btn-right" data-theme="a">Sign out</a>
+        </div>
+        <!-- map -->
+        <div id="map_canvas" data-role="content">
+        </div>
+        <!-- footer div -->
+        <div id="footer" data-role="navbar" data-iconpos="bottom" data-theme="a">
+            <ul>
+                <li>
+                <!-- Settings -->
+                <a
+                  href="#/settings".
+                  data-rel="dialog"
+                  data-transition="pop"
+                  data-theme="a"
+                  data-icon="grid">
+                  Settings
+                </a>
+                </li>
+                <li>
+                <!-- View Layers Button -->
+                <a
+                  href="#/layers".
+                  data-rel="dialog"
+                  data-transition="pop"
+                  data-theme="a"
+                  data-icon="grid">
+                  Layers
+                </a>
+                </li>
+                <li>
+                <!-- Place a marker on the map Button -->
+                <a
+                  href="#/add_entity"
+                  data-rel="dialog"
+                  data-transition="pop"
+                  data-icon="plus"
+                  data-theme="a">
+                  New...
+                </a>
+                </li>
+            </ul>
+        </div>
+
+    </script>
+
+    <script type="text/template" id="settings">
+      <!-- Header -->
+      <div data-role="header" data-theme="a">
+        <h1>Settings</h1>
+      </div>
+      <!-- Content -->
+      <center>
+        <div data-role="content" style="padding: 15px">
+          <!-- Geolocation Toggle -->
+          <label for="flip-1">Allow Geolocation</label>
+          <select name="flip-1" id="flip-1" data-role="slider">
+            <option value="off">Off</option>
+            <option value="on">On</option>
+          </select>
+
+          <!-- Radius Slider -->
+          <label for="radius_slider">Search Radius (in miles):</label>
+          <input
+            type="range"
+            name="radius_slider"
+            id="radius_slider"
+            value="1"
+            min="0"
+            max="10"
+            data-highlight="true"/>
+
+          <!-- Checkbox -->
+          <div id="settings_fieldcontain" data-role="fieldcontain">
+            <fieldset  data-role="controlgroup">
+              <% _.each( checkboxNames, function( checkboxName ){ %>
+                <label>
+                  <input
+                    type="checkbox"
+                    id="<%= checkboxName %>"/>
+                    <%= checkboxName %>
+                </label>
+              <% }); %>
+            </fieldset>
+          </div>
+
+        </div>
+
+        <!-- navigation bar to go back-->
+        <div data-role="navbar" data-theme="a" data-iconpos="right">
+          <ul>
+            <li>
+            <a
+              data-role="button"
+              data-transition="flip"
+              href="#"
+              data-theme="a">
+              Go back
+            </a>
+            <a
+              data-role="button"
+              id="save_settings_button"
+              data-theme="a"
+              data-icon="check">
+              Save Settings
+            </a>
+            </li>
+          </ul>
+        </div>
+      </center>
+    </script>
+
+    <!-- The Scripts -->
+    <script src="lib/jquery-1.7.1.min.js"></script>
+    <script src="js/jqm-config.js"></script>
+    <script src="lib/jquery.mobile-1.0.1.min.js"></script>
+    <script src="lib/jquery.livequery.js"></script>
+    <script src="lib/underscore-min.js"></script>
+    <script src="lib/parse-1.1.5.js"></script>
+    <script src="lib/backbone-min.js"></script>
+    <!-- <script src="http://maps.google.com/maps/api/js?sensor=true"></script> -->
+    <script src="lib/googlemaps.js"></script>
+    <script src="lib/infobubble.js"</script>
+    <script src="lib/infobubble-compiled.js"</script>
+    <script src="lib/markerwithlabel.js"></script>
+    <script src="js/models.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body></body>
+
+</html>
