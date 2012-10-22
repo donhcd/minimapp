@@ -29,7 +29,7 @@ window.LoginView = Parse.View.extend({
         var password = this.$("#login-password").val();
         console.log("attempting to log in with user: " +
             username + " pass: " + password);
-  
+
         // Will eventually change this to our own user
         Parse.User.logIn(username, password, {
             success: function(user) {
@@ -37,7 +37,7 @@ window.LoginView = Parse.View.extend({
                 //delete this;
 //                ApplyUser(0, username);
 //                $("#sign_in_page").dialog("close");
-                
+
                 console.log("log in succeded!");
                 window.location.replace("#");
             },
@@ -59,7 +59,7 @@ window.LoginView = Parse.View.extend({
         var password = this.$("#signup-password").val();
         console.log("attempting to sign up with user: " + username +
                 " pass: " + password);
-  
+
         Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
             success: function(user) {
                 //self.undelegateEvents();
@@ -99,7 +99,7 @@ window.SettingsView = Backbone.View.extend({
     checkboxNamesToIds: { "Setting1": "wat", "Setting2": "wut" },
 
     render: function() {
-        $(this.el).html(this.template({
+        this.$el.html(this.template({
             checkboxNames: this.checkboxNames
         }));
     }
@@ -122,23 +122,19 @@ window.MapView = Backbone.View.extend({
     },
 
     render: function() {
-        var self = this;
-        var initmap = function () {
-//            $('#map_canvas').height(
-//                window.innerHeight - $('#header').height() - $('#footer').height());
-            $('#map_canvas').height(400);
-            self.gmap = new google.maps.Map($('#map_canvas')[0], { 
-                center: new google.maps.LatLng(40.4430322,         
-                            -79.9429397),                          
-                zoom: 17,                                          
-                mapTypeId: google.maps.MapTypeId.ROADMAP           
-            });                                                    
-            gmap = self.gmap;
-        };
-        $(this.el).html(this.template({
+        this.$el.html(this.template({
             user : Parse.User.current().getUsername()
         }));
-        setTimeout(initmap, 250);
+//        this.$('#map_canvas').height(
+//            window.innerHeight - $('#header').height() - $('#footer').height());
+        this.$('#map_canvas').height(400);
+        this.gmap = new google.maps.Map(this.$('#map_canvas')[0], {
+            center: new google.maps.LatLng(40.4430322,
+                        -79.9429397),
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        gmap = this.gmap;
         return this;
     },
 
@@ -312,16 +308,16 @@ var AppRouter = Backbone.Router.extend({
     },
 
     changePage:function (page) {
-        $(page.el).attr('data-role', 'page');
+        page.$el.attr('data-role', 'page');
         page.render();
-        $('body').append($(page.el));
+        $('body').append(page.$el);
         var transition = $.mobile.defaultPageTransition;
         // We don't want to slide the first page
         if (this.firstPage) {
             transition = 'none';
             this.firstPage = false;
         }
-        $.mobile.changePage($(page.el), {changeHash:false, transition: transition});
+        $.mobile.changePage(page.$el, {changeHash:false, transition: transition});
     }
 
 });
