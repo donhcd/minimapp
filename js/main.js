@@ -129,8 +129,7 @@ window.MapView = Backbone.View.extend({
 //            window.innerHeight - $('#header').height() - $('#footer').height());
         this.$('#map_canvas').height(400);
         this.gmap = new google.maps.Map(this.$('#map_canvas')[0], {
-            center: new google.maps.LatLng(40.4430322,
-                        -79.9429397),
+            center: new google.maps.LatLng(40.4430322, -79.9429397),
             zoom: 17,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
@@ -151,7 +150,9 @@ window.MapView = Backbone.View.extend({
             markers[entity.get("name")].title);
         //map,marker,x,y){
         // update_dialog(entity);
-        infoBubble.content = '<a STYLE="text-decoration:none" href="#info_window_page" class="phoneytext">'+markers[entity.get("name")].title+'</a>';
+        infoBubble.content =
+            '<a STYLE="text-decoration:none" href="#info_window_page" ' +
+            'class="phoneytext">'+markers[entity.get("name")].title+'</a>';
         selected_entity=entity;
         console.log("selected entity: "+ markers[selected_entity.get("name")].title);
         $(infoBubble.bubble_).live("click", function() {
@@ -317,7 +318,10 @@ var AppRouter = Backbone.Router.extend({
             transition = 'none';
             this.firstPage = false;
         }
-        $.mobile.changePage(page.$el, {changeHash:false, transition: transition});
+        $.mobile.changePage(page.$el, {
+            changeHash:false,
+            transition: transition
+        });
     }
 
 });
