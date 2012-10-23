@@ -1,17 +1,6 @@
-window.HomeView = Backbone.View.extend({
-
-    render:function (eventName) {
-        if (Parse.User.current()) {
-        } else {
-            new LoginView();
-        }
-        return this;
-    }
-});
-
 // Log in View
 window.LoginView = Parse.View.extend({
-    template:_.template($('#login').html()),
+    template:_.template(this.$('#login').html()),
 
     events: {
         "submit form.login-form": "logIn",
@@ -21,7 +10,6 @@ window.LoginView = Parse.View.extend({
     initialize: function() {
         console.log("initialized LoginView");
         _.bindAll(this, "logIn", "signUp");
-        this.render();
     },
 
     logIn: function(e) {
@@ -36,10 +24,10 @@ window.LoginView = Parse.View.extend({
                 //self.undelegateEvents();
                 //delete this;
 //                ApplyUser(0, username);
-//                $("#sign_in_page").dialog("close");
+//                this.$("#sign_in_page").dialog("close");
 
                 console.log("log in succeded!");
-                window.location.replace("#");
+                window.location.replace("");
             },
             error: function(user, error) {
                 this.$(".login-form .error")
@@ -65,7 +53,7 @@ window.LoginView = Parse.View.extend({
                 //self.undelegateEvents();
                 //delete self;
 //                ApplyUser(1,username);
-//                $("#sign_in_page").dialog("close");
+//                this.$("#sign_in_page").dialog("close");
                 window.location.replace("#");
                 console.log("sign up succeded!");
             },
@@ -92,7 +80,7 @@ window.LayersView = Backbone.View.extend({
 
 window.SettingsView = Backbone.View.extend({
 
-    template:_.template($('#settings').html()),
+    template:_.template(this.$('#settings').html()),
 
     checkboxNames: ["Setting1", "Setting2"],
 
@@ -110,7 +98,7 @@ window.AddEntityView = Backbone.View.extend({
 
 window.MapView = Backbone.View.extend({
 
-    template: _.template($('#mappage').html()),
+    template: _.template(this.$('#mappage').html()),
 
     defaults: {
         layerIds: layerIds
@@ -126,7 +114,7 @@ window.MapView = Backbone.View.extend({
             user : Parse.User.current().getUsername()
         }));
 //        this.$('#map_canvas').height(
-//            window.innerHeight - $('#header').height() - $('#footer').height());
+//            window.innerHeight - this.$('#header').height() - $('#footer').height());
         this.$('#map_canvas').height(400);
         this.gmap = new google.maps.Map(this.$('#map_canvas')[0], {
             center: new google.maps.LatLng(40.4430322, -79.9429397),
@@ -155,7 +143,7 @@ window.MapView = Backbone.View.extend({
             'class="phoneytext">'+markers[entity.get("name")].title+'</a>';
         selected_entity=entity;
         console.log("selected entity: "+ markers[selected_entity.get("name")].title);
-        $(infoBubble.bubble_).live("click", function() {
+        this.$(infoBubble.bubble_).live("click", function() {
             console.log('clicked!');
             infoWindowView.render(selected_entity);
         });
@@ -264,10 +252,10 @@ var AppRouter = Backbone.Router.extend({
 
     routes:{
         "":"home",
-        "/logout":"logout",
-        "/settings":"settings",
-        "/layers":"layers",
-        "/add_entity":"add_entity"
+        "logout":"logout",
+        "settings":"settings",
+        "layers":"layers",
+        "add_entity":"add_entity"
     },
 
     initialize: function () {
@@ -284,7 +272,15 @@ var AppRouter = Backbone.Router.extend({
 
     home: function () {
         console.log('#home');
-        this.changePage(Parse.User.current() ? new MapView() : new LoginView());
+        var newView;
+        if (Parse.User.current()) {
+            newView = new MapView();
+            console.log('you are logged in');
+        } else {
+            newView = new LoginView();
+            console.log('you are not logged in, so log in');
+        }
+        this.changePage(newView);
     },
 
     logout: function () {
