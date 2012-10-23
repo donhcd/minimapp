@@ -1,6 +1,7 @@
 // Log in View
 window.LoginView = Parse.View.extend({
-    template:_.template(this.$('#login').html()),
+
+    template: _.template(this.$('#login').html()),
 
     events: {
         "submit form.login-form": "logIn",
@@ -77,22 +78,25 @@ window.LoginView = Parse.View.extend({
 
 window.LayersView = Backbone.View.extend({
 
-    template:_.template(this.$('#layers').html()),
+    template: _.template(this.$('#layers').html()),
 
-	layerNames: ["penis", "dickweed"],
+    layerNames: ["penis", "dickweed"],
 
-	layerNamesToIds: {"penis" : "wuasdt", "dickweed" : "waasdt"},
+    layerNamesToIds: {
+        "penis": "wuasdt",
+        "dickweed" : "waasdt"
+    },
 
-	render: function() {
+    render: function() {
         this.$el.html(this.template({
-			layerNames: this.layerNames
-			}));
+            layerNames: this.layerNames
+        }));
     }
 });
 
 window.SettingsView = Backbone.View.extend({
 
-    template:_.template(this.$('#settings').html()),
+    template: _.template(this.$('#settings').html()),
 
     checkboxNames: ["Setting1", "Setting2"],
 
@@ -106,6 +110,14 @@ window.SettingsView = Backbone.View.extend({
 });
 
 window.AddEntityView = Backbone.View.extend({
+
+    template:_.template(this.$('#addentity').html()),
+
+    render: function() {
+        this.$el.html(this.template({
+
+        }));
+    }
 });
 
 window.MapView = Backbone.View.extend({
