@@ -57,7 +57,76 @@
             </div>
         </center>
     </script>
-
+    <!-- layers page-->
+    <script type="text/template" id="layers">
+      <div data-role="header" data-theme="c">
+        <h1>Select Layer(s)</h1>
+		
+        <!-- navbar for select all select none-->
+        <div data-role="navbar" data-iconpos="right">
+          <ul>
+            <li>
+            <a 
+				data-role="button" 
+				data-theme="a" 
+				id="select_all_button" > 
+				Select All 
+			</a>
+            </li>
+            <li>
+            <a 
+				data-role="button"  
+				data-theme="a" 
+				id="select_none_button"> 
+				Select None 
+			</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- content -->
+      <center>
+        <div data-role="content" data-theme="c" style="margin-bottom:100px;">
+          <div id="layer_filter_fieldcontain" data-role="fieldcontain">
+            <!-- layer selector checkbox -->
+            <fieldset id="testt" data-role="controlgroup">
+              <% _.each( layerNames, function( layerName ){ %>
+                <label>
+				<input 
+					type="checkbox" 
+					id="<%= layerName %>"/><%= layerName %>
+				</label>
+              <% }); %>
+            </fieldset>
+          </div>
+			<p>
+			<a 
+				href="#layers_marker" 
+		        id="confirm_layers_button" 
+		        data-rel="back" 
+				data-role="button" 
+				data-theme="a">
+				Confim Layers
+			</a>
+			</p>
+        </div>
+		<div data-role="navbar" data-theme="a" data-iconpos="right">
+          <ul>
+            <li>
+            <a
+              data-role="button"
+              data-transition="flip"
+              href="#"
+              data-theme="a">
+              Go back
+            </a>
+            </li>
+          </ul>
+        </div>
+      </center>
+    </script>
+	
+	
     <!-- map page-->
     <script type="text/template" id="mappage">
         <!-- Header -->
