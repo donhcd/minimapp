@@ -22,7 +22,7 @@
             <div class="error" style="display:none"></div>
             <input type="text" id="login-username" placeholder="Username"/>
             <input type="password" id="login-password" placeholder="Password"/>
-            <button a href="#">Log In</button>
+            <button>Log In</button>
           </form>
           <form class="signup-form">
             <h2>Sign Up</h2>
@@ -32,7 +32,7 @@
             type="password"
             id="signup-password"
             placeholder="Create a Password"/>
-            <button a href="#">Sign Up</button>
+            <button>Sign Up</button>
           </form>
         </div>
       </center>
@@ -168,48 +168,40 @@
       </div>
       <!-- content -->
       <div data-role="content" data-theme="c">
-        <!-- marker name -->
-        <label for="basic">Name of marker:</label>
-        <input type="text" name="marker_name" id="marker_name" value="" />
-        <!-- drop down for layer -->
-        <center>
-          <div data-role="fieldcontain">
-            <select id="layer_select" data-native-menu="false" >
-              <option>Select a layer below</option>
-              <option selected="selected" value="Person">Person</option>
-              <option value="Landmark">Landmark</option>
-            </select>
-          </div>
-          <!-- time select -->
-          <div data-role="fieldcontain" data-theme="c" data-content-theme="d">
-            <label for="mode7">Choose Time</label>
-            <input
-            name="mode7"
-            id="mode7"
-            type="text"
-            data-role="datebox"
-            data-options='{"mode":"timeflipbox", "useNewStyle":true}' />
-          </div>
-        </center>
-        <!-- checkbox to enable geolocaiton -->
-        <center>
-          <label>
-            <input type="checkbox" name="checkbox-0" data-inline="true" />
-            Use my current position
-          </label>
-        </center>
-        <!-- Save marker -->
-        <p>
-        <a
-          href="#save_marker"
-          id="save_marker_button"
-          data-rel="back"
-          data-role="button"
-          data-icon="plus"
-          data-theme="a">
-          Place marker
-        </a>
-        </p>
+        <form class="add-entity-form" action="">
+          <!-- marker name -->
+          <label for="basic">Name of marker:</label>
+          <input type="text" name="marker_name" id="marker_name" value="" />
+          <!-- drop down for layer -->
+          <center>
+            <div data-role="fieldcontain">
+              <select id="layer_select" data-native-menu="false" >
+                <option>Select a layer below</option>
+                <option selected="selected" value="Person">Person</option>
+                <option value="Landmark">Landmark</option>
+              </select>
+            </div>
+            <!-- time select -->
+            <div data-role="fieldcontain" data-theme="c" data-content-theme="d">
+              <label for="mode7">Choose Time</label>
+              <input
+              name="mode7"
+              id="mode7"
+              type="text"
+              data-role="datebox"
+              data-options='{"mode":"timeflipbox", "useNewStyle":true}' />
+            </div>
+          </center>
+          <!-- checkbox to enable geolocaiton -->
+          <center>
+            <label>
+              <input type="checkbox" name="checkbox-0" data-inline="true" />
+              Use my current position
+            </label>
+          </center>
+          <!-- Save marker -->
+          <button>Place marker</button>
+        </form>
       </div>
     </script>
 

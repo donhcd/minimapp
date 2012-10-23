@@ -14,6 +14,7 @@ window.LoginView = Parse.View.extend({
     },
 
     logIn: function(e) {
+        var self = this;
         var username = this.$("#login-username").val();
         var password = this.$("#login-password").val();
         console.log("attempting to log in with user: " +
@@ -22,13 +23,11 @@ window.LoginView = Parse.View.extend({
         // Will eventually change this to our own user
         Parse.User.logIn(username, password, {
             success: function(user) {
-                //self.undelegateEvents();
-                //delete this;
-//                ApplyUser(0, username);
-//                this.$("#sign_in_page").dialog("close");
-
                 console.log("log in succeded!");
-                window.location.replace("");
+                $(document).trigger('gotohome');
+                // REVIEW(donaldh) not sure if this stuff is necessary but whatever
+                self.undelegateEvents();
+                delete self;
             },
             error: function(user, error) {
                 this.$(".login-form .error")
@@ -44,6 +43,7 @@ window.LoginView = Parse.View.extend({
     },
 
     signUp: function(e) {
+        var self = this;
         var username = this.$("#signup-username").val();
         var password = this.$("#signup-password").val();
         console.log("attempting to sign up with user: " + username +
@@ -51,12 +51,11 @@ window.LoginView = Parse.View.extend({
 
         Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
             success: function(user) {
-                //self.undelegateEvents();
-                //delete self;
-//                ApplyUser(1,username);
-//                this.$("#sign_in_page").dialog("close");
-                window.location.replace("#");
+                $(document).trigger('gotohome');
                 console.log("sign up succeded!");
+                // REVIEW(donaldh) not sure if this stuff is necessary but whatever
+                self.undelegateEvents();
+                delete self;
             },
             error: function(user, error) {
                 this.$(".signup-form .error").html(error.message).show();
@@ -113,9 +112,18 @@ window.AddEntityView = Backbone.View.extend({
 
     template:_.template(this.$('#addentity').html()),
 
+    events: {
+        "submit form.add-entity-form": "save"
+    },
+
+    save: function(e) {
+        // TODO(donaldh) save entity stuff, make the entity, and add it
+        $(document).trigger('gotohome');
+        return false;
+    },
+
     render: function() {
         this.$el.html(this.template({
-
         }));
     }
 });
@@ -296,15 +304,19 @@ var AppRouter = Backbone.Router.extend({
 
     home: function () {
         console.log('#home');
-        var newView;
         if (Parse.User.current()) {
-            newView = new MapView();
+            var mapView = new MapView();
             console.log('you are logged in');
+            this.changePage(mapView);
+            // TODO(donaldh) this is kind of terrible, so figure out a better way
+            setInterval(function() {
+                google.maps.event.trigger(mapView.gmap, "resize");
+            }, 1);
         } else {
-            newView = new LoginView();
+            var loginView = new LoginView();
             console.log('you are not logged in, so log in');
+            this.changePage(loginView);
         }
-        this.changePage(newView);
     },
 
     logout: function () {
@@ -349,5 +361,8 @@ var AppRouter = Backbone.Router.extend({
 $(document).ready(function () {
     console.log('document ready');
     app = new AppRouter();
+    $(document).bind('gotohome', function() {
+        app.navigate("#/", {trigger: true});
+    });
     Backbone.history.start();
 });
