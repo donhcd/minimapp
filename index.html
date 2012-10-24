@@ -57,6 +57,7 @@
             </div>
         </center>
     </script>
+	
     <!-- layers page-->
     <script type="text/template" id="layers">
       <div data-role="header" data-theme="c">
@@ -67,19 +68,19 @@
           <ul>
             <li>
             <a 
-				data-role="button" 
+                data-role="button" 
 				data-theme="a" 
 				id="select_all_button" > 
 				Select All 
-			</a>
+            </a>
             </li>
             <li>
-            <a 
-				data-role="button"  
+            <a 	
+			    data-role="button"  
 				data-theme="a" 
 				id="select_none_button"> 
 				Select None 
-			</a>
+            </a>
             </li>
           </ul>
         </div>
@@ -93,15 +94,15 @@
               <% _.each( layerNames, function( layerName ){ %>
                 <label>
 				<input 
-					type="checkbox" 
+				    type="checkbox" 
 					id="<%= layerName %>"/><%= layerName %>
-				</label>
+                </label>
               <% }); %>
             </fieldset>
           </div>
-			<p>
-			<a 
-				href="#layers_marker" 
+            <p>
+            <a 
+			    href="#layers_marker" 
 		        id="confirm_layers_button" 
 		        data-rel="back" 
 				data-role="button" 

@@ -76,9 +76,13 @@ window.LoginView = Parse.View.extend({
 });
 
 window.LayersView = Backbone.View.extend({
+
     template:_.template(this.$('#layers').html()),
+
 	layerNames: ["penis", "dickweed"],
-	layerNamesToIds: {"penis":"wuasdt", "dickweed":"waasdt"},
+
+	layerNamesToIds: {"penis" : "wuasdt", "dickweed" : "waasdt"},
+
 	render: function() {
         this.$el.html(this.template({
 			layerNames: this.layerNames
