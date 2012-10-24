@@ -183,13 +183,14 @@
             </div>
             <!-- time select -->
             <div data-role="fieldcontain" data-theme="c" data-content-theme="d">
-              <label for="mode7">Choose Time</label>
-              <input
-              name="mode7"
-              id="mode7"
-              type="text"
-              data-role="datebox"
-              data-options='{"mode":"timeflipbox", "useNewStyle":true}' />
+              <label>
+                Choose Time
+                <input
+                id="time"
+                type="text"
+                data-role="datebox"
+                data-options='{"mode":"timeflipbox", "useNewStyle":true}' />
+              </label>
             </div>
           </center>
           <!-- checkbox to enable geolocaiton -->
@@ -277,6 +278,8 @@
     <script src="js/jqm-config.js"></script>
     <script src="lib/jquery.mobile-1.2.0.js"></script>
     <script src="lib/jquery.livequery.js"></script>
+    <script src="lib/jqm-datebox.core.js"></script>
+    <script src="lib/jqm-datebox.mode.flipbox.js"></script>
     <script src="lib/underscore.js"></script>
     <script src="lib/parse-1.1.5.js"></script>
     <script src="lib/backbone.js"></script>
