@@ -135,8 +135,10 @@
         initialize: function() {
             this.InstantiateWithIds(this.get("subscribed"));
             setInterval(function () {
-                // callback handles each layer update separately!
-                _.each(this.get("subscribed"), this.UpdateLocalLayer, this);
+                if (Parse.User.current()) {
+                    // callback handles each layer update separately!
+                    _.each(this.get("subscribed"), this.UpdateLocalLayer, this);
+                }
             }.bind(this), 30000);
         },
         // representation logic
