@@ -96,7 +96,7 @@
     });
 
     /* expect a layerid field */
-    var EntitySet = Parse.Collection.extend("EntitySet", {
+    window.EntitySet = Parse.Collection.extend("EntitySet", {
         model: Entity
     });
 
