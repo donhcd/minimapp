@@ -72,9 +72,10 @@ window.LoginView = Parse.View.extend({
     render: function() {
         this.$el.html(this.template());
         this.delegateEvents();
+        console.log("rendered login view");
     }
 });
-
+// Layers View
 window.LayersView = Backbone.View.extend({
 
     template: _.template(this.$('#layers').html()),
@@ -90,9 +91,10 @@ window.LayersView = Backbone.View.extend({
         this.$el.html(this.template({
             layerNames: this.layerNames
         }));
+        console.log("rendered layers view");
     }
 });
-
+// Handle Settings page
 window.SettingsView = Backbone.View.extend({
 
     template: _.template(this.$('#settings').html()),
@@ -107,7 +109,7 @@ window.SettingsView = Backbone.View.extend({
         }));
     }
 });
-
+// Handles Add Entity page
 window.AddEntityView = Backbone.View.extend({
 
     template:_.template(this.$('#addentity').html()),
@@ -117,6 +119,21 @@ window.AddEntityView = Backbone.View.extend({
     },
 
     save: function(e) {
+        console.log("saving entity");
+        
+        var user = Parse.user.current();
+        var name= $('#marker_name').val();
+        var layerName = $('#select-choice-a').val();
+        var time= $('#mode7').val();
+        var text_input = $('#textarea').val();
+        var use_my_location =  $('input[name="checkbox-0"]:checked').length > 0;
+        console.log(text_input);
+        console.log("time: " + time +  ",name: " + name +
+            ",layerName: " + layerName + ",use my Location: " +
+            use_my_location + "text input: "+ text_input);
+        
+
+        
         // TODO(donaldh) save entity stuff, make the entity, and add it
         $(document).trigger('gotohome');
         return false;
@@ -125,9 +142,10 @@ window.AddEntityView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template({
         }));
+        console.log("rendered settings view");
     }
 });
-
+// Handle mapview page
 window.MapView = Backbone.View.extend({
 
     template: _.template(this.$('#mappage').html()),
@@ -148,11 +166,13 @@ window.MapView = Backbone.View.extend({
 //        this.$('#map_canvas').height(
 //            window.innerHeight - this.$('#header').height() - $('#footer').height());
         this.$('#map_canvas').height(400);
+        
         this.gmap = new google.maps.Map(this.$('#map_canvas')[0], {
             center: new google.maps.LatLng(40.4430322, -79.9429397),
             zoom: 17,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
+        console.log(this.gmap);
         gmap = this.gmap;
         return this;
     },
@@ -299,21 +319,30 @@ var AppRouter = Backbone.Router.extend({
 //            window.history.back();
 //            return false;
 //        });
+
+        // Instantiate all the views
+        this.mapView = new MapView();
+        this.loginView = new LoginView();
+        this.settingsView = new SettingsView();
+        this.layersView = new LayersView();
+        this.addEntityView = new AddEntityView({collection : window.EntitySet});
+
         this.firstPage = true;
     },
 
     home: function () {
         console.log('#home');
+        var self = this;
         if (Parse.User.current()) {
-            var mapView = new MapView();
             console.log('you are logged in');
-            this.changePage(mapView);
+            this.changePage(this.mapView);
             // TODO(donaldh) this is kind of terrible, so figure out a better way
-            setInterval(function() {
-                google.maps.event.trigger(mapView.gmap, "resize");
+            
+            setTimeout(function() {
+            debugger;
+                google.maps.event.trigger(self.mapView.gmap, "resize");
             }, 1);
         } else {
-            var loginView = new LoginView();
             console.log('you are not logged in, so log in');
             this.changePage(loginView);
         }
@@ -322,22 +351,22 @@ var AppRouter = Backbone.Router.extend({
     logout: function () {
         console.log('#logout');
         Parse.User.logOut();
-        this.changePage(new LoginView());
+        this.changePage(this.loginView);
     },
 
     settings: function () {
         console.log('#settings');
-        this.changePage(new SettingsView());
+        this.changePage(this.settingsView);
     },
 
     layers: function () {
         console.log('#layers');
-        this.changePage(new LayersView());
+        this.changePage(this.layersView);
     },
 
     add_entity: function () {
         console.log('#add_entity');
-        this.changePage(new AddEntityView());
+        this.changePage(this.addEntityView);
     },
 
     changePage:function (page) {
