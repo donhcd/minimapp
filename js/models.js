@@ -2,7 +2,7 @@
     var gmap;
 
     var layerNames = ["People", "Landmarks"];
-    var layerIds = ["users", "landmarks"];
+    var layerids = ["users", "landmarks"];
     var layerNamesToIds = {
         "Person": "users",
         "People": "users",
@@ -10,31 +10,31 @@
         "Landmarks": "landmarks"
     };
 
-    // TODO(jzzhang) find a place for this
-    var infoBubble = new InfoBubble({
-        map: gmap,
-        content: '<div class="phoneytext" > Click me </div>',
-        shadowStyle: 1,
-        padding: 0,
-        backgroundColor: 'rgb(57,57,57)',
-        borderRadius: 4,
-        arrowSize: 10,
-        borderWidth: 1,
-        borderColor: '#2c2c2c',
-        disableAutoPan: true,
-        hideCloseButton: true,
-        arrowPosition: 30,
-        backgroundClassName: 'phoney',
-        arrowStyle: 2
-    });
-
-    // updates info window with selected entity
-    var selected_entity;
-    // binds click event on infobubble to render infowindow
+//    // TODO(jzzhang) find a place for this
+//    var infoBubble = new InfoBubble({
+//        map: gmap,
+//        content: '<div class="phoneytext" > Click me </div>',
+//        shadowStyle: 1,
+//        padding: 0,
+//        backgroundColor: 'rgb(57,57,57)',
+//        borderRadius: 4,
+//        arrowSize: 10,
+//        borderWidth: 1,
+//        borderColor: '#2c2c2c',
+//        disableAutoPan: true,
+//        hideCloseButton: true,
+//        arrowPosition: 30,
+//        backgroundClassName: 'phoney',
+//        arrowStyle: 2
+//    });
+//
+//    // updates info window with selected entity
+//    var selected_entity;
+//    // binds click event on infobubble to render infowindow
 
 
     window.layerNames = layerNames;
-    window.layerIds = layerIds;
+    window.layerids = layerids;
     window.GetLayerIdFromName = function(name) {
         return layerNamesToIds[name];
     };
@@ -43,11 +43,11 @@
 
     window.Entity = Parse.Object.extend("Entity", {
         // This should be constructed with a map providing the name, ownerId,
-        // layerId, and latLng coordinates
+        // layerid, and latLng coordinates
         initialize: function() {
 
             if (!(this.get("name") &&
-                    this.get("ownerId") && this.get("layerId") &&
+                    this.get("ownerId") && this.get("layerid") &&
                     this.get("lat") && this.get("lng"))) {
                 if (this.get("lat")) {
                     // The main thing missing is probably the ownerId
@@ -55,14 +55,14 @@
                 }
                 // everything is probably missing
 //                console.log(this.attributes.name +', '+
-//                    this.attributes.ownerId +', '+ this.attributes.layerId +', '+
+//                    this.attributes.ownerId +', '+ this.attributes.layerid +', '+
 //                    this.attributes.lat +', '+ this.attributes.lng);
 //                console.log(this.get("name") +', '+
-//                    this.get("ownerId") +', '+ this.get("layerId") +', '+
+//                    this.get("ownerId") +', '+ this.get("layerid") +', '+
 //                    this.get("lat") +', '+ this.get("lng"));
 //                console.log(this);
                 return;
-//                throw "name, ownerId, layerId, lat, and lng must be " +
+//                throw "name, ownerId, layerid, lat, and lng must be " +
 //                      "provided to the constructor for an Entity";
             }
             var currenttime = new Date();
@@ -75,7 +75,7 @@
                     position: new google.maps.LatLng(
                         this.get("lat"),
                         this.get("lng")),
-                    icon: layers[this.get("layerId")].getImage(),
+                    icon: layers[this.get("layerid")].getImage(),
                     map: gmap
                 });
 //            this.get("ownerId").fetch({});
@@ -107,7 +107,7 @@
             }
             this.entities = new EntitySet();
             this.entities.query = new Parse.Query(Entity);
-            this.entities.query.equalTo("layerId", this.get("layerid"));
+            this.entities.query.equalTo("layerid", this.get("layerid"));
         },
         getImage: function() {
             switch(this.get("layerid")) {
@@ -121,12 +121,16 @@
         }
     });
 
+    window.Layers = Parse.Collection.extend("Layers", {
+        model: Layer
+    });
+
     var layers = {};
 
     window.Map = Parse.Object.extend("Map", {
         defaults: {
-            subscribed: layerIds,
-            shownLayers: layerIds,
+            subscribed: layerids,
+            shownLayers: layerids,
             // weren't shown before but now are
             layersNowShown: [],
             // were shown before but now should hide
@@ -148,24 +152,24 @@
             // (assume ownerId is already authenticated)
 
             // only if it valid:
-            console.log("adding entity to layer: "+ entity.get("layerId"));
+            console.log("adding entity to layer: "+ entity.get("layerid"));
 
-            layers[entity.get("layerId")].entities.add(entity);
+            layers[entity.get("layerid")].entities.add(entity);
         },
-        DoWithEntities: function(layerId, action) {
-            if (layers[layerId]) {
+        DoWithEntities: function(layerid, action) {
+            if (layers[layerid]) {
                 // if we already have a cached version, use that
-                action(layers[layerId].entities.models);
+                action(layers[layerid].entities.models);
                 return;
             } else {
                 console.log("Called DoWithEntities with no" +
-                        "such local layer: " + layerId);
+                        "such local layer: " + layerid);
                 console.log("local layers:");
                 console.log(layers);
             }
         },
-        UpdateLocalLayer: function(layerId) {
-            layers[layerId].entities.fetch({
+        UpdateLocalLayer: function(layerid) {
+            layers[layerid].entities.fetch({
                 success: function(entities) {
                    entities.each(function(entity) {
                        entity.initialize();
@@ -176,11 +180,11 @@
                 }
             });
         },
-        Subscribe: function(layerIds) {
-            this.subscribed = _.union(layerIds, this.subscribed);
+        Subscribe: function(layerids) {
+            this.subscribed = _.union(layerids, this.subscribed);
         },
-        Unsubscribe: function(layerIds) {
-            this.subscribed = _.difference(this.subscribed, layerIds);
+        Unsubscribe: function(layerids) {
+            this.subscribed = _.difference(this.subscribed, layerids);
         },
         InstantiateWithIds: function(ids) {
             _.each(

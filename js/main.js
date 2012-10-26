@@ -150,12 +150,12 @@ window.MapView = Backbone.View.extend({
     template: _.template(this.$('#mappage').html()),
 
     defaults: {
-        layerIds: layerIds
+        layerids: layerids
     },
 
     initialize: function() {
         this.map = new Map();
-        this.shownLayers = layerIds;
+        this.shownLayers = layerids;
     },
 
     render: function() {
@@ -229,36 +229,36 @@ window.MapView = Backbone.View.extend({
         google.maps.event.trigger(this.gmap, eventname);
     },
 
-    RenderLayers: function(layerIds) {
+    RenderLayers: function(layerids) {
         _.each(
-                layerIds,
-                function(layerId) {
-                    this.DoWithEntities(layerId, function(entities) {
+                layerids,
+                function(layerid) {
+                    this.DoWithEntities(layerid, function(entities) {
                         _.each(entities, this.DrawEntity, this);
                     });
                 },
                 this);
     },
 
-    ClearLayers: function(layerIds) {
+    ClearLayers: function(layerids) {
         _.each(
-                layerIds,
-                function(layerId) {
-                    this.DoWithEntities(layerId, function(entities) {
+                layerids,
+                function(layerid) {
+                    this.DoWithEntities(layerid, function(entities) {
                         _.each(entities, this.EraseEntity, this);
                     });
                 },
                 this);
     },
 
-    ForceRefreshLayers: function(layerIds) {
-        this.ClearLayers(layerIds);
+    ForceRefreshLayers: function(layerids) {
+        this.ClearLayers(layerids);
         this.RenderLayers(shownLayers);
         this.set(entitiesAdded, {});
     },
 
     // This function should be called after the user modifies the
-    // "Select Layer(s)" dialog with an array of the layerIds that
+    // "Select Layer(s)" dialog with an array of the layerids that
     // should now be shown.
     UpdateShownLayers: function(newShownLayers) {
         this.set("layersNowShown",
@@ -276,16 +276,16 @@ window.MapView = Backbone.View.extend({
     RefreshLayers: function() {
         _.each(
                 this.get("layersNowShown"),
-                function(layerId) {
-                    this.get("map").DoWithEntities(layerId, function(entities) {
+                function(layerid) {
+                    this.get("map").DoWithEntities(layerid, function(entities) {
                         _.each(entities, this.DrawEntity, this);
                     }.bind(this));
                 }.bind(this),
                 this);
         _.each(
                 this.get("layersNowHidden"),
-                function(layerId) {
-                    this.get("map").DoWithEntities(layerId, function(entities) {
+                function(layerid) {
+                    this.get("map").DoWithEntities(layerid, function(entities) {
                         _.each(entities, this.EraseEntity, this);
                     }.bind(this));
                 }.bind(this),
