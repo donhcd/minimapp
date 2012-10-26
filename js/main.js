@@ -27,7 +27,6 @@ window.LoginView = Parse.View.extend({
                 $(document).trigger('gotohome');
                 // REVIEW(donaldh) not sure if this stuff is necessary but whatever
                 self.undelegateEvents();
-                delete self;
             },
             error: function(user, error) {
                 this.$(".login-form .error")
@@ -55,7 +54,6 @@ window.LoginView = Parse.View.extend({
                 console.log("sign up succeded!");
                 // REVIEW(donaldh) not sure if this stuff is necessary but whatever
                 self.undelegateEvents();
-                delete self;
             },
             error: function(user, error) {
                 this.$(".signup-form .error").html(error.message).show();
@@ -88,6 +86,7 @@ window.LayersView = Backbone.View.extend({
     },
 
     render: function() {
+        this.delegateEvents();
         this.$el.html(this.template({
             layerNames: this.layerNames
         }));
@@ -104,6 +103,7 @@ window.SettingsView = Backbone.View.extend({
     checkboxNamesToIds: { "Setting1": "wat", "Setting2": "wut" },
 
     render: function() {
+        this.delegateEvents();
         this.$el.html(this.template({
             checkboxNames: this.checkboxNames
         }));
@@ -120,29 +120,28 @@ window.AddEntityView = Backbone.View.extend({
 
     save: function(e) {
         console.log("saving entity");
-        
-        var user = Parse.user.current();
-        var name= $('#marker_name').val();
-        var layerName = $('#select-choice-a').val();
-        var time= $('#mode7').val();
-        var text_input = $('#textarea').val();
-        var use_my_location =  $('input[name="checkbox-0"]:checked').length > 0;
-        console.log(text_input);
-        console.log("time: " + time +  ",name: " + name +
-            ",layerName: " + layerName + ",use my Location: " +
-            use_my_location + "text input: "+ text_input);
-        
 
-        
-        // TODO(donaldh) save entity stuff, make the entity, and add it
-        $(document).trigger('gotohome');
+        // Go to home,
+        var variables = {
+            markerName: this.$('#marker_name').val(),
+            layerName: this.$('layer_select').val(),
+            time: this.$('time').val(),
+            userId: Parse.User.current(),
+            user: Parse.User.current().getUsername(),
+            text: this.$('#textarea').val(),
+            useLocation: $('input[name="use-position"]:checked').length > 0
+        };
+        console.log(variables);
+        // TODO(donaldh) add entity with the above variables.
+        $(document).trigger("gotohome");
         return false;
     },
 
     render: function() {
+        this.delegateEvents();
         this.$el.html(this.template({
         }));
-        console.log("rendered settings view");
+        console.log("rendered add entity view");
     }
 });
 // Handle mapview page
@@ -166,7 +165,7 @@ window.MapView = Backbone.View.extend({
 //        this.$('#map_canvas').height(
 //            window.innerHeight - this.$('#header').height() - $('#footer').height());
         this.$('#map_canvas').height(400);
-        
+
         this.gmap = new google.maps.Map(this.$('#map_canvas')[0], {
             center: new google.maps.LatLng(40.4430322, -79.9429397),
             zoom: 17,
@@ -337,9 +336,8 @@ var AppRouter = Backbone.Router.extend({
             console.log('you are logged in');
             this.changePage(this.mapView);
             // TODO(donaldh) this is kind of terrible, so figure out a better way
-            
-            setTimeout(function() {
-            debugger;
+
+            setInterval(function() {
                 google.maps.event.trigger(self.mapView.gmap, "resize");
             }, 1);
         } else {
@@ -390,7 +388,9 @@ var AppRouter = Backbone.Router.extend({
 $(document).ready(function () {
     console.log('document ready');
     app = new AppRouter();
-    $(document).bind('gotohome', function() {
+    $(document).bind('gotohome', function(e) {
+        e.preventDefault();
+        console.warn("poop.");
         app.navigate("#/", {trigger: true});
     });
     Backbone.history.start();
