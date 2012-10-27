@@ -1,6 +1,4 @@
  (function () {
-    var gmap;
-
     var layerNames = ["People", "Landmarks"];
     var layerids = ["users", "landmarks"];
     var layerNamesToIds = {

@@ -188,13 +188,12 @@ window.MapView = Backbone.View.extend({
             zoom: 17,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        console.log(this.gmap);
+        gmap = this.gmap;
         if (this.stuffToDo) {
             this.stuffToDo();
             this.stuffToDo = null;
         }
         this.delegateEvents();
-        gmap = this.gmap;
         return this;
     },
 
@@ -415,7 +414,6 @@ $(document).ready(function () {
     app = new AppRouter();
     $(document).bind('gotohome', function(e) {
         e.preventDefault();
-        console.warn("poop.");
         app.navigate("#/", {trigger: true});
     });
     Backbone.history.start();
