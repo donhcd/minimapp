@@ -50,8 +50,8 @@
                     this.get("ownerId") && this.get("layerid") &&
                     this.get("lat") && this.get("lng"))) {
                 if (this.get("lat")) {
-                    // The main thing missing is probably the ownerId
-                    alert("Please log in on the main screen first!");
+                    // We weren't given a user. This should never happen.
+                    throw "something is fucked up";
                 }
                 // everything is probably missing
 //                console.log(this.attributes.name +', '+
@@ -96,11 +96,18 @@
     });
 
     /* expect a layerid field */
-    window.EntitySet = Parse.Collection.extend("EntitySet", {
-        model: Entity
+    window.EntitySet = Parse.Collection.extend({
+
+        model: Entity,
+
+        addEntity: function(entity) {
+            this.add(entity);
+            entity.initialize();
+        }
     });
 
     window.Layer = Parse.Object.extend("Layer", {
+
         initialize: function() {
             if (!this.get("layerid")) {
                 throw "Layer initializer requires layerid attribute";
@@ -109,6 +116,7 @@
             this.entities.query = new Parse.Query(Entity);
             this.entities.query.equalTo("layerid", this.get("layerid"));
         },
+
         getImage: function() {
             switch(this.get("layerid")) {
                 case 'users':
@@ -118,11 +126,47 @@
                     return 'images/markers/landmark.png';
                     //return 'scripts/images/green_75.png';
             }
+        },
+
+        addEntity: function(entity) {
+            entity.set('layerid', this.get('layerid'));
+            this.entities.addEntity(entity);
         }
     });
 
-    window.Layers = Parse.Collection.extend("Layers", {
-        model: Layer
+    window.Layers = Parse.Collection.extend({
+
+        model: Layer,
+
+        initialize: function() {
+            _.bindAll(this, 'addEntity');
+            this.add(new Layer({
+                layerid: 'users',
+                layerName: 'People',
+                layerNameSingular: 'Person'
+            }));
+            this.add(new Layer({
+                layerid: 'landmarks',
+                layerName: 'Landmarks',
+                layerNameSingular: 'Landmark'
+            }));
+        },
+
+        getLayerWithName: function(name) {
+            return this.find(function(layer) {
+                return layer.get("layerNameSingular") === name;
+            });
+        },
+
+        addEntity: function(entity) {
+            var layerToAddEntityTo =
+                this.getLayerWithName(entity.get("layerNameSingular"));
+            if (layerToAddEntityTo) {
+                layerToAddEntityTo.addEntity(entity);
+            } else {
+                alert("this layer is not a thing");
+            }
+        }
     });
 
     var layers = {};
@@ -134,7 +178,8 @@
             // weren't shown before but now are
             layersNowShown: [],
             // were shown before but now should hide
-            layersNowHidden: []
+            layersNowHidden: [],
+            layers: new Layers()
         },
         initialize: function() {
             this.InstantiateWithIds(this.get("subscribed"));
@@ -145,16 +190,13 @@
                 }
             }.bind(this), 30000);
         },
-        // representation logic
-        AddEntity: function(entity) {
-            // TODO
-            // this is where user permission validation errors should happen
+        addEntity: function(entity) {
             // (assume ownerId is already authenticated)
 
             // only if it valid:
-            console.log("adding entity to layer: "+ entity.get("layerid"));
+            console.log("adding entity to layer: " + entity.get("layerNameSingular"));
 
-            layers[entity.get("layerid")].entities.add(entity);
+            this.get('layers').addEntity(entity);
         },
         DoWithEntities: function(layerid, action) {
             if (layers[layerid]) {
