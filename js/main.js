@@ -156,7 +156,6 @@ window.MapView = Backbone.View.extend({
             google.maps.event.addListener(
                 self.gmap, 'click', function(e) {
                     google.maps.event.clearListeners(self.gmap, 'click');
-                    alert(e.latLng.lat()+", "+e.latLng.lng());
                     entity.set({
                         lat: e.latLng.lat(),
                         lng: e.latLng.lng()
@@ -321,7 +320,7 @@ window.MapView = Backbone.View.extend({
 
 var AppRouter = Backbone.Router.extend({
 
-    routes:{
+    routes: {
         "":"home",
         "logout":"logout",
         "settings":"settings",
@@ -329,7 +328,7 @@ var AppRouter = Backbone.Router.extend({
         "add_entity":"add_entity"
     },
 
-    initialize: function () {
+    initialize: function() {
         Parse.initialize(
             "Q6TCdTd0MUgW5M3GYkuTwTRYiOBQZJIsClO8X6U5",
             "6nvtUl1BW2fJKDfs3XPS3DDDdR1qBDWFsI88a0cK");
@@ -353,7 +352,7 @@ var AppRouter = Backbone.Router.extend({
         this.firstPage = true;
     },
 
-    home: function () {
+    home: function() {
         console.log('#home');
         var self = this;
         if (Parse.User.current()) {
@@ -370,31 +369,32 @@ var AppRouter = Backbone.Router.extend({
         }
     },
 
-    logout: function () {
+    logout: function() {
         console.log('#logout');
         Parse.User.logOut();
         this.changePage(this.loginView);
     },
 
-    settings: function () {
+    settings: function() {
         console.log('#settings');
         this.changePage(this.settingsView);
     },
 
-    layers: function () {
+    layers: function() {
         console.log('#layers');
         this.changePage(this.layersView);
     },
 
-    add_entity: function () {
+    add_entity: function() {
         console.log('#add_entity');
         this.changePage(this.addEntityView);
     },
 
-    changePage:function (page) {
+    changePage: function(page) {
         page.$el.attr('data-role', 'page');
         page.render();
         $('body').append(page.$el);
+        this.currentPage = page;
         var transition = $.mobile.defaultPageTransition;
         // We don't want to slide the first page
         if (this.firstPage) {
