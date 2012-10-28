@@ -236,12 +236,23 @@ window.MapView = Backbone.View.extend({
         //     $('#footer').height());
         this.$('#map-canvas').height(400);
 
-        this.gmap = new google.maps.Map(this.$('#map-canvas')[0], {
+        var gmap = this.gmap = new google.maps.Map(this.$('#map-canvas')[0], {
             center: new google.maps.LatLng(40.4430322, -79.9429397),
             zoom: 17,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        gmap = this.gmap;
+
+        // TODO(donaldh) this is kind of terrible, so figure out a better way
+        var interval = setInterval((function() {
+            var i = 0;
+            return function() {
+                i++;
+                google.maps.event.trigger(gmap, "resize");
+                if (i > 1) {
+                    clearInterval(interval);
+                }
+            };
+        })(), 100);
         if (this.stuffToDo) {
             this.stuffToDo();
             this.stuffToDo = null;
@@ -251,7 +262,7 @@ window.MapView = Backbone.View.extend({
         this.model.layers.each(function(layer) {
             var layerView = new LayerView({
                 model: layer,
-                gmap: this.gmap
+                gmap: gmap
             });
             layerView.render();
             this.layerViews[layer.get('layerid')] = layerView;
@@ -445,11 +456,6 @@ window.AppRouter = Backbone.Router.extend({
         if (Parse.User.current()) {
             console.log('you are logged in');
             this.changePage(this.mapView);
-            // TODO(donaldh) this is kind of terrible, so figure out a better way
-            setInterval(function() {
-                google.maps.event.trigger(self.mapView.gmap, "resize");
-                console.log("resized");
-            }, 1);
 
         } else {
             console.log('you are not logged in, so log in');
