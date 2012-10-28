@@ -147,15 +147,10 @@ window.AddEntityView = Backbone.View.extend({
 window.LayerView = Backbone.View.extend({
 
     initialize: function() {
-
     },
 
-    poop: function() {
-        wheee
-    },
-
-    wat: {
-    },
+    render: function() {
+    }
 
 });
 
