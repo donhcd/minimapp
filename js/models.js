@@ -144,11 +144,11 @@ window.Map = Parse.Object.extend("Map", {
     },
     initialize: function() {
         this.layers = new Layers();
-        // this.InstantiateWithIds(this.get("subscribed"));
+        // this.instantiateWithIds(this.get("subscribed"));
         // setInterval(function () {
         //     if (Parse.User.current()) {
         //         // callback handles each layer update separately!
-        //         _.each(this.get("subscribed"), this.UpdateLocalLayer, this);
+        //         _.each(this.get("subscribed"), this.updateLocalLayer, this);
         //     }
         // }.bind(this), 30000);
     },
@@ -161,19 +161,19 @@ window.Map = Parse.Object.extend("Map", {
 
         this.layers.addEntity(entity);
     },
-    DoWithEntities: function(layerid, action) {
+    doWithEntities: function(layerid, action) {
         if (layers[layerid]) {
             // if we already have a cached version, use that
             action(layers[layerid].entities.models);
             return;
         } else {
-            console.log("Called DoWithEntities with no" +
+            console.log("Called doWithEntities with no" +
                         "such local layer: " + layerid);
             console.log("local layers:");
             console.log(layers);
         }
     },
-    UpdateLocalLayer: function(layerid) {
+    updateLocalLayer: function(layerid) {
         layers[layerid].entities.fetch({
             success: function(entities) {
                 entities.each(function(entity) {
@@ -185,19 +185,19 @@ window.Map = Parse.Object.extend("Map", {
             }
         });
     },
-    Subscribe: function(layerids) {
+    subscribe: function(layerids) {
         this.subscribed = _.union(layerids, this.subscribed);
     },
-    Unsubscribe: function(layerids) {
+    unsubscribe: function(layerids) {
         this.subscribed = _.difference(this.subscribed, layerids);
     },
-    InstantiateWithIds: function(ids) {
+    instantiateWithIds: function(ids) {
         _.each(
             ids,
             function(id) {
                 var layer = new Layer({layerid: id});
                 layers[id] = layer;
-                this.UpdateLocalLayer(id);
+                this.updateLocalLayer(id);
             },
             this);
     }
