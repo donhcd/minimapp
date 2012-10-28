@@ -159,10 +159,6 @@ window.MapView = Backbone.View.extend({
 
     template: _.template(this.$('#mappage').html()),
 
-    initialize: function() {
-        this.shownLayers = layerids;
-    },
-
     render: function() {
         this.$el.html(this.template({
             user : Parse.User.current().getUsername()
@@ -182,6 +178,7 @@ window.MapView = Backbone.View.extend({
             this.stuffToDo();
             this.stuffToDo = null;
         }
+        this.model.get('layers');
         this.delegateEvents();
         return this;
     },
@@ -359,7 +356,7 @@ var AppRouter = Backbone.Router.extend({
         this.settingsView = new SettingsView();
         this.mapView = new MapView({model: map});
         this.mapView.setAddedEntitiesCollection(addedEntities);
-        this.layersView = new LayersView({collection: map.get('layers')});
+        this.layersView = new LayersView({collection: map.layers});
         this.addEntityView = new AddEntityView({collection: addedEntities});
 
         this.firstPage = true;

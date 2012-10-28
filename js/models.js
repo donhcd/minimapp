@@ -1,13 +1,4 @@
  (function () {
-    var layerNames = ["People", "Landmarks"];
-    var layerids = ["users", "landmarks"];
-    var layerNamesToIds = {
-        "Person": "users",
-        "People": "users",
-        "Landmark": "landmarks",
-        "Landmarks": "landmarks"
-    };
-
 //    // TODO(jzzhang) find a place for this
 //    var infoBubble = new InfoBubble({
 //        map: gmap,
@@ -30,12 +21,6 @@
 //    var selected_entity;
 //    // binds click event on infobubble to render infowindow
 
-
-    window.layerNames = layerNames;
-    window.layerids = layerids;
-    window.GetLayerIdFromName = function(name) {
-        return layerNamesToIds[name];
-    };
 
     window.markers = {};
 
@@ -73,7 +58,7 @@
                     position: new google.maps.LatLng(
                         this.get("lat"),
                         this.get("lng")),
-                    icon: layers[this.get("layerid")].getImage(),
+                    icon: this.get('image'),
                     map: gmap
                 });
             google.maps.event.addListener(
@@ -127,6 +112,7 @@
 
         addEntity: function(entity) {
             entity.set('layerid', this.get('layerid'));
+            entity.set('image', this.getImage());
             this.entities.addEntity(entity);
         }
     });
@@ -170,14 +156,12 @@
 
     window.Map = Parse.Object.extend("Map", {
         defaults: {
-            subscribed: layerids,
-            shownLayers: layerids,
             // weren't shown before but now are
             layersNowShown: [],
             // were shown before but now should hide
-            layersNowHidden: [],
-            layers: new Layers()
+            layersNowHidden: []
         },
+        layers: new Layers(),
         initialize: function() {
             this.InstantiateWithIds(this.get("subscribed"));
             setInterval(function () {
@@ -193,7 +177,7 @@
             // only if it valid:
             console.log("adding entity to layer: " + entity.get("layerNameSingular"));
 
-            this.get('layers').addEntity(entity);
+            this.layers.addEntity(entity);
         },
         DoWithEntities: function(layerid, action) {
             if (layers[layerid]) {
