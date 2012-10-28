@@ -48,7 +48,6 @@
 //                throw "name, ownerId, layerid, lat, and lng must be " +
 //                      "provided to the constructor for an Entity";
             }
-            var currenttime = new Date();
             this.save();
         }
     });
