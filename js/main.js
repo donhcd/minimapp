@@ -402,6 +402,7 @@ var AppRouter = Backbone.Router.extend({
 
     routes: {
         "":"home",
+        "login":"home",
         "logout":"logout",
         "settings":"settings",
         "layers":"layers",

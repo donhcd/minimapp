@@ -5,3 +5,11 @@ div#login_container {
     border: 1px solid grey; 
     width: 200px;
 }
+
+/* Container for sign up functionality */
+div#signup_container { 
+    position: relative;
+    top: 50px;
+    border: 1px solid grey; 
+    width: 200px;
+}
