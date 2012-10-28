@@ -386,7 +386,7 @@ window.MapView = Backbone.View.extend({
     }
 });
 
-var AppRouter = Backbone.Router.extend({
+window.AppRouter = Backbone.Router.extend({
 
     routes: {
         "":"home",

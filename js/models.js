@@ -20,9 +20,6 @@
 //    var selected_entity;
 //    // binds click event on infobubble to render infowindow
 
-
-window.markers = {};
-
 window.Entity = Parse.Object.extend("Entity", {
     // This should be constructed with a map providing the name, ownerId,
     // layerid, and latLng coordinates
@@ -137,8 +134,6 @@ window.Layers = Parse.Collection.extend({
         }
     }
 });
-
-var layers = {};
 
 window.Map = Parse.Object.extend("Map", {
     defaults: {
