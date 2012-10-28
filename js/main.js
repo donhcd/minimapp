@@ -48,7 +48,7 @@ window.LoginView = Parse.View.extend({
     template: _.template(this.$('#login').html()),
 
     events: {
-        "submit form.login-form": "logIn",
+        "submit form.login-form": "logIn"
     },
 
     initialize: function() {
