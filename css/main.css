@@ -1,0 +1,7 @@
+/* Container for login functionality */
+div#login_container { 
+    position: relative;
+    top: 50px;
+    border: 1px solid grey; 
+    width: 200px;
+}
