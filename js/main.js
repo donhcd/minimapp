@@ -118,7 +118,6 @@ window.AddEntityView = Backbone.View.extend({
 
     save: function(e) {
         console.log("saving entity");
-
         // Go to home,
         var variables = {
             name: this.$('#marker-name').val(),
@@ -429,10 +428,12 @@ var AppRouter = Backbone.Router.extend({
             console.log('you are logged in');
             this.changePage(this.mapView);
             // TODO(donaldh) this is kind of terrible, so figure out a better way
-
             setInterval(function() {
                 google.maps.event.trigger(self.mapView.gmap, "resize");
+                console.log("resized");
             }, 1);
+            debugger;
+            
         } else {
             console.log('you are not logged in, so log in');
             this.changePage(loginView);
