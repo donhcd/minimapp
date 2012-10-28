@@ -1,5 +1,6 @@
 window.SignupView = Parse.View.extend({
-template: _.template(this.$('#signup').html()),
+
+    template: _.template(this.$('#signup').html()),
 
     events: {
         "submit form.signup-form": "signUp"
@@ -9,6 +10,7 @@ template: _.template(this.$('#signup').html()),
         console.log("initialized SignupView");
         _.bindAll(this, "signUp");
     },
+
     signUp: function(e) {
         var self = this;
         var username = this.$("#signup-username").val();
@@ -32,13 +34,13 @@ template: _.template(this.$('#signup').html()),
         //this.$(".signup-form button").attr("disabled", "disabled");
         return false;
     },
+
     render: function() {
         this.$el.html(this.template());
         this.delegateEvents();
         console.log("rendered sign up view");
     }
 });
-
 
 // Log in View
 window.LoginView = Parse.View.extend({
@@ -82,6 +84,7 @@ window.LoginView = Parse.View.extend({
         //this.$(".login-form button").attr("disabled", "disabled");
         return false;
     },
+
     render: function() {
         this.$el.html(this.template());
         this.delegateEvents();
@@ -447,7 +450,7 @@ window.AppRouter = Backbone.Router.extend({
                 google.maps.event.trigger(self.mapView.gmap, "resize");
                 console.log("resized");
             }, 1);
-            
+
         } else {
             console.log('you are not logged in, so log in');
             this.changePage(this.loginView);
@@ -474,6 +477,7 @@ window.AppRouter = Backbone.Router.extend({
         console.log('#add_entity');
         this.changePage(this.addEntityView);
     },
+
     sign_up : function(){
         console.log('#sign_up');
         this.changePage(this.signupView);
