@@ -78,17 +78,10 @@ window.LayersView = Backbone.View.extend({
 
     template: _.template(this.$('#layers').html()),
 
-    layerNames: ["penis", "dickweed"],
-
-    layerNamesToIds: {
-        "penis": "wuasdt",
-        "dickweed" : "waasdt"
-    },
-
     render: function() {
         this.delegateEvents();
         this.$el.html(this.template({
-            layerNames: this.layerNames
+            layers: this.collection.toJSON()
         }));
         console.log("rendered layers view");
     }
@@ -145,33 +138,18 @@ window.AddEntityView = Backbone.View.extend({
         console.log("rendered add entity view");
     }
 });
+
+window.EntityView = Backbone.View.extend({
+
+});
+
 // Handle mapview page
 window.MapView = Backbone.View.extend({
 
     template: _.template(this.$('#mappage').html()),
 
-    prepAddEntity: function(entity) {
-        var self = this;
-        this.stuffToDo = function() {
-            google.maps.event.addListener(
-                self.gmap, 'click', function(e) {
-                    google.maps.event.clearListeners(self.gmap, 'click');
-                    entity.set({
-                        lat: e.latLng.lat(),
-                        lng: e.latLng.lng()
-                    });
-                    self.model.addEntity(entity);
-                });
-        };
-    },
-
     initialize: function() {
         this.shownLayers = layerids;
-    },
-
-    setAddedEntitiesCollection: function(addedEntities) {
-        this.addedEntities = addedEntities;
-        this.addedEntities.bind('add', this.prepAddEntity, this);
     },
 
     render: function() {
@@ -194,6 +172,27 @@ window.MapView = Backbone.View.extend({
         }
         this.delegateEvents();
         return this;
+    },
+
+    setAddedEntitiesCollection: function(addedEntities) {
+        this.addedEntities = addedEntities;
+        this.addedEntities.bind('add', this.prepareToAddEntity, this);
+    },
+
+    prepareToAddEntity: function(entity) {
+        var self = this;
+        self.addedEntities.remove(entity);
+        self.stuffToDo = function() {
+            google.maps.event.addListener(
+                self.gmap, 'click', function(e) {
+                    google.maps.event.clearListeners(self.gmap, 'click');
+                    entity.set({
+                        lat: e.latLng.lat(),
+                        lng: e.latLng.lng()
+                    });
+                    self.model.addEntity(entity);
+                });
+        };
     },
 
     drawEntity: function(entity) {
@@ -346,7 +345,7 @@ var AppRouter = Backbone.Router.extend({
         this.settingsView = new SettingsView();
         this.mapView = new MapView({model: map});
         this.mapView.setAddedEntitiesCollection(addedEntities);
-        this.layersView = new LayersView({map: map});
+        this.layersView = new LayersView({collection: map.get('layers')});
         this.addEntityView = new AddEntityView({collection: addedEntities});
 
         this.firstPage = true;

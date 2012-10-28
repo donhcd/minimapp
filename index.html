@@ -71,11 +71,12 @@
           <div id="layer_filter_fieldcontain" data-role="fieldcontain">
             <!-- layer selector checkbox -->
             <fieldset id="testt" data-role="controlgroup">
-              <% _.each( layerNames, function( layerName ){ %>
+              <% _.each(layers, function(layer) { %>
                 <label>
                   <input
                   type="checkbox"
-                  id="<%= layerName %>"/><%= layerName %>
+                  id="<%= layer.layerName %>"/>
+                  <%= layer.layerName %>
                 </label>
                 <% }); %>
             </fieldset>
@@ -237,7 +238,7 @@
           <!-- Checkbox -->
           <div id="settings_fieldcontain" data-role="fieldcontain">
             <fieldset  data-role="controlgroup">
-              <% _.each( checkboxNames, function( checkboxName ){ %>
+              <% _.each(checkboxNames, function(checkboxName) { %>
                 <label>
                   <input
                   type="checkbox"
