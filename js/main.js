@@ -121,8 +121,8 @@ window.AddEntityView = Backbone.View.extend({
 
         // Go to home,
         var variables = {
-            name: this.$('#marker_name').val(),
-            layerNameSingular: this.$('#layer_select').val(),
+            name: this.$('#marker-name').val(),
+            layerNameSingular: this.$('#layer-select').val(),
             time: this.$('time').val(),
             ownerId: Parse.User.current().id,
             ownerUsername: Parse.User.current().getUsername(),
@@ -216,12 +216,12 @@ window.MapView = Backbone.View.extend({
         this.$el.html(this.template({
             user : Parse.User.current().getUsername()
         }));
-        // this.$('#map_canvas').height(
+        // this.$('#map-canvas').height(
         //     window.innerHeight - this.$('#header').height() -
         //     $('#footer').height());
-        this.$('#map_canvas').height(400);
+        this.$('#map-canvas').height(400);
 
-        this.gmap = new google.maps.Map(this.$('#map_canvas')[0], {
+        this.gmap = new google.maps.Map(this.$('#map-canvas')[0], {
             center: new google.maps.LatLng(40.4430322, -79.9429397),
             zoom: 17,
             mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -270,26 +270,26 @@ window.MapView = Backbone.View.extend({
         markers[entity.get("name")].setMap(null);
     },
 
-    displayInfoWindow: function(entity){
-        console.log("display info window called on marker: "+
-                    markers[entity.get("name")].title);
-        //map,marker,x,y){
-        // update_dialog(entity);
-        infoBubble.content =
-            '<a STYLE="text-decoration:none" href="#info_window_page" ' +
-            'class="phoneytext">'+markers[entity.get("name")].title+'</a>';
-        selected_entity=entity;
-        console.log("selected entity: " +
-                    markers[selected_entity.get("name")].title);
-        this.$(infoBubble.bubble_).live("click", function() {
-            console.log('clicked!');
-            infoWindowView.render(selected_entity);
-        });
-        // Will do later if I hit a deadend (JIM)
-        //infoBubble.content= '<div class="phoneytext"
-        //onclick="createDialog()" >'+marker.title+'</div>';
-        infoBubble.open(this.gmap, markers[entity.get("name")]);
-    },
+    // displayInfoWindow: function(entity){
+    //     console.log("display info window called on marker: "+
+    //                 markers[entity.get("name")].title);
+    //     //map,marker,x,y){
+    //     // update_dialog(entity);
+    //     // infoBubble.content =
+    //     //     '<a STYLE="text-decoration:none" href="#info_window_page" ' +
+    //     //     'class="phoneytext">'+markers[entity.get("name")].title+'</a>';
+    //     selected_entity=entity;
+    //     console.log("selected entity: " +
+    //                 markers[selected_entity.get("name")].title);
+    //     this.$(infoBubble.bubble_).live("click", function() {
+    //         console.log('clicked!');
+    //         infoWindowView.render(selected_entity);
+    //     });
+    //     // Will do later if I hit a deadend (JIM)
+    //     //infoBubble.content= '<div class="phoneytext"
+    //     //onclick="createDialog()" >'+marker.title+'</div>';
+    //     infoBubble.open(this.gmap, markers[entity.get("name")]);
+    // },
 
     addEntityAnimated: function(entity) {
         this.get("map").AddEntity(entity);

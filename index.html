@@ -50,7 +50,7 @@
             <a
               data-role="button"
               data-theme="a"
-              id="select_all_button" >
+              id="select-all-button" >
               Select All
             </a>
             </li>
@@ -58,7 +58,7 @@
             <a
               data-role="button"
               data-theme="a"
-              id="select_none_button">
+              id="select-none-button">
               Select None
             </a>
             </li>
@@ -68,7 +68,7 @@
       <!-- Content -->
       <center>
         <div data-role="content" data-theme="c" style="margin-bottom:100px;">
-          <div id="layer_filter_fieldcontain" data-role="fieldcontain">
+          <div id="layer-filter-fieldcontain" data-role="fieldcontain">
             <!-- layer selector checkbox -->
             <fieldset id="testt" data-role="controlgroup">
               <% _.each(layers, function(layer) { %>
@@ -83,8 +83,8 @@
           </div>
           <p>
           <a
-            href="#/layers_marker"
-            id="confirm_layers_button"
+            href="#/layers-marker"
+            id="confirm-layers-button"
             data-rel="back"
             data-role="button"
             data-theme="a">
@@ -119,7 +119,7 @@
         </a>
       </div>
       <!-- map -->
-      <div id="map_canvas" data-role="content">
+      <div id="map-canvas" data-role="content">
       </div>
       <!-- footer div -->
       <div id="footer" data-role="navbar" data-iconpos="bottom" data-theme="a">
@@ -173,11 +173,11 @@
         <form class="add-entity-form" action="">
           <!-- marker name -->
           <label for="basic">Name of marker:</label>
-          <input type="text" name="marker_name" id="marker_name" value="" />
+          <input type="text" name="marker-name" id="marker-name" value="" />
           <!-- drop down for layer -->
           <center>
             <div data-role="fieldcontain">
-              <select id="layer_select" data-native-menu="false" >
+              <select id="layer-select" data-native-menu="false" >
                 <option>Select a layer below</option>
                 <option selected="selected" value="Person">Person</option>
                 <option value="Landmark">Landmark</option>
@@ -225,18 +225,18 @@
           </select>
 
           <!-- Radius Slider -->
-          <label for="radius_slider">Search Radius (in miles):</label>
+          <label for="radius-slider">Search Radius (in miles):</label>
           <input
           type="range"
-          name="radius_slider"
-          id="radius_slider"
+          name="radius-slider"
+          id="radius-slider"
           value="1"
           min="0"
           max="10"
           data-highlight="true"/>
 
           <!-- Checkbox -->
-          <div id="settings_fieldcontain" data-role="fieldcontain">
+          <div id="settings-fieldcontain" data-role="fieldcontain">
             <fieldset  data-role="controlgroup">
               <% _.each(checkboxNames, function(checkboxName) { %>
                 <label>
@@ -264,7 +264,7 @@
             </a>
             <a
               data-role="button"
-              id="save_settings_button"
+              id="save-settings-button"
               data-theme="a"
               data-icon="check">
               Save Settings
