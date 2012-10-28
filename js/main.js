@@ -1,3 +1,45 @@
+window.SignupView = Parse.View.extend({
+template: _.template(this.$('#signup').html()),
+
+    events: {
+        "submit form.signup-form": "signUp"
+    },
+
+    initialize: function() {
+        console.log("initialized SignupView");
+        _.bindAll(this, "signUp");
+    },
+    signUp: function(e) {
+        var self = this;
+        var username = this.$("#signup-username").val();
+        var password = this.$("#signup-password").val();
+        console.log("attempting to sign up with user: " + username +
+                    " pass: " + password);
+        Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
+            success: function(user) {
+                $(document).trigger('gotohome');
+                console.log("sign up succeded!");
+                // REVIEW(donaldh) not sure if this stuff is necessary but
+                // whatever
+                self.undelegateEvents();
+            },
+            error: function(user, error) {
+                this.$(".signup-form .error").html(error.message).show();
+                this.$(".signup-form button").removeAttr("disabled");
+                console.log("sign up Failed...");
+            }
+        });
+        //this.$(".signup-form button").attr("disabled", "disabled");
+        return false;
+    },
+    render: function() {
+        this.$el.html(this.template());
+        this.delegateEvents();
+        console.log("rendered sign up view");
+    }
+});
+
+
 // Log in View
 window.LoginView = Parse.View.extend({
 
@@ -5,12 +47,11 @@ window.LoginView = Parse.View.extend({
 
     events: {
         "submit form.login-form": "logIn",
-        "submit form.signup-form": "signUp"
     },
 
     initialize: function() {
         console.log("initialized LoginView");
-        _.bindAll(this, "logIn", "signUp");
+        _.bindAll(this, "logIn");
     },
 
     logIn: function(e) {
@@ -41,34 +82,6 @@ window.LoginView = Parse.View.extend({
         //this.$(".login-form button").attr("disabled", "disabled");
         return false;
     },
-
-    signUp: function(e) {
-        var self = this;
-        var username = this.$("#signup-username").val();
-        var password = this.$("#signup-password").val();
-        console.log("attempting to sign up with user: " + username +
-                    " pass: " + password);
-
-        Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
-            success: function(user) {
-                $(document).trigger('gotohome');
-                console.log("sign up succeded!");
-                // REVIEW(donaldh) not sure if this stuff is necessary but
-                // whatever
-                self.undelegateEvents();
-            },
-            error: function(user, error) {
-                this.$(".signup-form .error").html(error.message).show();
-                this.$(".signup-form button").removeAttr("disabled");
-                console.log("sign up Failed...");
-            }
-        });
-
-        //this.$(".signup-form button").attr("disabled", "disabled");
-
-        return false;
-    },
-
     render: function() {
         this.$el.html(this.template());
         this.delegateEvents();
@@ -392,7 +405,8 @@ var AppRouter = Backbone.Router.extend({
         "logout":"logout",
         "settings":"settings",
         "layers":"layers",
-        "add_entity":"add_entity"
+        "add_entity":"add_entity",
+        "sign_up":"sign_up"
     },
 
     initialize: function() {
@@ -410,6 +424,7 @@ var AppRouter = Backbone.Router.extend({
 
         // Instantiate all the views
         this.loginView = new LoginView();
+        this.signupView = new SignupView();
         this.settingsView = new SettingsView();
         this.mapView = new MapView({
             model: map,
@@ -432,11 +447,10 @@ var AppRouter = Backbone.Router.extend({
                 google.maps.event.trigger(self.mapView.gmap, "resize");
                 console.log("resized");
             }, 1);
-            debugger;
             
         } else {
             console.log('you are not logged in, so log in');
-            this.changePage(loginView);
+            this.changePage(this.loginView);
         }
     },
 
@@ -459,6 +473,10 @@ var AppRouter = Backbone.Router.extend({
     add_entity: function() {
         console.log('#add_entity');
         this.changePage(this.addEntityView);
+    },
+    sign_up : function(){
+        console.log('#sign_up');
+        this.changePage(this.signupView);
     },
 
     changePage: function(page) {

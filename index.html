@@ -12,7 +12,7 @@
     <script type="text/template" id="login">
       <!-- Header -->
       <div data-role="header" data-theme="a">
-        <h1>New/Existing User</h1>
+        <h1>Existing User</h1>
       </div>
       <!-- Content -->
       <center>
@@ -24,6 +24,28 @@
             <input type="password" id="login-password" placeholder="Password"/>
             <button>Log In</button>
           </form>
+          <a
+            href="#/sign_up".
+            data-role="button"
+            data-transition="pop"
+            data-theme="a"
+            data-inline="true"
+            data-icon="grid">
+            Sign up!
+          </a>
+        </div>
+      </center>
+    </script>
+    
+    <!-- sign up template -->
+    <script type="text/template" id="signup">
+      <!-- Header -->
+      <div data-role="header" data-theme="a">
+        <h1>New User</h1>
+      </div>
+      <!-- Content -->
+      <center>
+        <div data-role="content" data-theme="c" style="margin-bottom:100px;">
           <form class="signup-form">
             <h2>Sign Up</h2>
             <div class="error" style="display:none"></div>
