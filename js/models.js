@@ -49,30 +49,6 @@
 //                      "provided to the constructor for an Entity";
             }
             var currenttime = new Date();
-            markers[this.get("name")] = markers[this.get("name")] ||
-                new MarkerWithLabel({
-                    title: this.get("name"),
-                    labelContent: this.get("name"),
-                    // drop marker with animation
-                    animation: google.maps.Animation.DROP,
-                    position: new google.maps.LatLng(
-                        this.get("lat"),
-                        this.get("lng")),
-                    icon: this.get('image'),
-                    map: gmap
-                });
-            google.maps.event.addListener(
-                    markers[this.get("name")],
-                    'click', function() {
-                  console.log("added event listener  " + markers[this.get("name")].title);
-                  mapview.DisplayInfoWindow(this);
-            }.bind(this));
-
-            this.bind("change:lat change:lng", function() {
-                markers[this.get("name")].setPosition(new google.maps.LatLng(
-                        this.get("lat"),
-                        this.get("lng")));
-            });
             this.save();
         }
     });
@@ -133,6 +109,18 @@
                 layerName: 'Landmarks',
                 layerNameSingular: 'Landmark'
             }));
+            this.each(function(layer) {
+                layer.entities.fetch({
+                    success: function(entities) {
+                       entities.each(function(entity) {
+                           entity.initialize();
+                       });
+                    },
+                    error: function(entities) {
+                        //alert("fuck, got an error");
+                    }
+                });
+            });
         },
 
         getLayerWithName: function(name) {
@@ -161,15 +149,15 @@
             // were shown before but now should hide
             layersNowHidden: []
         },
-        layers: new Layers(),
         initialize: function() {
-            this.InstantiateWithIds(this.get("subscribed"));
-            setInterval(function () {
-                if (Parse.User.current()) {
-                    // callback handles each layer update separately!
-                    _.each(this.get("subscribed"), this.UpdateLocalLayer, this);
-                }
-            }.bind(this), 30000);
+            this.layers = new Layers();
+//            this.InstantiateWithIds(this.get("subscribed"));
+//            setInterval(function () {
+//                if (Parse.User.current()) {
+//                    // callback handles each layer update separately!
+//                    _.each(this.get("subscribed"), this.UpdateLocalLayer, this);
+//                }
+//            }.bind(this), 30000);
         },
         addEntity: function(entity) {
             // (assume ownerId is already authenticated)
