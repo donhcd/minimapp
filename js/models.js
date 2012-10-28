@@ -118,15 +118,10 @@ window.Layers = Parse.Collection.extend({
         });
     },
 
-    getLayerWithName: function(name) {
-        return this.find(function(layer) {
+    addEntity: function(entity) {
+        var layerToAddEntityTo = this.find(function(layer) {
             return layer.get("layerNameSingular") === name;
         });
-    },
-
-    addEntity: function(entity) {
-        var layerToAddEntityTo =
-            this.getLayerWithName(entity.get("layerNameSingular"));
         if (layerToAddEntityTo) {
             layerToAddEntityTo.addEntity(entity);
         } else {
@@ -136,12 +131,14 @@ window.Layers = Parse.Collection.extend({
 });
 
 window.Map = Parse.Object.extend("Map", {
+
     defaults: {
         // weren't shown before but now are
         layersNowShown: [],
         // were shown before but now should hide
         layersNowHidden: []
     },
+
     initialize: function() {
         this.layers = new Layers();
         // this.instantiateWithIds(this.get("subscribed"));
@@ -152,6 +149,7 @@ window.Map = Parse.Object.extend("Map", {
         //     }
         // }.bind(this), 30000);
     },
+
     addEntity: function(entity) {
         // (assume ownerId is already authenticated)
 
@@ -160,45 +158,5 @@ window.Map = Parse.Object.extend("Map", {
                     entity.get("layerNameSingular"));
 
         this.layers.addEntity(entity);
-    },
-    doWithEntities: function(layerid, action) {
-        if (layers[layerid]) {
-            // if we already have a cached version, use that
-            action(layers[layerid].entities.models);
-            return;
-        } else {
-            console.log("Called doWithEntities with no" +
-                        "such local layer: " + layerid);
-            console.log("local layers:");
-            console.log(layers);
-        }
-    },
-    updateLocalLayer: function(layerid) {
-        layers[layerid].entities.fetch({
-            success: function(entities) {
-                entities.each(function(entity) {
-                    entity.initialize();
-                });
-            },
-            error: function(entities) {
-                //alert("fuck, got an error");
-            }
-        });
-    },
-    subscribe: function(layerids) {
-        this.subscribed = _.union(layerids, this.subscribed);
-    },
-    unsubscribe: function(layerids) {
-        this.subscribed = _.difference(this.subscribed, layerids);
-    },
-    instantiateWithIds: function(ids) {
-        _.each(
-            ids,
-            function(id) {
-                var layer = new Layer({layerid: id});
-                layers[id] = layer;
-                this.updateLocalLayer(id);
-            },
-            this);
     }
 });
