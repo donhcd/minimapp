@@ -18,14 +18,15 @@ window.LoginView = Parse.View.extend({
         var username = this.$("#login-username").val();
         var password = this.$("#login-password").val();
         console.log("attempting to log in with user: " +
-            username + " pass: " + password);
+                    username + " pass: " + password);
 
         // Will eventually change this to our own user
         Parse.User.logIn(username, password, {
             success: function(user) {
                 console.log("log in succeded!");
                 $(document).trigger('gotohome');
-                // REVIEW(donaldh) not sure if this stuff is necessary but whatever
+                // REVIEW(donaldh) not sure if this stuff is necessary but
+                // whatever
                 self.undelegateEvents();
             },
             error: function(user, error) {
@@ -46,13 +47,14 @@ window.LoginView = Parse.View.extend({
         var username = this.$("#signup-username").val();
         var password = this.$("#signup-password").val();
         console.log("attempting to sign up with user: " + username +
-                " pass: " + password);
+                    " pass: " + password);
 
         Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
             success: function(user) {
                 $(document).trigger('gotohome');
                 console.log("sign up succeded!");
-                // REVIEW(donaldh) not sure if this stuff is necessary but whatever
+                // REVIEW(donaldh) not sure if this stuff is necessary but
+                // whatever
                 self.undelegateEvents();
             },
             error: function(user, error) {
@@ -73,6 +75,7 @@ window.LoginView = Parse.View.extend({
         console.log("rendered login view");
     }
 });
+
 // Layers View
 window.LayersView = Backbone.View.extend({
 
@@ -86,6 +89,7 @@ window.LayersView = Backbone.View.extend({
         console.log("rendered layers view");
     }
 });
+
 // Handle Settings page
 window.SettingsView = Backbone.View.extend({
 
@@ -102,6 +106,7 @@ window.SettingsView = Backbone.View.extend({
         }));
     }
 });
+
 // Handles Add Entity page
 window.AddEntityView = Backbone.View.extend({
 
@@ -139,7 +144,18 @@ window.AddEntityView = Backbone.View.extend({
     }
 });
 
-window.EntityView = Backbone.View.extend({
+window.LayerView = Backbone.View.extend({
+
+    initialize: function() {
+
+    },
+
+    poop: function() {
+        wheee
+    },
+
+    wat: {
+    },
 
 });
 
@@ -156,8 +172,9 @@ window.MapView = Backbone.View.extend({
         this.$el.html(this.template({
             user : Parse.User.current().getUsername()
         }));
-//        this.$('#map_canvas').height(
-//            window.innerHeight - this.$('#header').height() - $('#footer').height());
+        // this.$('#map_canvas').height(
+        //     window.innerHeight - this.$('#header').height() -
+        //     $('#footer').height());
         this.$('#map_canvas').height(400);
 
         this.gmap = new google.maps.Map(this.$('#map_canvas')[0], {
@@ -205,20 +222,22 @@ window.MapView = Backbone.View.extend({
 
     displayInfoWindow: function(entity){
         console.log("display info window called on marker: "+
-            markers[entity.get("name")].title);
+                    markers[entity.get("name")].title);
         //map,marker,x,y){
         // update_dialog(entity);
         infoBubble.content =
             '<a STYLE="text-decoration:none" href="#info_window_page" ' +
             'class="phoneytext">'+markers[entity.get("name")].title+'</a>';
         selected_entity=entity;
-        console.log("selected entity: "+ markers[selected_entity.get("name")].title);
+        console.log("selected entity: " +
+                    markers[selected_entity.get("name")].title);
         this.$(infoBubble.bubble_).live("click", function() {
             console.log('clicked!');
             infoWindowView.render(selected_entity);
         });
         // Will do later if I hit a deadend (JIM)
-        //infoBubble.content= '<div class="phoneytext" onclick="createDialog()" >'+marker.title+'</div>';
+        //infoBubble.content= '<div class="phoneytext"
+        //onclick="createDialog()" >'+marker.title+'</div>';
         infoBubble.open(this.gmap, markers[entity.get("name")]);
     },
 
@@ -249,24 +268,24 @@ window.MapView = Backbone.View.extend({
 
     renderLayers: function(layerids) {
         _.each(
-                layerids,
-                function(layerid) {
-                    this.doWithEntities(layerid, function(entities) {
-                        _.each(entities, this.drawEntity, this);
-                    });
-                },
-                this);
+            layerids,
+            function(layerid) {
+                this.doWithEntities(layerid, function(entities) {
+                    _.each(entities, this.drawEntity, this);
+                });
+            },
+            this);
     },
 
     clearLayers: function(layerids) {
         _.each(
-                layerids,
-                function(layerid) {
-                    this.doWithEntities(layerid, function(entities) {
-                        _.each(entities, this.eraseEntity, this);
-                    });
-                },
-                this);
+            layerids,
+            function(layerid) {
+                this.doWithEntities(layerid, function(entities) {
+                    _.each(entities, this.eraseEntity, this);
+                });
+            },
+            this);
     },
 
     forceRefreshLayers: function(layerids) {
@@ -280,11 +299,11 @@ window.MapView = Backbone.View.extend({
     // should now be shown.
     updateShownLayers: function(newShownLayers) {
         this.set("layersNowShown",
-                _.difference(newShownLayers, this.get("shownLayers")));
+                 _.difference(newShownLayers, this.get("shownLayers")));
         console.log(this.get("shownLayers"));
         console.log(this.get("layersNowShown"));
         this.set("layersNowHidden",
-                _.difference(this.get("shownLayers"), newShownLayers));
+                 _.difference(this.get("shownLayers"), newShownLayers));
         console.log(this.get("layersNowHidden"));
         this.set("shownLayers", newShownLayers);
         console.log(this.get("shownLayers"));
@@ -293,21 +312,21 @@ window.MapView = Backbone.View.extend({
 
     refreshLayers: function() {
         _.each(
-                this.get("layersNowShown"),
-                function(layerid) {
-                    this.get("map").doWithEntities(layerid, function(entities) {
-                        _.each(entities, this.drawEntity, this);
-                    }.bind(this));
-                }.bind(this),
-                this);
+            this.get("layersNowShown"),
+            function(layerid) {
+                this.get("map").doWithEntities(layerid, function(entities) {
+                    _.each(entities, this.drawEntity, this);
+                }.bind(this));
+            }.bind(this),
+            this);
         _.each(
-                this.get("layersNowHidden"),
-                function(layerid) {
-                    this.get("map").doWithEntities(layerid, function(entities) {
-                        _.each(entities, this.eraseEntity, this);
-                    }.bind(this));
-                }.bind(this),
-                this);
+            this.get("layersNowHidden"),
+            function(layerid) {
+                this.get("map").doWithEntities(layerid, function(entities) {
+                    _.each(entities, this.eraseEntity, this);
+                }.bind(this));
+            }.bind(this),
+            this);
         _.each(this.get("entitiesAdded"), this.drawEntity, this);
         this.set({
             layersNowShown: [],
@@ -332,10 +351,10 @@ var AppRouter = Backbone.Router.extend({
             "Q6TCdTd0MUgW5M3GYkuTwTRYiOBQZJIsClO8X6U5",
             "6nvtUl1BW2fJKDfs3XPS3DDDdR1qBDWFsI88a0cK");
         // Handle back button throughout the application
-//        $('.back').live('click', function(event) {
-//            window.history.back();
-//            return false;
-//        });
+        // $('.back').live('click', function(event) {
+        //     window.history.back();
+        //     return false;
+        // });
 
         var map = new Map();
         var addedEntities = new EntitySet();
