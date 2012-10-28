@@ -76,7 +76,6 @@
                     icon: layers[this.get("layerid")].getImage(),
                     map: gmap
                 });
-//            this.get("ownerId").fetch({});
             google.maps.event.addListener(
                     markers[this.get("name")],
                     'click', function() {

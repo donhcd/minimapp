@@ -196,15 +196,15 @@ window.MapView = Backbone.View.extend({
         return this;
     },
 
-    DrawEntity: function(entity) {
+    drawEntity: function(entity) {
         markers[entity.get("name")].setMap(this.gmap);
     },
 
-    EraseEntity: function(entity) {
+    eraseEntity: function(entity) {
         markers[entity.get("name")].setMap(null);
     },
 
-    DisplayInfoWindow: function(entity){
+    displayInfoWindow: function(entity){
         console.log("display info window called on marker: "+
             markers[entity.get("name")].title);
         //map,marker,x,y){
@@ -223,9 +223,9 @@ window.MapView = Backbone.View.extend({
         infoBubble.open(this.gmap, markers[entity.get("name")]);
     },
 
-    AddEntityAnimated: function(entity) {
+    addEntityAnimated: function(entity) {
         this.get("map").AddEntity(entity);
-        // TODO(donaldh) this should be done in DrawEntity
+        // TODO(donaldh) this should be done in drawEntity
         markers[entity.get("name")].setMap(this.gmap);
     },
 
@@ -240,46 +240,46 @@ window.MapView = Backbone.View.extend({
             }.bind(this));
     },
 
-    Center: function(lat,lng) {
+    center: function(lat,lng) {
         this.gmap.setCenter(new google.maps.LatLng(lat,lng));
     },
 
-    TriggerGmapEvent: function(eventname) {
+    triggerGmapEvent: function(eventname) {
         google.maps.event.trigger(this.gmap, eventname);
     },
 
-    RenderLayers: function(layerids) {
+    renderLayers: function(layerids) {
         _.each(
                 layerids,
                 function(layerid) {
-                    this.DoWithEntities(layerid, function(entities) {
-                        _.each(entities, this.DrawEntity, this);
+                    this.doWithEntities(layerid, function(entities) {
+                        _.each(entities, this.drawEntity, this);
                     });
                 },
                 this);
     },
 
-    ClearLayers: function(layerids) {
+    clearLayers: function(layerids) {
         _.each(
                 layerids,
                 function(layerid) {
-                    this.DoWithEntities(layerid, function(entities) {
-                        _.each(entities, this.EraseEntity, this);
+                    this.doWithEntities(layerid, function(entities) {
+                        _.each(entities, this.eraseEntity, this);
                     });
                 },
                 this);
     },
 
-    ForceRefreshLayers: function(layerids) {
-        this.ClearLayers(layerids);
-        this.RenderLayers(shownLayers);
+    forceRefreshLayers: function(layerids) {
+        this.clearLayers(layerids);
+        this.renderLayers(shownLayers);
         this.set(entitiesAdded, {});
     },
 
     // This function should be called after the user modifies the
     // "Select Layer(s)" dialog with an array of the layerids that
     // should now be shown.
-    UpdateShownLayers: function(newShownLayers) {
+    updateShownLayers: function(newShownLayers) {
         this.set("layersNowShown",
                 _.difference(newShownLayers, this.get("shownLayers")));
         console.log(this.get("shownLayers"));
@@ -289,27 +289,27 @@ window.MapView = Backbone.View.extend({
         console.log(this.get("layersNowHidden"));
         this.set("shownLayers", newShownLayers);
         console.log(this.get("shownLayers"));
-        this.RefreshLayers();
+        this.refreshLayers();
     },
 
-    RefreshLayers: function() {
+    refreshLayers: function() {
         _.each(
                 this.get("layersNowShown"),
                 function(layerid) {
-                    this.get("map").DoWithEntities(layerid, function(entities) {
-                        _.each(entities, this.DrawEntity, this);
+                    this.get("map").doWithEntities(layerid, function(entities) {
+                        _.each(entities, this.drawEntity, this);
                     }.bind(this));
                 }.bind(this),
                 this);
         _.each(
                 this.get("layersNowHidden"),
                 function(layerid) {
-                    this.get("map").DoWithEntities(layerid, function(entities) {
-                        _.each(entities, this.EraseEntity, this);
+                    this.get("map").doWithEntities(layerid, function(entities) {
+                        _.each(entities, this.eraseEntity, this);
                     }.bind(this));
                 }.bind(this),
                 this);
-        _.each(this.get("entitiesAdded"), this.DrawEntity, this);
+        _.each(this.get("entitiesAdded"), this.drawEntity, this);
         this.set({
             layersNowShown: [],
             layersNowHidden: [],
