@@ -123,6 +123,19 @@ window.SettingsView = Backbone.View.extend({
     }
 });
 
+
+window.EntityInfoView = Backbone.View.extend({
+
+    template: _.template(this.$('#entity_info_view').html()),
+   
+    render: function() {
+        this.$el.html(this.template({
+            name: this.entityHard.name,
+			time: this.entityHard.time
+        }));
+    }
+});
+
 // Handles Add Entity page
 window.AddEntityView = Backbone.View.extend({
 
@@ -182,12 +195,12 @@ window.EntityView = Backbone.View.extend({
             icon: this.options.image,
             map: this.options.gmap
         });
-        // google.maps.event.addListener(
-        //     markers[this.model.get("name")], 'click', function() {
-        //     console.log("added event listener  " +
-        //                 markers[this.model.get("name")].title);
-        //     mapview.DisplayInfoWindow(this);
-        // }.bind(this));
+        google.maps.event.addListener(
+        this.marker, 'click', function() {
+        console.log("added event listener  " +
+        this.marker.title);
+        //mapview.DisplayInfoWindow(this);
+        }.bind(this));
     }
 
 });
@@ -420,7 +433,8 @@ window.AppRouter = Backbone.Router.extend({
         "settings":"settings",
         "layers":"layers",
         "add_entity":"add_entity",
-        "sign_up":"sign_up"
+        "sign_up":"sign_up",
+		"entity_info":"entity_info"
     },
 
     initialize: function() {
@@ -440,6 +454,7 @@ window.AppRouter = Backbone.Router.extend({
         this.loginView = new LoginView();
         this.signupView = new SignupView();
         this.settingsView = new SettingsView();
+		this.entityInfoView = new EntityInfoView();
         this.mapView = new MapView({
             model: map,
             addedEntities: addedEntities
@@ -448,6 +463,17 @@ window.AppRouter = Backbone.Router.extend({
         this.addEntityView = new AddEntityView({collection: addedEntities});
 
         this.firstPage = true;
+		
+		var vars = {
+            name: "gay",
+            layerNameSingular: "peeple",
+            time: "time to partee",
+            ownerId: Parse.User.current().id,
+            ownerUsername: Parse.User.current().getUsername(),
+            text: "yooo nigguh yo",
+            useLocation: "huh"
+        };
+		this.entityHard = new Entity(vars);
     },
 
     home: function() {
@@ -487,6 +513,11 @@ window.AppRouter = Backbone.Router.extend({
     sign_up : function(){
         console.log('#sign_up');
         this.changePage(this.signupView);
+    },
+	
+	entity_info : function(){
+	    console.log('#entity_info');
+		this.changePage(this.entityInfoView);
     },
 
     changePage: function(page) {
