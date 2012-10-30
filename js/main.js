@@ -127,7 +127,7 @@ window.SettingsView = Backbone.View.extend({
 window.EntityInfoView = Backbone.View.extend({
 
     template: _.template(this.$('#entity_info_view').html()),
-   
+
     render: function() {
         this.$el.html(this.template({
             name: this.entityHard.name,
@@ -463,7 +463,7 @@ window.AppRouter = Backbone.Router.extend({
         this.addEntityView = new AddEntityView({collection: addedEntities});
 
         this.firstPage = true;
-		
+
 		var vars = {
             name: "gay",
             layerNameSingular: "peeple",
@@ -514,7 +514,7 @@ window.AppRouter = Backbone.Router.extend({
         console.log('#sign_up');
         this.changePage(this.signupView);
     },
-	
+
 	entity_info : function(){
 	    console.log('#entity_info');
 		this.changePage(this.entityInfoView);
