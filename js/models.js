@@ -1,47 +1,25 @@
-//    // TODO(jzzhang) find a place for this
-//    var infoBubble = new InfoBubble({
-//        map: gmap,
-//        content: '<div class="phoneytext" > Click me </div>',
-//        shadowStyle: 1,
-//        padding: 0,
-//        backgroundColor: 'rgb(57,57,57)',
-//        borderRadius: 4,
-//        arrowSize: 10,
-//        borderWidth: 1,
-//        borderColor: '#2c2c2c',
-//        disableAutoPan: true,
-//        hideCloseButton: true,
-//        arrowPosition: 30,
-//        backgroundClassName: 'phoney',
-//        arrowStyle: 2
-//    });
-//
-//    // updates info window with selected entity
-//    var selected_entity;
-//    // binds click event on infobubble to render infowindow
-
-window.Entity = Parse.Object.extend("Entity", {
+window.Entity = Parse.Object.extend('Entity', {
     // This should be constructed with a map providing the name, ownerId,
     // layerid, and latLng coordinates
     initialize: function() {
 
-        if (!(this.get("name") &&
-              this.get("ownerId") && this.get("layerid") &&
-                  this.get("lat") && this.get("lng"))) {
-            if (this.get("lat")) {
+        if (!(this.get('name') &&
+              this.get('ownerId') && this.get('layerid') &&
+                  this.get('lat') && this.get('lng'))) {
+            if (this.get('lat')) {
                 // We weren't given a user. This should never happen.
-                throw "something is fucked up";
+                throw 'something is fucked up';
             }
             // everything is probably missing
             // console.log(this.attributes.name +', '+
             //     this.attributes.ownerId +', '+ this.attributes.layerid +', '+
             //     this.attributes.lat +', '+ this.attributes.lng);
-            // console.log(this.get("name") +', '+
-            //     this.get("ownerId") +', '+ this.get("layerid") +', '+
-            //     this.get("lat") +', '+ this.get("lng"));
+            // console.log(this.get('name') +', '+
+            //     this.get('ownerId') +', '+ this.get('layerid') +', '+
+            //     this.get('lat') +', '+ this.get('lng'));
             // console.log(this);
-            // throw "name, ownerId, layerid, lat, and lng must be " +
-            //       "provided to the constructor for an Entity";
+            // throw 'name, ownerId, layerid, lat, and lng must be ' +
+            //       'provided to the constructor for an Entity';
             return;
         }
         this.save();
@@ -59,19 +37,19 @@ window.EntitySet = Parse.Collection.extend({
     }
 });
 
-window.Layer = Parse.Object.extend("Layer", {
+window.Layer = Parse.Object.extend('Layer', {
 
     initialize: function() {
-        if (!this.get("layerid")) {
-            throw "Layer initializer requires layerid attribute";
+        if (!this.get('layerid')) {
+            throw 'Layer initializer requires layerid attribute';
         }
         this.entities = new EntitySet();
         this.entities.query = new Parse.Query(Entity);
-        this.entities.query.equalTo("layerid", this.get("layerid"));
+        this.entities.query.equalTo('layerid', this.get('layerid'));
     },
 
     getImage: function() {
-        switch(this.get("layerid")) {
+        switch(this.get('layerid')) {
             case 'users':
                 return 'images/markers/man.png';
             //return 'scripts/images/person_generic.png';
@@ -112,7 +90,7 @@ window.Layers = Parse.Collection.extend({
                     });
                 },
                 error: function(entities) {
-                    //alert("fuck, got an error");
+                    //alert('fuck, got an error');
                 }
             });
         });
@@ -120,17 +98,17 @@ window.Layers = Parse.Collection.extend({
 
     addEntity: function(entity) {
         var layerToAddEntityTo = this.find(function(layer) {
-            return layer.get("layerNameSingular") === name;
+            return layer.get('layerNameSingular') === name;
         });
         if (layerToAddEntityTo) {
             layerToAddEntityTo.addEntity(entity);
         } else {
-            alert("this layer is not a thing");
+            alert('this layer is not a thing');
         }
     }
 });
 
-window.Map = Parse.Object.extend("Map", {
+window.Map = Parse.Object.extend('Map', {
 
     defaults: {
         // weren't shown before but now are
@@ -141,11 +119,11 @@ window.Map = Parse.Object.extend("Map", {
 
     initialize: function() {
         this.layers = new Layers();
-        // this.instantiateWithIds(this.get("subscribed"));
+        // this.instantiateWithIds(this.get('subscribed'));
         // setInterval(function () {
         //     if (Parse.User.current()) {
         //         // callback handles each layer update separately!
-        //         _.each(this.get("subscribed"), this.updateLocalLayer, this);
+        //         _.each(this.get('subscribed'), this.updateLocalLayer, this);
         //     }
         // }.bind(this), 30000);
     },
@@ -154,8 +132,8 @@ window.Map = Parse.Object.extend("Map", {
         // (assume ownerId is already authenticated)
 
         // only if it valid:
-        console.log("adding entity to layer: " +
-                    entity.get("layerNameSingular"));
+        console.log('adding entity to layer: ' +
+                    entity.get('layerNameSingular'));
 
         this.layers.addEntity(entity);
     }

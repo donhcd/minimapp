@@ -3,42 +3,42 @@ window.SignupView = Parse.View.extend({
     template: Handlebars.compile(this.$('#signup').html()),
 
     events: {
-        "submit form.signup-form": "signUp"
+        'submit form.signup-form': 'signUp'
     },
 
     initialize: function() {
-        console.log("initialized SignupView");
-        _.bindAll(this, "signUp");
+        console.log('initialized SignupView');
+        _.bindAll(this, 'signUp');
     },
 
     signUp: function(e) {
         var self = this;
-        var username = this.$("#signup-username").val();
-        var password = this.$("#signup-password").val();
-        console.log("attempting to sign up with user: " + username +
-                    " pass: " + password);
+        var username = this.$('#signup-username').val();
+        var password = this.$('#signup-password').val();
+        console.log('attempting to sign up with user: ' + username +
+                    ' pass: ' + password);
         Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
             success: function(user) {
-                $(document).trigger('gotohome');
-                console.log("sign up succeded!");
+                $(document).trigger('goto', 'home');
+                console.log('sign up succeded!');
                 // REVIEW(donaldh) not sure if this stuff is necessary but
                 // whatever
                 self.undelegateEvents();
             },
             error: function(user, error) {
-                this.$(".signup-form .error").html(error.message).show();
-                this.$(".signup-form button").removeAttr("disabled");
-                console.log("sign up Failed...");
+                this.$('.signup-form .error').html(error.message).show();
+                this.$('.signup-form button').removeAttr('disabled');
+                console.log('sign up Failed...');
             }
         });
-        //this.$(".signup-form button").attr("disabled", "disabled");
+        //this.$('.signup-form button').attr('disabled', 'disabled');
         return false;
     },
 
     render: function() {
         this.$el.html(this.template());
         this.delegateEvents();
-        console.log("rendered sign up view");
+        console.log('rendered sign up view');
     }
 });
 
@@ -48,47 +48,47 @@ window.LoginView = Parse.View.extend({
     template: Handlebars.compile(this.$('#login').html()),
 
     events: {
-        "submit form.login-form": "logIn"
+        'submit form.login-form': 'logIn'
     },
 
     initialize: function() {
-        console.log("initialized LoginView");
-        _.bindAll(this, "logIn");
+        console.log('initialized LoginView');
+        _.bindAll(this, 'logIn');
     },
 
     logIn: function(e) {
         var self = this;
-        var username = this.$("#login-username").val();
-        var password = this.$("#login-password").val();
-        console.log("attempting to log in with user: " +
-                    username + " pass: " + password);
+        var username = this.$('#login-username').val();
+        var password = this.$('#login-password').val();
+        console.log('attempting to log in with user: ' +
+                    username + ' pass: ' + password);
 
         // Will eventually change this to our own user
         Parse.User.logIn(username, password, {
             success: function(user) {
-                console.log("log in succeded!");
-                $(document).trigger('gotohome');
+                console.log('log in succeded!');
+                $(document).trigger('goto', 'home');
                 // REVIEW(donaldh) not sure if this stuff is necessary but
                 // whatever
                 self.undelegateEvents();
             },
             error: function(user, error) {
-                this.$(".login-form .error")
-                    .html("Invalid username or password. Please try again.")
+                this.$('.login-form .error')
+                    .html('Invalid username or password. Please try again.')
                     .show();
-                this.$(".login-form button").removeAttr("disabled");
-                console.log("log in failure!");
+                this.$('.login-form button').removeAttr('disabled');
+                console.log('log in failure!');
             }
         });
 
-        //this.$(".login-form button").attr("disabled", "disabled");
+        //this.$('.login-form button').attr('disabled', 'disabled');
         return false;
     },
 
     render: function() {
         this.$el.html(this.template());
         this.delegateEvents();
-        console.log("rendered login view");
+        console.log('rendered login view');
     }
 });
 
@@ -102,7 +102,7 @@ window.LayersView = Backbone.View.extend({
         this.$el.html(this.template({
             layers: this.collection.toJSON()
         }));
-        console.log("rendered layers view");
+        console.log('rendered layers view');
     }
 });
 
@@ -111,9 +111,9 @@ window.SettingsView = Backbone.View.extend({
 
     template: Handlebars.compile(this.$('#settings').html()),
 
-    checkboxNames: ["Setting1", "Setting2"],
+    checkboxNames: ['Setting1', 'Setting2'],
 
-    checkboxNamesToIds: { "Setting1": "wat", "Setting2": "wut" },
+    checkboxNamesToIds: { 'Setting1': 'wat', 'Setting2': 'wut' },
 
     render: function() {
         this.delegateEvents();
@@ -130,12 +130,12 @@ window.EntityInfoView = Backbone.View.extend({
 
     initialize: function() {
         var vars = {
-            name: "gay",
-            layerNameSingular: "peeple",
-            time: "time to partee",
+            name: 'gay',
+            layerNameSingular: 'peeple',
+            time: 'time to partee',
             ownerId: Parse.User.current().id,
             ownerUsername: Parse.User.current().getUsername(),
-            text: "yooo nigguh yo"
+            text: 'yooo nigguh yo'
         };
         this.model = new Entity(vars);
     },
@@ -151,11 +151,11 @@ window.AddEntityView = Backbone.View.extend({
     template:Handlebars.compile(this.$('#addentity').html()),
 
     events: {
-        "submit form.add-entity-form": "save"
+        'submit form.add-entity-form': 'save'
     },
 
     save: function(e) {
-        console.log("saving entity");
+        console.log('saving entity');
         // Go to home,
         var variables = {
             name: this.$('#marker-name').val(),
@@ -169,7 +169,7 @@ window.AddEntityView = Backbone.View.extend({
         this.collection.add(new Entity(variables));
         console.log(variables);
         // TODO(donaldh) add entity with the above variables.
-        $(document).trigger("gotohome");
+        $(document).trigger('goto', 'home');
         return false;
     },
 
@@ -177,7 +177,7 @@ window.AddEntityView = Backbone.View.extend({
         this.delegateEvents();
         this.$el.html(this.template({
         }));
-        console.log("rendered add entity view");
+        console.log('rendered add entity view');
     }
 });
 
@@ -185,29 +185,28 @@ window.EntityView = Backbone.View.extend({
 
     initialize: function() {
         var self = this;
-        this.model.bind("change:lat change:lng", function() {
+        this.model.bind('change:lat change:lng', function() {
             this.marker.setPosition(new google.maps.LatLng(
-                    self.model.get("lat"),
-                    self.model.get("lng")));
+                    self.model.get('lat'),
+                    self.model.get('lng')));
         });
     },
 
     render: function() {
         this.marker = new MarkerWithLabel({
-            title: this.model.get("name"),
-            labelContent: this.model.get("name"),
+            title: this.model.get('name'),
+            labelContent: this.model.get('name'),
             // drop marker with animation
             animation: google.maps.Animation.DROP,
             position: new google.maps.LatLng(
-                this.model.get("lat"),
-                this.model.get("lng")),
+                this.model.get('lat'),
+                this.model.get('lng')),
             icon: this.options.image,
             map: this.options.gmap
         });
         google.maps.event.addListener(
         this.marker, 'click', function() {
-        console.log("added event listener  " +
-        this.marker.title);
+        console.log('added event listener ' + this.marker.title);
         //mapview.DisplayInfoWindow(this);
         }.bind(this));
     }
@@ -269,7 +268,7 @@ window.MapView = Backbone.View.extend({
             var i = 0;
             return function() {
                 i++;
-                google.maps.event.trigger(gmap, "resize");
+                google.maps.event.trigger(gmap, 'resize');
                 if (i > 1) {
                     clearInterval(interval);
                 }
@@ -310,58 +309,8 @@ window.MapView = Backbone.View.extend({
         };
     },
 
-    drawEntity: function(entity) {
-        markers[entity.get("name")].setMap(this.gmap);
-    },
-
-    eraseEntity: function(entity) {
-        markers[entity.get("name")].setMap(null);
-    },
-
-    // displayInfoWindow: function(entity){
-    //     console.log("display info window called on marker: "+
-    //                 markers[entity.get("name")].title);
-    //     //map,marker,x,y){
-    //     // update_dialog(entity);
-    //     // infoBubble.content =
-    //     //     '<a STYLE="text-decoration:none" href="#info_window_page" ' +
-    //     //     'class="phoneytext">'+markers[entity.get("name")].title+'</a>';
-    //     selected_entity=entity;
-    //     console.log("selected entity: " +
-    //                 markers[selected_entity.get("name")].title);
-    //     this.$(infoBubble.bubble_).live("click", function() {
-    //         console.log('clicked!');
-    //         infoWindowView.render(selected_entity);
-    //     });
-    //     // Will do later if I hit a deadend (JIM)
-    //     //infoBubble.content= '<div class="phoneytext"
-    //     //onclick="createDialog()" >'+marker.title+'</div>';
-    //     infoBubble.open(this.gmap, markers[entity.get("name")]);
-    // },
-
-    addEntityAnimated: function(entity) {
-        this.get("map").AddEntity(entity);
-        // TODO(donaldh) this should be done in drawEntity
-        markers[entity.get("name")].setMap(this.gmap);
-    },
-
-    onNextClick: function(HandleClickCoordinates) {
-        google.maps.event.addListener(
-            this.gmap, 'click',
-            function(e) {
-                console.log('google maps listener got click');
-                console.log(this.gmap);
-                google.maps.event.clearListeners(this.gmap, 'click');
-                HandleClickCoordinates(e.latLng);
-            }.bind(this));
-    },
-
     center: function(lat,lng) {
         this.gmap.setCenter(new google.maps.LatLng(lat,lng));
-    },
-
-    triggerGmapEvent: function(eventname) {
-        google.maps.event.trigger(this.gmap, eventname);
     },
 
     renderLayers: function(layerids) {
@@ -393,39 +342,39 @@ window.MapView = Backbone.View.extend({
     },
 
     // This function should be called after the user modifies the
-    // "Select Layer(s)" dialog with an array of the layerids that
+    // 'Select Layer(s)' dialog with an array of the layerids that
     // should now be shown.
     updateShownLayers: function(newShownLayers) {
-        this.set("layersNowShown",
-                 _.difference(newShownLayers, this.get("shownLayers")));
-        console.log(this.get("shownLayers"));
-        console.log(this.get("layersNowShown"));
-        this.set("layersNowHidden",
-                 _.difference(this.get("shownLayers"), newShownLayers));
-        console.log(this.get("layersNowHidden"));
-        this.set("shownLayers", newShownLayers);
-        console.log(this.get("shownLayers"));
+        this.set('layersNowShown',
+                 _.difference(newShownLayers, this.get('shownLayers')));
+        console.log(this.get('shownLayers'));
+        console.log(this.get('layersNowShown'));
+        this.set('layersNowHidden',
+                 _.difference(this.get('shownLayers'), newShownLayers));
+        console.log(this.get('layersNowHidden'));
+        this.set('shownLayers', newShownLayers);
+        console.log(this.get('shownLayers'));
         this.refreshLayers();
     },
 
     refreshLayers: function() {
         _.each(
-            this.get("layersNowShown"),
+            this.get('layersNowShown'),
             function(layerid) {
-                this.get("map").doWithEntities(layerid, function(entities) {
+                this.get('map').doWithEntities(layerid, function(entities) {
                     _.each(entities, this.drawEntity, this);
                 }.bind(this));
             }.bind(this),
             this);
         _.each(
-            this.get("layersNowHidden"),
+            this.get('layersNowHidden'),
             function(layerid) {
-                this.get("map").doWithEntities(layerid, function(entities) {
+                this.get('map').doWithEntities(layerid, function(entities) {
                     _.each(entities, this.eraseEntity, this);
                 }.bind(this));
             }.bind(this),
             this);
-        _.each(this.get("entitiesAdded"), this.drawEntity, this);
+        _.each(this.get('entitiesAdded'), this.drawEntity, this);
         this.set({
             layersNowShown: [],
             layersNowHidden: [],
@@ -437,19 +386,19 @@ window.MapView = Backbone.View.extend({
 window.AppRouter = Backbone.Router.extend({
 
     routes: {
-        "":"home",
-        "logout":"logout",
-        "settings":"settings",
-        "layers":"layers",
-        "add_entity":"add_entity",
-        "sign_up":"sign_up",
-        "entity_info":"entity_info"
+        '':'home',
+        'logout':'logout',
+        'settings':'settings',
+        'layers':'layers',
+        'add_entity':'add_entity',
+        'sign_up':'sign_up',
+        'entity_info':'entity_info'
     },
 
     initialize: function() {
         Parse.initialize(
-            "Q6TCdTd0MUgW5M3GYkuTwTRYiOBQZJIsClO8X6U5",
-            "6nvtUl1BW2fJKDfs3XPS3DDDdR1qBDWFsI88a0cK");
+            'Q6TCdTd0MUgW5M3GYkuTwTRYiOBQZJIsClO8X6U5',
+            '6nvtUl1BW2fJKDfs3XPS3DDDdR1qBDWFsI88a0cK');
         // Handle back button throughout the application
         // $('.back').live('click', function(event) {
         //     window.history.back();
@@ -540,9 +489,9 @@ window.AppRouter = Backbone.Router.extend({
 $(document).ready(function () {
     console.log('document ready');
     app = new AppRouter();
-    $(document).bind('gotohome', function(e) {
+    $(document).bind('goto', function(e) {
         e.preventDefault();
-        app.navigate("#/", {trigger: true});
+        app.navigate('#/', {trigger: true});
     });
     Backbone.history.start();
 });

@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html class="ui-mobile-rendering">
+<html class='ui-mobile-rendering'>
   <head>
     <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/jquery.mobile-1.2.0.css"/>
-    <link rel="stylesheet" href="css/jqm-datebox.css"/>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' href='css/jquery.mobile-1.2.0.css'/>
+    <link rel='stylesheet' href='css/jqm-datebox.css'/>
 
     <!-- The Templates -->
 
     <!-- login template -->
-    <script type="text/template" id="login">
+    <script type='text/template' id='login'>
       <!-- Header -->
-      <div data-role="header" data-theme="a">
+      <div data-role='header' data-theme='a'>
         <h1>Existing User</h1>
       </div>
       <!-- Content -->
       <center>
-        <div data-role="content" data-theme="c" style="margin-bottom:100px;">
-          <form class="login-form">
+        <div data-role='content' data-theme='c' style='margin-bottom:100px;'>
+          <form class='login-form'>
             <h2>Log In</h2>
-            <div class="error" style="display:none"></div>
-            <input type="text" id="login-username" placeholder="Username"/>
-            <input type="password" id="login-password" placeholder="Password"/>
+            <div class='error' style='display:none'></div>
+            <input type='text' id='login-username' placeholder='Username'/>
+            <input type='password' id='login-password' placeholder='Password'/>
             <button>Log In</button>
           </form>
           <a
-            href="#/sign_up"
-            data-role="button"
-            data-transition="pop"
-            data-theme="a"
-            data-inline="true"
-            data-icon="grid">
+            href='#/sign_up'
+            data-role='button'
+            data-transition='pop'
+            data-theme='a'
+            data-inline='true'
+            data-icon='grid'>
             Sign up!
           </a>
         </div>
@@ -38,22 +38,22 @@
     </script>
 
     <!-- sign up template -->
-    <script type="text/template" id="signup">
+    <script type='text/template' id='signup'>
       <!-- Header -->
-      <div data-role="header" data-theme="a">
+      <div data-role='header' data-theme='a'>
         <h1>New User</h1>
       </div>
       <!-- Content -->
       <center>
-        <div data-role="content" data-theme="c" style="margin-bottom:100px;">
-          <form class="signup-form">
+        <div data-role='content' data-theme='c' style='margin-bottom:100px;'>
+          <form class='signup-form'>
             <h2>Sign Up</h2>
-            <div class="error" style="display:none"></div>
-            <input type="text" id="signup-username" placeholder="Username"/>
+            <div class='error' style='display:none'></div>
+            <input type='text' id='signup-username' placeholder='Username'/>
             <input
-            type="password"
-            id="signup-password"
-            placeholder="Create a Password"/>
+            type='password'
+            id='signup-password'
+            placeholder='Create a Password'/>
             <button>Sign Up</button>
           </form>
         </div>
@@ -61,9 +61,9 @@
     </script>
 
     <!-- entity info view -->
-    <script type="text/template" id="entity-info-view">
+    <script type='text/template' id='entity-info-view'>
       <!-- Header -->
-      <div data-role="header" data-theme="a">
+      <div data-role='header' data-theme='a'>
         <h1>Entity Info</h1>
       </div>
       <div data-role='content' data-theme='c'>
@@ -75,14 +75,14 @@
           <li> Description: {{text}} </li>
         </ul>
       </div>
-      <div data-role="navbar" data-theme="a" data-iconpos="bottom">
+      <div data-role='navbar' data-theme='a' data-iconpos='bottom'>
           <ul>
             <li>
             <a
-              data-role="button"
-              data-transition="flip"
-              href="#"
-              data-theme="a">
+              data-role='button'
+              data-transition='flip'
+              href='#'
+              data-theme='a'>
               Go back
             </a>
             </li>
@@ -92,26 +92,26 @@
 
 
     <!-- layers page-->
-    <script type="text/template" id="layers">
-      <div data-role="header" data-theme="c">
+    <script type='text/template' id='layers'>
+      <div data-role='header' data-theme='c'>
         <h1>Select Layer(s)</h1>
 
         <!-- navbar for select all select none-->
-        <div data-role="navbar" data-iconpos="right">
+        <div data-role='navbar' data-iconpos='right'>
           <ul>
             <li>
             <a
-              data-role="button"
-              data-theme="a"
-              id="select-all-button" >
+              data-role='button'
+              data-theme='a'
+              id='select-all-button' >
               Select All
             </a>
             </li>
             <li>
             <a
-              data-role="button"
-              data-theme="a"
-              id="select-none-button">
+              data-role='button'
+              data-theme='a'
+              id='select-none-button'>
               Select None
             </a>
             </li>
@@ -120,15 +120,15 @@
       </div>
       <!-- Content -->
       <center>
-        <div data-role="content" data-theme="c" style="margin-bottom:100px;">
-          <div id="layer-filter-fieldcontain" data-role="fieldcontain">
+        <div data-role='content' data-theme='c' style='margin-bottom:100px;'>
+          <div id='layer-filter-fieldcontain' data-role='fieldcontain'>
             <!-- layer selector checkbox -->
-            <fieldset id="testt" data-role="controlgroup">
+            <fieldset id='testt' data-role='controlgroup'>
               {{#each layers}}
               <label>
                 <input
-                type="checkbox"
-                id="{{layerName}}"/>
+                type='checkbox'
+                id='{{layerName}}'/>
                 {{layerName}}
               </label>
               {{/each}}
@@ -136,23 +136,23 @@
           </div>
           <p>
           <a
-            href="#/layers-marker"
-            id="confirm-layers-button"
-            data-rel="back"
-            data-role="button"
-            data-theme="a">
+            href='#/layers-marker'
+            id='confirm-layers-button'
+            data-rel='back'
+            data-role='button'
+            data-theme='a'>
             Confim Layers
           </a>
           </p>
         </div>
-        <div data-role="navbar" data-theme="a" data-iconpos="right">
+        <div data-role='navbar' data-theme='a' data-iconpos='right'>
           <ul>
             <li>
             <a
-              data-role="button"
-              data-transition="flip"
-              href="#"
-              data-theme="a">
+              data-role='button'
+              data-transition='flip'
+              href='#'
+              data-theme='a'>
               Go back
             </a>
             </li>
@@ -163,51 +163,51 @@
 
 
     <!-- map page-->
-    <script type="text/template" id="mappage">
+    <script type='text/template' id='mappage'>
       <!-- Header -->
-      <div id="header" data-role="header" data-theme="a">
+      <div id='header' data-role='header' data-theme='a'>
         <h1>Welcome, {{user}}!</h1>
-        <a href="#/logout" data-role="button" class="ui-btn-right" data-theme="a">
+        <a href='#/logout' data-role='button' class='ui-btn-right' data-theme='a'>
           Sign out
         </a>
       </div>
       <!-- map -->
-      <div id="map-canvas" data-role="content">
+      <div id='map-canvas' data-role='content'>
       </div>
       <!-- footer div -->
-      <div id="footer" data-role="navbar" data-iconpos="bottom" data-theme="a">
+      <div id='footer' data-role='navbar' data-iconpos='bottom' data-theme='a'>
         <ul>
           <li>
           <!-- Settings -->
           <a
-            href="#/settings"
-            data-rel="dialog"
-            data-transition="pop"
-            data-theme="a"
-            data-icon="grid">
+            href='#/settings'
+            data-rel='dialog'
+            data-transition='pop'
+            data-theme='a'
+            data-icon='grid'>
             Settings
           </a>
           </li>
           <li>
           <!-- View Layers Button -->
           <a
-            href="#/layers"
-            data-rel="dialog"
-            data-transition="pop"
-            data-theme="a"
-            data-icon="grid">
+            href='#/layers'
+            data-rel='dialog'
+            data-transition='pop'
+            data-theme='a'
+            data-icon='grid'>
             Layers
           </a>
           </li>
           <li>
           <!-- Place a marker on the map Button -->
           <a
-            href="#/add_entity"
-            id="add-entity-button"
-            data-rel="dialog"
-            data-transition="pop"
-            data-icon="plus"
-            data-theme="a">
+            href='#/add_entity'
+            id='add-entity-button'
+            data-rel='dialog'
+            data-transition='pop'
+            data-icon='plus'
+            data-theme='a'>
             New...
           </a>
           </li>
@@ -216,42 +216,42 @@
     </script>
 
     <!-- Add entity template -->
-    <script type="text/template" id="addentity">
+    <script type='text/template' id='addentity'>
       <!-- header -->
-      <div data-role="header" data-theme="c">
+      <div data-role='header' data-theme='c'>
         <h1>Add new entity</h1>
       </div>
       <!-- content -->
-      <div data-role="content" data-theme="c">
-        <form class="add-entity-form" action="">
+      <div data-role='content' data-theme='c'>
+        <form class='add-entity-form' action=''>
           <!-- marker name -->
-          <label for="basic">Name of marker:</label>
-          <input type="text" name="marker-name" id="marker-name" value="" />
+          <label for='basic'>Name of marker:</label>
+          <input type='text' name='marker-name' id='marker-name' value='' />
           <!-- drop down for layer -->
           <center>
-            <div data-role="fieldcontain">
-              <select id="layer-select" data-native-menu="false" >
+            <div data-role='fieldcontain'>
+              <select id='layer-select' data-native-menu='false' >
                 <option>Select a layer below</option>
-                <option selected="selected" value="Person">Person</option>
-                <option value="Landmark">Landmark</option>
+                <option selected='selected' value='Person'>Person</option>
+                <option value='Landmark'>Landmark</option>
               </select>
             </div>
             <!-- time select -->
-            <div data-role="fieldcontain" data-theme="c" data-content-theme="d">
+            <div data-role='fieldcontain' data-theme='c' data-content-theme='d'>
               <label>
                 Choose Time
                 <input
-                id="time"
-                type="text"
-                data-role="datebox"
-                data-options='{"mode":"timeflipbox", "useNewStyle":true}' />
+                id='time'
+                type='text'
+                data-role='datebox'
+                data-options='{'mode':'timeflipbox', 'useNewStyle':true}' />
               </label>
             </div>
           </center>
           <!-- checkbox to enable geolocaiton -->
           <center>
             <label>
-              <input type="checkbox" name="use-position" data-inline="true" />
+              <input type='checkbox' name='use-position' data-inline='true' />
               Use my current position
             </label>
           </center>
@@ -262,40 +262,40 @@
     </script>
 
     <!-- settings template -->
-    <script type="text/template" id="settings">
+    <script type='text/template' id='settings'>
       <!-- Header -->
-      <div data-role="header" data-theme="a">
+      <div data-role='header' data-theme='a'>
         <h1>Settings</h1>
       </div>
       <!-- Content -->
       <center>
-        <div data-role="content" style="padding: 15px">
+        <div data-role='content' style='padding: 15px'>
           <!-- Geolocation Toggle -->
-          <label for="flip-1">Allow Geolocation</label>
-          <select name="flip-1" id="flip-1" data-role="slider">
-            <option value="off">Off</option>
-            <option value="on">On</option>
+          <label for='flip-1'>Allow Geolocation</label>
+          <select name='flip-1' id='flip-1' data-role='slider'>
+            <option value='off'>Off</option>
+            <option value='on'>On</option>
           </select>
 
           <!-- Radius Slider -->
-          <label for="radius-slider">Search Radius (in miles):</label>
+          <label for='radius-slider'>Search Radius (in miles):</label>
           <input
-          type="range"
-          name="radius-slider"
-          id="radius-slider"
-          value="1"
-          min="0"
-          max="10"
-          data-highlight="true"/>
+          type='range'
+          name='radius-slider'
+          id='radius-slider'
+          value='1'
+          min='0'
+          max='10'
+          data-highlight='true'/>
 
           <!-- Checkbox -->
-          <div id="settings-fieldcontain" data-role="fieldcontain">
-            <fieldset  data-role="controlgroup">
+          <div id='settings-fieldcontain' data-role='fieldcontain'>
+            <fieldset  data-role='controlgroup'>
               {{#each checkboxNames}}
               <label>
                 <input
-                type="checkbox"
-                id="{{this}}"/>
+                type='checkbox'
+                id='{{this}}'/>
                 {{this}}
               </label>
               {{/each}}
@@ -305,21 +305,21 @@
         </div>
 
         <!-- navigation bar to go back-->
-        <div data-role="navbar" data-theme="a" data-iconpos="right">
+        <div data-role='navbar' data-theme='a' data-iconpos='right'>
           <ul>
             <li>
             <a
-              data-role="button"
-              data-transition="flip"
-              href="#"
-              data-theme="a">
+              data-role='button'
+              data-transition='flip'
+              href='#'
+              data-theme='a'>
               Go back
             </a>
             <a
-              data-role="button"
-              id="save-settings-button"
-              data-theme="a"
-              data-icon="check">
+              data-role='button'
+              id='save-settings-button'
+              data-theme='a'
+              data-icon='check'>
               Save Settings
             </a>
             </li>
@@ -329,23 +329,21 @@
     </script>
 
     <!-- The Scripts -->
-    <script src="lib/jquery-1.8.1.js"></script>
-    <script src="js/jqm-config.js"></script>
-    <script src="lib/jquery.mobile-1.2.0.js"></script>
-    <script src="lib/jquery.livequery.js"></script>
-    <script src="lib/jqm-datebox.core.js"></script>
-    <script src="lib/jqm-datebox.mode.flipbox.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="lib/handlebars-1.0.rc.1.js"></script>
-    <script src="lib/parse-1.1.5.js"></script>
-    <script src="lib/backbone.js"></script>
-    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <!-- <script src="lib/googlemaps.js"></script> -->
-    <script src="lib/infobubble.js"</script>
-    <script src="lib/infobubble-compiled.js"</script>
-    <script src="lib/markerwithlabel.js"></script>
-    <script src="js/models.js"></script>
-    <script src="js/main.js"></script>
+    <script src='lib/jquery-1.8.1.js'></script>
+    <script src='js/jqm-config.js'></script>
+    <script src='lib/jquery.mobile-1.2.0.js'></script>
+    <script src='lib/jquery.livequery.js'></script>
+    <script src='lib/jqm-datebox.core.js'></script>
+    <script src='lib/jqm-datebox.mode.flipbox.js'></script>
+    <script src='lib/underscore.js'></script>
+    <script src='lib/handlebars-1.0.rc.1.js'></script>
+    <script src='lib/parse-1.1.5.js'></script>
+    <script src='lib/backbone.js'></script>
+    <script src='http://maps.google.com/maps/api/js?sensor=true'></script>
+    <!-- <script src='lib/googlemaps.js'></script> -->
+    <script src='lib/markerwithlabel.js'></script>
+    <script src='js/models.js'></script>
+    <script src='js/main.js'></script>
   </head>
 
   <body></body>
