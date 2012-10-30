@@ -60,11 +60,34 @@
       </center>
     </script>
 
-	<!-- entity info view -->
-    <script type="text/template" id="entity_info_view">
+    <!-- entity info view -->
+    <script type="text/template" id="entity-info-view">
       <!-- Header -->
       <div data-role="header" data-theme="a">
-        <h1><%=name %>Info</h1>
+        <h1>Entity Info</h1>
+      </div>
+      <div data-role='content' data-theme='c'>
+        <ul>
+          <li> Name: <%= name %> </li>
+          <li> Layer name: <%= layerNameSingular %> </li>
+          <li> Time: <%= time %> </li>
+          <li> Owner: <%= ownerUsername %> </li>
+          <li> Description: <%= text %> </li>
+        </ul>
+      </div>
+      <div data-role="navbar" data-theme="a" data-iconpos="bottom">
+          <ul>
+            <li>
+            <a
+              data-role="button"
+              data-transition="flip"
+              href="#"
+              data-theme="a">
+              Go back
+            </a>
+            </li>
+          </ul>
+      </div>
     </script>
 
 

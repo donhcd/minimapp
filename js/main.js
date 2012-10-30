@@ -126,13 +126,22 @@ window.SettingsView = Backbone.View.extend({
 
 window.EntityInfoView = Backbone.View.extend({
 
-    template: _.template(this.$('#entity_info_view').html()),
+    template: _.template(this.$('#entity-info-view').html()),
+
+    initialize: function() {
+        var vars = {
+            name: "gay",
+            layerNameSingular: "peeple",
+            time: "time to partee",
+            ownerId: Parse.User.current().id,
+            ownerUsername: Parse.User.current().getUsername(),
+            text: "yooo nigguh yo"
+        };
+        this.model = new Entity(vars);
+    },
 
     render: function() {
-        this.$el.html(this.template({
-            name: this.entityHard.name,
-			time: this.entityHard.time
-        }));
+        this.$el.html(this.template(this.model.toJSON()));
     }
 });
 
@@ -434,7 +443,7 @@ window.AppRouter = Backbone.Router.extend({
         "layers":"layers",
         "add_entity":"add_entity",
         "sign_up":"sign_up",
-		"entity_info":"entity_info"
+        "entity_info":"entity_info"
     },
 
     initialize: function() {
@@ -454,7 +463,7 @@ window.AppRouter = Backbone.Router.extend({
         this.loginView = new LoginView();
         this.signupView = new SignupView();
         this.settingsView = new SettingsView();
-		this.entityInfoView = new EntityInfoView();
+        this.entityInfoView = new EntityInfoView();
         this.mapView = new MapView({
             model: map,
             addedEntities: addedEntities
@@ -463,17 +472,6 @@ window.AppRouter = Backbone.Router.extend({
         this.addEntityView = new AddEntityView({collection: addedEntities});
 
         this.firstPage = true;
-
-		var vars = {
-            name: "gay",
-            layerNameSingular: "peeple",
-            time: "time to partee",
-            ownerId: Parse.User.current().id,
-            ownerUsername: Parse.User.current().getUsername(),
-            text: "yooo nigguh yo",
-            useLocation: "huh"
-        };
-		this.entityHard = new Entity(vars);
     },
 
     home: function() {
@@ -510,14 +508,14 @@ window.AppRouter = Backbone.Router.extend({
         this.changePage(this.addEntityView);
     },
 
-    sign_up : function(){
+    sign_up : function() {
         console.log('#sign_up');
         this.changePage(this.signupView);
     },
 
-	entity_info : function(){
-	    console.log('#entity_info');
-		this.changePage(this.entityInfoView);
+    entity_info : function() {
+        console.log('#entity_info');
+        this.changePage(this.entityInfoView);
     },
 
     changePage: function(page) {
