@@ -98,12 +98,14 @@ window.Layers = Parse.Collection.extend({
 
     addEntity: function(entity) {
         var layerToAddEntityTo = this.find(function(layer) {
-            return layer.get('layerNameSingular') === name;
+            return layer.get('layerNameSingular') ===
+                entity.get('layerNameSingular');
         });
         if (layerToAddEntityTo) {
             layerToAddEntityTo.addEntity(entity);
         } else {
-            alert('this layer is not a thing');
+            alert('this layer ' + entity.get('layerNameSingular') +
+                  'is not a thing');
         }
     }
 });
