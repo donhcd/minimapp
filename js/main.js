@@ -1,6 +1,6 @@
 window.SignupView = Parse.View.extend({
 
-    template: _.template(this.$('#signup').html()),
+    template: Handlebars.compile(this.$('#signup').html()),
 
     events: {
         "submit form.signup-form": "signUp"
@@ -45,7 +45,7 @@ window.SignupView = Parse.View.extend({
 // Log in View
 window.LoginView = Parse.View.extend({
 
-    template: _.template(this.$('#login').html()),
+    template: Handlebars.compile(this.$('#login').html()),
 
     events: {
         "submit form.login-form": "logIn"
@@ -95,7 +95,7 @@ window.LoginView = Parse.View.extend({
 // Layers View
 window.LayersView = Backbone.View.extend({
 
-    template: _.template(this.$('#layers').html()),
+    template: Handlebars.compile(this.$('#layers').html()),
 
     render: function() {
         this.delegateEvents();
@@ -109,7 +109,7 @@ window.LayersView = Backbone.View.extend({
 // Handle Settings page
 window.SettingsView = Backbone.View.extend({
 
-    template: _.template(this.$('#settings').html()),
+    template: Handlebars.compile(this.$('#settings').html()),
 
     checkboxNames: ["Setting1", "Setting2"],
 
@@ -126,7 +126,7 @@ window.SettingsView = Backbone.View.extend({
 
 window.EntityInfoView = Backbone.View.extend({
 
-    template: _.template(this.$('#entity-info-view').html()),
+    template: Handlebars.compile(this.$('#entity-info-view').html()),
 
     initialize: function() {
         var vars = {
@@ -148,7 +148,7 @@ window.EntityInfoView = Backbone.View.extend({
 // Handles Add Entity page
 window.AddEntityView = Backbone.View.extend({
 
-    template:_.template(this.$('#addentity').html()),
+    template:Handlebars.compile(this.$('#addentity').html()),
 
     events: {
         "submit form.add-entity-form": "save"
@@ -243,7 +243,7 @@ window.LayerView = Backbone.View.extend({
 // Handle mapview page
 window.MapView = Backbone.View.extend({
 
-    template: _.template(this.$('#mappage').html()),
+    template: Handlebars.compile(this.$('#mappage').html()),
 
     initialize: function() {
         this.options.addedEntities.bind('add', this.prepareToAddEntity, this);

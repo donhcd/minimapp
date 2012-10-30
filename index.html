@@ -25,7 +25,7 @@
             <button>Log In</button>
           </form>
           <a
-            href="#/sign_up".
+            href="#/sign_up"
             data-role="button"
             data-transition="pop"
             data-theme="a"
@@ -68,11 +68,11 @@
       </div>
       <div data-role='content' data-theme='c'>
         <ul>
-          <li> Name: <%= name %> </li>
-          <li> Layer name: <%= layerNameSingular %> </li>
-          <li> Time: <%= time %> </li>
-          <li> Owner: <%= ownerUsername %> </li>
-          <li> Description: <%= text %> </li>
+          <li> Name: {{name}} </li>
+          <li> Layer name: {{layerNameSingular}} </li>
+          <li> Time: {{time}} </li>
+          <li> Owner: {{ownerUsername}} </li>
+          <li> Description: {{text}} </li>
         </ul>
       </div>
       <div data-role="navbar" data-theme="a" data-iconpos="bottom">
@@ -124,14 +124,14 @@
           <div id="layer-filter-fieldcontain" data-role="fieldcontain">
             <!-- layer selector checkbox -->
             <fieldset id="testt" data-role="controlgroup">
-              <% _.each(layers, function(layer) { %>
-                <label>
-                  <input
-                  type="checkbox"
-                  id="<%= layer.layerName %>"/>
-                  <%= layer.layerName %>
-                </label>
-                <% }); %>
+              {{#each layers}}
+              <label>
+                <input
+                type="checkbox"
+                id="{{layerName}}"/>
+                {{layerName}}
+              </label>
+              {{/each}}
             </fieldset>
           </div>
           <p>
@@ -166,7 +166,7 @@
     <script type="text/template" id="mappage">
       <!-- Header -->
       <div id="header" data-role="header" data-theme="a">
-        <h1>Welcome, <%= user %>!</h1>
+        <h1>Welcome, {{user}}!</h1>
         <a href="#/logout" data-role="button" class="ui-btn-right" data-theme="a">
           Sign out
         </a>
@@ -180,7 +180,7 @@
           <li>
           <!-- Settings -->
           <a
-            href="#/settings".
+            href="#/settings"
             data-rel="dialog"
             data-transition="pop"
             data-theme="a"
@@ -191,7 +191,7 @@
           <li>
           <!-- View Layers Button -->
           <a
-            href="#/layers".
+            href="#/layers"
             data-rel="dialog"
             data-transition="pop"
             data-theme="a"
@@ -291,14 +291,14 @@
           <!-- Checkbox -->
           <div id="settings-fieldcontain" data-role="fieldcontain">
             <fieldset  data-role="controlgroup">
-              <% _.each(checkboxNames, function(checkboxName) { %>
-                <label>
-                  <input
-                  type="checkbox"
-                  id="<%= checkboxName %>"/>
-                  <%= checkboxName %>
-                </label>
-                <% }); %>
+              {{#each checkboxNames}}
+              <label>
+                <input
+                type="checkbox"
+                id="{{this}}"/>
+                {{this}}
+              </label>
+              {{/each}}
             </fieldset>
           </div>
 
@@ -336,6 +336,7 @@
     <script src="lib/jqm-datebox.core.js"></script>
     <script src="lib/jqm-datebox.mode.flipbox.js"></script>
     <script src="lib/underscore.js"></script>
+    <script src="lib/handlebars-1.0.rc.1.js"></script>
     <script src="lib/parse-1.1.5.js"></script>
     <script src="lib/backbone.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
