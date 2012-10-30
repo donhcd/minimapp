@@ -129,15 +129,10 @@ window.EntityInfoView = Backbone.View.extend({
     template: Handlebars.compile(this.$('#entity-info-view').html()),
 
     initialize: function() {
-        var vars = {
-            name: 'gay',
-            layerNameSingular: 'peeple',
-            time: 'time to partee',
-            ownerId: Parse.User.current().id,
-            ownerUsername: Parse.User.current().getUsername(),
-            text: 'yooo nigguh yo'
-        };
-        this.model = new Entity(vars);
+        this.collection.bind('add', function(entity) {
+            this.model = entity;
+            this.collection.remove(entity);
+        }, this);
     },
 
     render: function() {
@@ -204,11 +199,17 @@ window.EntityView = Backbone.View.extend({
             icon: this.options.image,
             map: this.options.gmap
         });
-        google.maps.event.addListener(
-        this.marker, 'click', function() {
-        console.log('added event listener ' + this.marker.title);
-        //mapview.DisplayInfoWindow(this);
+        google.maps.event.addListener(this.marker, 'click', function() {
+            console.log('added event listener ' + this.marker.title);
+            this.collection.add(this.model);
+            //mapview.DisplayInfoWindow(this);
         }.bind(this));
+    },
+
+    remove: function() {
+        if (this.marker) {
+            this.marker.setMap(null);
+        }
     }
 
 });
@@ -230,6 +231,7 @@ window.LayerView = Backbone.View.extend({
     drawEntity: function(entity) {
         var entityView = new EntityView({
             model: entity,
+            collection: this.options.entitiesToDisplay,
             gmap: this.options.gmap,
             image: this.model.getImage()
         });
@@ -283,6 +285,7 @@ window.MapView = Backbone.View.extend({
         this.model.layers.each(function(layer) {
             var layerView = new LayerView({
                 model: layer,
+                entitiesToDisplay: this.options.entitiesToDisplay,
                 gmap: gmap
             });
             layerView.render();
@@ -407,15 +410,19 @@ window.AppRouter = Backbone.Router.extend({
 
         var map = new Map();
         var addedEntities = new EntitySet();
+        var entitiesToDisplay = new EntitySet();
 
         // Instantiate all the views
         this.loginView = new LoginView();
         this.signupView = new SignupView();
         this.settingsView = new SettingsView();
-        this.entityInfoView = new EntityInfoView();
+        this.entityInfoView = new EntityInfoView({
+            collection: entitiesToDisplay
+        });
         this.mapView = new MapView({
             model: map,
-            addedEntities: addedEntities
+            addedEntities: addedEntities,
+            entitiesToDisplay: entitiesToDisplay
         });
         this.layersView = new LayersView({collection: map.layers});
         this.addEntityView = new AddEntityView({collection: addedEntities});
