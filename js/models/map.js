@@ -1,4 +1,4 @@
-define(['collections/layers'], function(Layers) {
+define([], function() {
 
     var Map = Parse.Object.extend('Map', {
 
@@ -10,7 +10,6 @@ define(['collections/layers'], function(Layers) {
         },
 
         initialize: function() {
-            this.layers = new Layers();
             // this.instantiateWithIds(this.get('subscribed'));
             // setInterval(function () {
             //     if (Parse.User.current()) {
@@ -27,7 +26,7 @@ define(['collections/layers'], function(Layers) {
             console.log('adding entity to layer: ' +
                         entity.get('layerNameSingular'));
 
-            this.layers.addEntity(entity);
+            this.get('layers').addEntity(entity);
         }
     });
 

@@ -1,5 +1,6 @@
 define([
     'models/map',
+    'collections/layers',
     'collections/entityset',
     'views/login',
     'views/signup',
@@ -10,6 +11,7 @@ define([
     'views/addentity'
 ], function(
         Map,
+        Layers,
         EntitySet,
         LoginView,
         SignupView,
@@ -42,7 +44,8 @@ define([
             //     return false;
             // });
 
-            var map = new Map();
+            var layers = new Layers();
+            var map = new Map({layers: layers});
             var addedEntities = new EntitySet();
             var entitiesToDisplay = new EntitySet();
 
@@ -59,7 +62,7 @@ define([
                 entitiesToDisplay: entitiesToDisplay
             });
             this.filterLayersView = new FilterLayersView({
-                collection: map.layers
+                collection: layers
             });
             this.addEntityView = new AddEntityView({
                 collection: addedEntities

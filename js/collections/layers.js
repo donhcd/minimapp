@@ -11,12 +11,14 @@ define([
             this.add(new Layer({
                 layerid: 'users',
                 layerName: 'People',
-                layerNameSingular: 'Person'
+                layerNameSingular: 'Person',
+                shown: true
             }));
             this.add(new Layer({
                 layerid: 'landmarks',
                 layerName: 'Landmarks',
-                layerNameSingular: 'Landmark'
+                layerNameSingular: 'Landmark',
+                shown: true
             }));
             this.each(function(layer) {
                 layer.entities.fetch({

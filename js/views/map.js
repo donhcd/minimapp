@@ -45,14 +45,16 @@ define([
             }
 
             this.layerViews = {};
-            this.model.layers.each(function(layer) {
-                var layerView = new LayerView({
-                    model: layer,
-                    entitiesToDisplay: this.options.entitiesToDisplay,
-                    gmap: gmap
-                });
-                layerView.render();
-                this.layerViews[layer.get('layerid')] = layerView;
+            this.model.get('layers').each(function(layer) {
+                if (layer.get('shown')) {
+                    var layerView = new LayerView({
+                        model: layer,
+                        entitiesToDisplay: this.options.entitiesToDisplay,
+                        gmap: gmap
+                    });
+                    layerView.render();
+                    this.layerViews[layer.get('layerid')] = layerView;
+                }
             }, this);
 
             this.delegateEvents();
@@ -77,75 +79,6 @@ define([
 
         center: function(lat,lng) {
             this.gmap.setCenter(new google.maps.LatLng(lat,lng));
-        },
-
-        renderLayers: function(layerids) {
-            _.each(
-                layerids,
-                function(layerid) {
-                    this.doWithEntities(layerid, function(entities) {
-                        _.each(entities, this.drawEntity, this);
-                    });
-                },
-                this);
-        },
-
-        clearLayers: function(layerids) {
-            _.each(
-                layerids,
-                function(layerid) {
-                    this.doWithEntities(layerid, function(entities) {
-                        _.each(entities, this.eraseEntity, this);
-                    });
-                },
-                this);
-        },
-
-        forceRefreshLayers: function(layerids) {
-            this.clearLayers(layerids);
-            this.renderLayers(shownLayers);
-            this.set(entitiesAdded, {});
-        },
-
-        // This function should be called after the user modifies the
-        // 'Select Layer(s)' dialog with an array of the layerids that
-        // should now be shown.
-        updateShownLayers: function(newShownLayers) {
-            this.set('layersNowShown',
-                     _.difference(newShownLayers, this.get('shownLayers')));
-            console.log(this.get('shownLayers'));
-            console.log(this.get('layersNowShown'));
-            this.set('layersNowHidden',
-                     _.difference(this.get('shownLayers'), newShownLayers));
-            console.log(this.get('layersNowHidden'));
-            this.set('shownLayers', newShownLayers);
-            console.log(this.get('shownLayers'));
-            this.refreshLayers();
-        },
-
-        refreshLayers: function() {
-            _.each(
-                this.get('layersNowShown'),
-                function(layerid) {
-                    this.get('map').doWithEntities(layerid, function(entities) {
-                        _.each(entities, this.drawEntity, this);
-                    }.bind(this));
-                }.bind(this),
-                this);
-            _.each(
-                this.get('layersNowHidden'),
-                function(layerid) {
-                    this.get('map').doWithEntities(layerid, function(entities) {
-                        _.each(entities, this.eraseEntity, this);
-                    }.bind(this));
-                }.bind(this),
-                this);
-            _.each(this.get('entitiesAdded'), this.drawEntity, this);
-            this.set({
-                layersNowShown: [],
-                layersNowHidden: [],
-                entitiesAdded: {}
-            });
         }
     });
 
