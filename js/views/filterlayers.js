@@ -23,22 +23,21 @@ define(['handlebars'], function(Handlebars) {
 
         selectAll: function(event) {
             this.collection.each(function(layer) {
-                document.getElementById(layer.get('layerName')).checked = 1;
+                // TODO(donaldh) show this in the UI
+                $('#' + layer.get('layerName'))[0].checked = 1;
             });
         },
 
         selectNone: function(event) {
             this.collection.each(function(layer) {
-                document.getElementById(layer.get('layerName')).checked = 0;
+                // TODO(donaldh) show this in the UI
+                $('#' + layer.get('layerName'))[0].checked = 0;
             });
         },
+
         selectLayers: function( event ){
-            var newShownLayers = [];
-            var self = this;
             this.collection.each(function(layer) {
-                layer.set(
-                    'shown',
-                    document.getElementById(layer.get('layerName')).checked);
+                layer.set('shown', $('#' + layer.get('layerName'))[0].checked);
             });
         }
     });
