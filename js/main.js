@@ -19,7 +19,7 @@ window.SignupView = Parse.View.extend({
                     ' pass: ' + password);
         Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
             success: function(user) {
-                $(document).trigger('goto', 'home');
+                $(document).trigger('goto', '');
                 console.log('sign up succeded!');
                 // REVIEW(donaldh) not sure if this stuff is necessary but
                 // whatever
@@ -67,7 +67,7 @@ window.LoginView = Parse.View.extend({
         Parse.User.logIn(username, password, {
             success: function(user) {
                 console.log('log in succeded!');
-                $(document).trigger('goto', 'home');
+                $(document).trigger('goto', '');
                 // REVIEW(donaldh) not sure if this stuff is necessary but
                 // whatever
                 self.undelegateEvents();
@@ -123,7 +123,6 @@ window.SettingsView = Backbone.View.extend({
     }
 });
 
-
 window.EntityInfoView = Backbone.View.extend({
 
     template: Handlebars.compile(this.$('#entity-info-view').html()),
@@ -164,7 +163,7 @@ window.AddEntityView = Backbone.View.extend({
         this.collection.add(new Entity(variables));
         console.log(variables);
         // TODO(donaldh) add entity with the above variables.
-        $(document).trigger('goto', 'home');
+        $(document).trigger('goto', '');
         return false;
     },
 
@@ -176,7 +175,7 @@ window.AddEntityView = Backbone.View.extend({
     }
 });
 
-window.EntityView = Backbone.View.extend({
+window.EntityMarkerView = Backbone.View.extend({
 
     initialize: function() {
         var self = this;
@@ -188,7 +187,7 @@ window.EntityView = Backbone.View.extend({
     },
 
     render: function() {
-        this.marker = new MarkerWithLabel({
+        this.marker = this.marker || new MarkerWithLabel({
             title: this.model.get('name'),
             labelContent: this.model.get('name'),
             // drop marker with animation
@@ -196,13 +195,13 @@ window.EntityView = Backbone.View.extend({
             position: new google.maps.LatLng(
                 this.model.get('lat'),
                 this.model.get('lng')),
-            icon: this.options.image,
-            map: this.options.gmap
+            icon: this.options.image
         });
+        this.marker.setMap(this.options.gmap);
         google.maps.event.addListener(this.marker, 'click', function() {
             console.log('added event listener ' + this.marker.title);
             this.collection.add(this.model);
-            //mapview.DisplayInfoWindow(this);
+            $(document).trigger('goto', '#/entity_info');
         }.bind(this));
     },
 
@@ -229,7 +228,7 @@ window.LayerView = Backbone.View.extend({
     },
 
     drawEntity: function(entity) {
-        var entityView = new EntityView({
+        var entityView = new EntityMarkerView({
             model: entity,
             collection: this.options.entitiesToDisplay,
             gmap: this.options.gmap,
@@ -471,7 +470,11 @@ window.AppRouter = Backbone.Router.extend({
 
     entity_info : function() {
         console.log('#entity_info');
-        this.changePage(this.entityInfoView);
+        if (this.entityInfoView.model) {
+            this.changePage(this.entityInfoView);
+        } else {
+            this.navigate('', {trigger: true});
+        }
     },
 
     changePage: function(page) {
@@ -496,9 +499,9 @@ window.AppRouter = Backbone.Router.extend({
 $(document).ready(function () {
     console.log('document ready');
     app = new AppRouter();
-    $(document).bind('goto', function(e) {
+    $(document).bind('goto', function(e, uri) {
         e.preventDefault();
-        app.navigate('#/', {trigger: true});
+        app.navigate(uri, {trigger: true});
     });
     Backbone.history.start();
 });
