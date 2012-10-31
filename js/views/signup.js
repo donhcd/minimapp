@@ -1,8 +1,11 @@
-define(['handlebars'], function(Handlebars) {
+define([
+    'handlebars',
+    'text!templates/signup.html'
+], function(Handlebars, signupTemplate) {
 
     var SignupView = Parse.View.extend({
 
-        template: Handlebars.compile(this.$('#signup').html()),
+        template: Handlebars.compile(signupTemplate),
 
         events: {
             'submit form.signup-form': 'signUp'

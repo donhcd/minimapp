@@ -1,0 +1,50 @@
+<!-- Header -->
+<div id='header' data-role='header' data-theme='a'>
+  <h1>Welcome, {{user}}!</h1>
+  <a href='#/logout' data-role='button' class='ui-btn-right' data-theme='a'>
+    Sign out
+  </a>
+</div>
+<!-- map -->
+<div id='map-canvas' data-role='content'>
+</div>
+<!-- footer div -->
+<div id='footer' data-role='navbar' data-iconpos='bottom' data-theme='a'>
+  <ul>
+    <li>
+    <!-- Settings -->
+    <a
+      href='#/settings'
+      data-rel='dialog'
+      data-transition='pop'
+      data-theme='a'
+      data-icon='grid'>
+      Settings
+    </a>
+    </li>
+    <li>
+    <!-- View Layers Button -->
+    <a
+      href='#/layers'
+      data-rel='dialog'
+      data-transition='pop'
+      data-theme='a'
+      data-icon='grid'>
+      Layers
+    </a>
+    </li>
+    <li>
+    <!-- Place a marker on the map Button -->
+    <a
+      href='#/add_entity'
+      id='add-entity-button'
+      data-rel='dialog'
+      data-transition='pop'
+      data-icon='plus'
+      data-theme='a'>
+      New...
+    </a>
+    </li>
+  </ul>
+</div>
+

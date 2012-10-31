@@ -1,12 +1,13 @@
 // Handle mapview page
 define([
     'handlebars',
-    'views/layer'
-], function(Handlebars, LayerView) {
+    'views/layer',
+    'text!templates/map.html'
+], function(Handlebars, LayerView, mapTemplate) {
 
     var MapView = Parse.View.extend({
 
-        template: Handlebars.compile(this.$('#mappage').html()),
+        template: Handlebars.compile(mapTemplate),
 
         initialize: function() {
             this.options.addedEntities.bind(

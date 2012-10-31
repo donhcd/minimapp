@@ -1,9 +1,12 @@
-define(['handlebars'], function(Handlebars) {
+define([
+    'handlebars',
+    'text!templates/settings.html'
+], function(Handlebars, settingsTemplate) {
 
     // Handle Settings page
     var SettingsView = Parse.View.extend({
 
-        template: Handlebars.compile(this.$('#settings').html()),
+        template: Handlebars.compile(settingsTemplate),
 
         checkboxNames: ['Setting1', 'Setting2'],
 

@@ -1,9 +1,12 @@
-define(['handlebars'], function(Handlebars) {
+define([
+    'handlebars',
+    'text!templates/filterlayers.html'
+], function(Handlebars, filterlayersTemplate) {
 
     // Should be instantiated with a collection of Layers
     var FilterLayersView = Parse.View.extend({
 
-        template: Handlebars.compile(this.$('#layers').html()),
+        template: Handlebars.compile(filterlayersTemplate),
 
         events: {
             "click #confirm-layers-button": "selectLayers",

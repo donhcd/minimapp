@@ -1,0 +1,68 @@
+<div data-role='header' data-theme='c'>
+  <h1>Select Layer(s)</h1>
+
+  <!-- navbar for select all select none-->
+  <div data-role='navbar' data-iconpos='right'>
+    <ul>
+      <li>
+      <a
+        data-role='button'
+        data-theme='a'
+        id='select-all-button' >
+        Select All
+      </a>
+      </li>
+      <li>
+      <a
+        data-role='button'
+        data-theme='a'
+        id='select-none-button'>
+        Select None
+      </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- Content -->
+<center>
+  <div data-role='content' data-theme='c' style='margin-bottom:100px;'>
+    <div id='layer-filter-fieldcontain' data-role='fieldcontain'>
+      <!-- layer selector checkbox -->
+      <fieldset id='testt' data-role='controlgroup'>
+        {{#each layers}}
+        <label>
+          <input
+          type='checkbox'
+          id='{{layerName}}'/>
+          {{layerName}}
+        </label>
+        {{/each}}
+      </fieldset>
+    </div>
+  </div>
+  <div data-role='navbar' data-theme='a' data-iconpos='right'>
+    <ul>
+      <li>
+      <a
+        id='confirm-layers-button'
+        data-role='button'
+        href='#'
+        data-theme='a'>
+        Confim Layers
+      </a>
+      </li>
+    </ul>
+    <ul>
+      <li>
+      <a
+        data-role='button'
+        data-transition='flip'
+        href='#'
+        data-theme='a'>
+        Go back
+      </a>
+      </li>
+    </ul>
+  </div>
+</center>
+

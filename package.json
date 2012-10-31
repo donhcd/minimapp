@@ -2,10 +2,16 @@
   "name": "minimapp",
   "version": "0.0.0",
   "dependencies": {
-    "express": "2.5.x"
+    "express": "2.5.x",
+    "volo": "0.2.x"
   },
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
+  },
+  "volo": {
+    "dependencies": {
+      "text": "github:requirejs/text/2.0.3"
+    }
   }
 }

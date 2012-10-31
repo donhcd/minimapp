@@ -1,4 +1,4 @@
-define(['handlebars'], function(Handlebars) {
+define([], function() {
 
     var EntityMarkerView = Parse.View.extend({
 

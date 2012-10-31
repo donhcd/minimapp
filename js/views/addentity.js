@@ -1,12 +1,13 @@
 define([
     'handlebars',
-    'models/entity'
-], function(Handlebars, Entity) {
+    'models/entity',
+    'text!templates/addentity.html'
+], function(Handlebars, Entity, addentityTemplate) {
 
     // Handles Add Entity page
     var AddEntityView = Parse.View.extend({
 
-        template: Handlebars.compile(this.$('#addentity').html()),
+        template: Handlebars.compile(addentityTemplate),
 
         events: {
             'submit form.add-entity-form': 'save'

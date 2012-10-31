@@ -1,8 +1,11 @@
-define(['handlebars'], function(Handlebars) {
+define([
+    'handlebars',
+    'text!templates/entityinfo.html'
+], function(Handlebars, entityinfoTemplate) {
 
     var EntityInfoView = Parse.View.extend({
 
-        template: Handlebars.compile(this.$('#entity-info-view').html()),
+        template: Handlebars.compile(entityinfoTemplate),
 
         initialize: function() {
             this.collection.bind('add', function(entity) {

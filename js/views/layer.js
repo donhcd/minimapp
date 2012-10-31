@@ -1,7 +1,4 @@
-define([
-    'handlebars',
-    'views/entitymarker'
-], function(Handlebars, EntityMarkerView) {
+define(['views/entitymarker'], function(EntityMarkerView) {
 
     var LayerView = Parse.View.extend({
 
