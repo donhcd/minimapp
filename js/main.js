@@ -93,7 +93,7 @@ window.LoginView = Parse.View.extend({
 });
 
 // Layers View
-window.LayersView = Backbone.View.extend({
+window.FilterLayersView = Backbone.View.extend({
 
     template: Handlebars.compile(this.$('#layers').html()),
 
@@ -423,7 +423,7 @@ window.AppRouter = Backbone.Router.extend({
             addedEntities: addedEntities,
             entitiesToDisplay: entitiesToDisplay
         });
-        this.layersView = new LayersView({collection: map.layers});
+        this.filterLayersView = new FilterLayersView({collection: map.layers});
         this.addEntityView = new AddEntityView({collection: addedEntities});
 
         this.firstPage = true;
@@ -455,7 +455,7 @@ window.AppRouter = Backbone.Router.extend({
 
     layers: function() {
         console.log('#layers');
-        this.changePage(this.layersView);
+        this.changePage(this.filterLayersView);
     },
 
     add_entity: function() {
