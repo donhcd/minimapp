@@ -1,7 +1,4 @@
-define([
-    'jquery',
-    'handlebars'
-], function($, Handlebars) {
+define(['handlebars'], function(Handlebars) {
 
     var FilterLayersView = Parse.View.extend({
 

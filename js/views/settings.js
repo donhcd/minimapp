@@ -1,7 +1,4 @@
-define([
-    'jquery',
-    'handlebars'
-], function($, Handlebars) {
+define(['handlebars'], function(Handlebars) {
 
     // Handle Settings page
     var SettingsView = Parse.View.extend({

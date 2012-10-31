@@ -1,8 +1,7 @@
 define([
-    'jquery',
     'handlebars',
-    'js/views/entitymarker'
-], function($, Handlebars, EntityMarkerView) {
+    'views/entitymarker'
+], function(Handlebars, EntityMarkerView) {
 
     var LayerView = Parse.View.extend({
 

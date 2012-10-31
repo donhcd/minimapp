@@ -1,6 +1,7 @@
 define([
+    'models/entity',
     'collections/entityset'
-], function(EntitySet) {
+], function(Entity, EntitySet) {
 
     var Layer = Parse.Object.extend('Layer', {
 

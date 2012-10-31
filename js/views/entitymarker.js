@@ -1,8 +1,4 @@
-define([
-    'jquery',
-    'handlebars',
-    'lib/markerwithlabel'
-], function($, Handlebars, MarkerWithLabel) {
+define(['handlebars'], function(Handlebars) {
 
     var EntityMarkerView = Parse.View.extend({
 

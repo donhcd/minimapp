@@ -1,9 +1,6 @@
-define([
-    'jquery',
-    'handlebars'
-], function($, Handlebars) {
+define(['handlebars'], function(Handlebars) {
 
-    var EntityInfoView = Backbone.View.extend({
+    var EntityInfoView = Parse.View.extend({
 
         template: Handlebars.compile(this.$('#entity-info-view').html()),
 

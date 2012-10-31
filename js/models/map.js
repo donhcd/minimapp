@@ -1,6 +1,4 @@
-define([
-    'collections/layers'
-], function(Layers) {
+define(['collections/layers'], function(Layers) {
 
     var Map = Parse.Object.extend('Map', {
 

@@ -1,8 +1,7 @@
 define([
-    'jquery',
     'handlebars',
-    'js/models/entity'
-], function($, Handlebars, Entity) {
+    'models/entity'
+], function(Handlebars, Entity) {
 
     // Handles Add Entity page
     var AddEntityView = Parse.View.extend({

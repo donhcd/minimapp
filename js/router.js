@@ -1,7 +1,23 @@
 define([
-    'jquery',
-    'jquerymobile'
-], function($, jqm) {
+    'models/map',
+    'collections/entityset',
+    'views/login',
+    'views/signup',
+    'views/settings',
+    'views/entityinfo',
+    'views/map',
+    'views/filterlayers',
+    'views/addentity'
+], function(
+        Map,
+        EntitySet,
+        LoginView,
+        SignupView,
+        SettingsView,
+        EntityInfoView,
+        MapView,
+        FilterLayersView,
+        AddEntityView) {
 
     var AppRouter = Backbone.Router.extend({
 
@@ -16,56 +32,40 @@ define([
         },
 
         initialize: function() {
+            Parse.initialize(
+                'Q6TCdTd0MUgW5M3GYkuTwTRYiOBQZJIsClO8X6U5',
+                '6nvtUl1BW2fJKDfs3XPS3DDDdR1qBDWFsI88a0cK');
+
             // Handle back button throughout the application
             // $('.back').live('click', function(event) {
             //     window.history.back();
             //     return false;
             // });
 
-            var self = this;
+            var map = new Map();
+            var addedEntities = new EntitySet();
+            var entitiesToDisplay = new EntitySet();
 
-            require([
-                'js/models/map.js',
-                'js/collections/entityset.js',
-                'js/views/login.js',
-                'js/views/signup.js',
-                'js/views/settings.js',
-                'js/views/entity_info.js',
-                'js/views/map.js',
-                'js/views/filter_layers.js',
-                'js/views/add_entity.js'
-            ], function(
-                    Map,
-                    EntitySet,
-                    LoginView,
-                    SignupView,
-                    SettingsView,
-                    EntityInfoView,
-                    MapView,
-                    FilterLayersView,
-                    AddEntityView) {
-                var map = new Map();
-                var addedEntities = new EntitySet();
-                var entitiesToDisplay = new EntitySet();
-
-                // Instantiate all the views
-                self.loginView = new LoginView();
-                self.signupView = new SignupView();
-                self.settingsView = new SettingsView();
-                self.entityInfoView = new EntityInfoView({
-                    collection: entitiesToDisplay
-                });
-                self.mapView = new MapView({
-                    model: map,
-                    addedEntities: addedEntities,
-                    entitiesToDisplay: entitiesToDisplay
-                });
-                self.filterLayersView = new FilterLayersView({collection: map.layers});
-                self.addEntityView = new AddEntityView({collection: addedEntities});
-
-                self.firstPage = true;
+            // Instantiate all the views
+            this.loginView = new LoginView();
+            this.signupView = new SignupView();
+            this.settingsView = new SettingsView();
+            this.entityInfoView = new EntityInfoView({
+                collection: entitiesToDisplay
+            });
+            this.mapView = new MapView({
+                model: map,
+                addedEntities: addedEntities,
+                entitiesToDisplay: entitiesToDisplay
+            });
+            this.filterLayersView = new FilterLayersView({
+                collection: map.layers
+            });
+            this.addEntityView = new AddEntityView({
+                collection: addedEntities
             });
 
+            this.firstPage = true;
         },
 
         home: function() {
@@ -137,9 +137,6 @@ define([
 
     var initialize = function () {
         console.log('document ready');
-        Parse.initialize(
-            'Q6TCdTd0MUgW5M3GYkuTwTRYiOBQZJIsClO8X6U5',
-            '6nvtUl1BW2fJKDfs3XPS3DDDdR1qBDWFsI88a0cK');
         app = new AppRouter();
         $(document).bind('goto', function(e, uri) {
             e.preventDefault();

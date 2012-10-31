@@ -1,9 +1,8 @@
 // Handle mapview page
 define([
-    'jquery',
     'handlebars',
     'views/layer'
-], function($, Handlebars, LayerView) {
+], function(Handlebars, LayerView) {
 
     var MapView = Parse.View.extend({
 

@@ -1,7 +1,4 @@
-define([
-    'jquery',
-    'handlebars'
-], function($, Handlebars) {
+define(['handlebars'], function(Handlebars) {
 
     // Log in View
     var LoginView = Parse.View.extend({
