@@ -23,25 +23,24 @@
   </div>
 </div>
 <!-- Content -->
-<center>
-  <div data-role='content' data-theme='c' style='margin-bottom:100px;'>
-    <div id='layer-filter-fieldcontain' data-role='fieldcontain'>
-      <!-- layer selector checkbox -->
-      <fieldset id='testt' data-role='controlgroup'>
-        {{#each layers}}
-        <label>
-          <input
+<div style="text-align:center" data-role='content' data-theme='c' style='margin-bottom:100px;'>
+  <div id='layer-filter-fieldcontain' data-role='fieldcontain'>
+    <!-- layer selector checkbox -->
+    <fieldset id='testt' data-role='controlgroup'>
+      {{#each layers}}
+      <label>
+        <input
           type='checkbox'
           id='{{layerName}}'/>
           {{layerName}}
-        </label>
-        {{/each}}
-      </fieldset>
-    </div>
+      </label>
+      {{/each}}
+    </fieldset>
   </div>
-  <div data-role='navbar' data-theme='a' data-iconpos='right'>
-    <ul>
-      <li>
+</div>
+<div data-role='navbar' data-theme='a' data-iconpos='right'>
+  <ul>
+    <li>
       <a
         id='confirm-layers-button'
         data-role='button'
@@ -49,10 +48,10 @@
         data-theme='a'>
         Confim Layers
       </a>
-      </li>
-    </ul>
-    <ul>
-      <li>
+    </li>
+  </ul>
+  <ul>
+    <li>
       <a
         data-role='button'
         data-transition='flip'
@@ -60,8 +59,7 @@
         data-theme='a'>
         Go back
       </a>
-      </li>
-    </ul>
-  </div>
-</center>
+    </li>
+  </ul>
+</div>
 

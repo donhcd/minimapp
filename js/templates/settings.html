@@ -3,18 +3,16 @@
   <h1>Settings</h1>
 </div>
 <!-- Content -->
-<center>
-  <div data-role='content' style='padding: 15px'>
-    <!-- Geolocation Toggle -->
-    <label for='flip-1'>Allow Geolocation</label>
-    <select name='flip-1' id='flip-1' data-role='slider'>
-      <option value='off'>Off</option>
-      <option value='on'>On</option>
-    </select>
-
-    <!-- Radius Slider -->
-    <label for='radius-slider'>Search Radius (in miles):</label>
-    <input
+<div style="text-align:center" data-role='content' style='padding: 15px'>
+  <!-- Geolocation Toggle -->
+  <label for='flip-1'>Allow Geolocation</label>
+  <select name='flip-1' id='flip-1' data-role='slider'>
+    <option value='off'>Off</option>
+    <option value='on'>On</option>
+  </select>
+  <!-- Radius Slider -->
+  <label for='radius-slider'>Search Radius (in miles):</label>
+  <input
     type='range'
     name='radius-slider'
     id='radius-slider'
@@ -22,43 +20,40 @@
     min='0'
     max='10'
     data-highlight='true'/>
-
-    <!-- Checkbox -->
-    <div id='settings-fieldcontain' data-role='fieldcontain'>
-      <fieldset  data-role='controlgroup'>
-        {{#each checkboxNames}}
-        <label>
-          <input
-          type='checkbox'
-          id='{{this}}'/>
-          {{this}}
-        </label>
-        {{/each}}
-      </fieldset>
-    </div>
-
+  <!-- Checkbox -->
+  <div id='settings-fieldcontain' data-role='fieldcontain'>
+    <fieldset  data-role='controlgroup'>
+      {{#each checkboxNames}}
+      <label>
+        <input
+        type='checkbox'
+        id='{{this}}'/>
+        {{this}}
+      </label>
+      {{/each}}
+    </fieldset>
   </div>
+</div>
+<!-- navigation bar to go back-->
+<div data-role='navbar' data-theme='a' data-iconpos='right'>
+  <ul>
+    <li>
+    <a
+      data-role='button'
+      data-transition='flip'
+      href='#'
+      data-theme='a'>
+      Go back
+    </a>
+    <a
+      data-role='button'
+      id='save-settings-button'
+      data-theme='a'
+      data-icon='check'>
+      Save Settings
+    </a>
+    </li>
+  </ul>
+</div>
 
-  <!-- navigation bar to go back-->
-  <div data-role='navbar' data-theme='a' data-iconpos='right'>
-    <ul>
-      <li>
-      <a
-        data-role='button'
-        data-transition='flip'
-        href='#'
-        data-theme='a'>
-        Go back
-      </a>
-      <a
-        data-role='button'
-        id='save-settings-button'
-        data-theme='a'
-        data-icon='check'>
-        Save Settings
-      </a>
-      </li>
-    </ul>
-  </div>
-</center>
 
