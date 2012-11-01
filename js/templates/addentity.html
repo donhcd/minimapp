@@ -3,41 +3,45 @@
   <h1>Add new entity</h1>
 </div>
 <!-- content -->
-<div data-role='content' data-theme='c'>
+<div style="text-align:center" data-role='content' data-theme='c'>
   <form class='add-entity-form' action=''>
-    <!-- marker name -->
-    <label for='basic'>Name of marker:</label>
-    <input type='text' name='marker-name' id='marker-name' value='' />
-    <!-- drop down for layer -->
-    <center>
-      <div data-role='fieldcontain'>
-        <select id='layer-select' data-native-menu='false' >
-          <option>Select a layer below</option>
-          <option selected='selected' value='Person'>Person</option>
-          <option value='Landmark'>Landmark</option>
-        </select>
-      </div>
-      <!-- time select -->
-      <div data-role='fieldcontain' data-theme='c' data-content-theme='d'>
-        <label>
-          Choose Time
-          <input
-          id='time'
-          type='text'
-          data-role='datebox'
-          data-options='{'mode':'timeflipbox', 'useNewStyle':true}' />
-        </label>
-      </div>
-    </center>
-    <!-- checkbox to enable geolocaiton -->
-    <center>
-      <label>
-        <input type='checkbox' name='use-position' data-inline='true' />
-        Use my current position
-      </label>
-    </center>
-    <!-- Save marker -->
-    <button>Place marker</button>
+  <!-- marker name -->
+  <label for='basic'>Name of marker:</label>
+  <input type='text' name='marker-name' id='marker-name' value='' />
+  <!-- drop down for layer -->
+  <div data-role='fieldcontain'>
+    <select id='layer-select' data-native-menu='false' >
+      <option>Select a layer below</option>
+      <option selected='selected' value='Person'>Person</option>
+      <option value='Landmark'>Landmark</option>
+    </select>
+  </div>
+  <label >Choose Time</label>
+  <!-- time select -->
+  <div data-role="fieldcontain" data-theme="c" data-content-theme="d"> 
+    <input
+      name="mode7"
+      id="mode7"
+      type="text"
+      data-role="datebox"
+      data-options='{"mode":"timeflipbox", "useNewStyle":true}'/>
+  </div>
+  <label>Short Description (optional) :</label>
+  <textarea name="textarea" id="textarea"></textarea>
+  <!-- checkbox to enable geolocaiton -->
+  <label>
+    <input type='checkbox' name='use-position' data-inline='true' />
+      Use my current position
+  </label>
+  <!-- Save marker -->
+  <button>Place marker</button>
+  <!-- Back to map -->
+    <a
+      data-role='button'
+      data-transition='flip'
+      href='#'
+      data-theme='a'>
+      Go back
+    </a>
   </form>
 </div>
-
