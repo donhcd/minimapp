@@ -29,6 +29,12 @@ define([
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
+            this.getCurrentLatLng({
+                success: function(latLng) {
+                    gmap.setCenter(gmap);
+                }
+            });
+
             // TODO(donaldh) this is kind of terrible, so figure out a better way
             var interval = setInterval((function() {
                 var i = 0;
@@ -40,6 +46,7 @@ define([
                     }
                 };
             })(), 100);
+
             if (this.stuffToDo) {
                 this.stuffToDo();
                 this.stuffToDo = null;
@@ -65,21 +72,50 @@ define([
         prepareToAddEntity: function(entity) {
             var self = this;
             self.options.addedEntities.remove(entity);
-            self.stuffToDo = function() {
-                google.maps.event.addListener(
-                    self.gmap, 'click', function(e) {
-                        google.maps.event.clearListeners(self.gmap, 'click');
-                        entity.set({
-                            lat: e.latLng.lat(),
-                            lng: e.latLng.lng()
-                        });
+            if (entity.get('useLocation')) {
+                self.getCurrentLatLng({
+                    success: function(latLng) {
+                        entity.set('latLng', latLng);
+                        entity.set('lat', latLng.lat());
+                        entity.set('lng', latLng.lng());
                         self.model.addEntity(entity);
-                    });
-            };
+                    }
+                });
+            } else {
+                self.stuffToDo = function() {
+                    google.maps.event.addListener(
+                        self.gmap, 'click', function(e) {
+                            google.maps.event.clearListeners(self.gmap, 'click');
+                            entity.set({
+                                lat: e.latLng.lat(),
+                                lng: e.latLng.lng()
+                            });
+                            self.model.addEntity(entity);
+                        });
+                };
+            }
         },
 
-        center: function(lat,lng) {
-            this.gmap.setCenter(new google.maps.LatLng(lat,lng));
+        getCurrentLatLng: function(options) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(geopos) { // success
+                        console.log('Successfully got current position');
+                        options.success(new google.maps.LatLng(
+                            geopos.coords.latitude,
+                            geopos.coords.longitude));
+                    },
+                    function() { // error
+                        if (options.error) {
+                            options.error();
+                        } else {
+                            console.log('Error getting the current position');
+                        }
+                    }
+                );
+            } else {
+                console.log('geolocation not enabled');
+            }
         }
     });
 
