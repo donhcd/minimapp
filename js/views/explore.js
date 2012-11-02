@@ -1,24 +1,24 @@
 define([
     'handlebars',
-    'text!templates/explore.html',
     'collections/explorelist',
     'models/entity',
-    'views/exploreitem'
-], function(Handlebars, exploreTemplate, ExploreList, entity, exploreitem) {
-
+    'views/exploreitem',
+    'text!templates/explore.html'
+], function(Handlebars, ExploreList, entity, ExploreItem, exploreTemplate) {
     // Handle Settings page
-    var exploreView = Parse.View.extend({
+    var ExploreView = Parse.View.extend({
 
         template: Handlebars.compile(exploreTemplate),
 
         initialize: function() {
-            var self=this;
             _.bindAll(this,'render','addOne','addAll');   
             
             // create collection of entities
             this.exploreitems = new ExploreList() ;
             // re-render every time fetch is called
             this.collection.bind('reset', this.render);
+            this.collection.bind('add', this.addOne);
+            
             console.log('initialized exploreView');                 
         },
 
@@ -29,14 +29,15 @@ define([
         },
         
         addOne: function(entity) {
-            var view = new exploreitem({model : entity});
+            var view = new ExploreItem({model : entity});
             this.$('#entity-list').append(view.render().el);
         },
+        
         addAll: function(collection) {
             this.$('#entity-list').html('');
             this.exploreitems.each(this.addOne);
         }
     });
 
-    return exploreView;
+    return ExploreView;
 });

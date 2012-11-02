@@ -1,4 +1,4 @@
-define(['models/entity','collections/entityset'], function(Entity,EntitySet) {
+define(['models/entity'], function(Entity) {
 
     /* expect a layerid field */
     var ExploreList = Parse.Collection.extend({

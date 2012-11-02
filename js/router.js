@@ -73,7 +73,7 @@ define([
             this.addEntityView = new AddEntityView({
                 collection: addedEntities
             });
-            this.exploreView = new ExploreView({
+            this.ExploreView = new ExploreView({
                 collection: exploreList
             });
 
@@ -129,7 +129,7 @@ define([
         },
         explore : function() {
             console.log('#explore');
-            this.changePage(this.exploreView);
+            this.changePage(this.ExploreView);
         },
 
         changePage: function(page) {

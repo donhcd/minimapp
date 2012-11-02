@@ -3,13 +3,13 @@ define([
     'text!templates/exploreitem.html'
 ], function(Handlebars, exploreitemTemplate) {
 
-
     // Handle Settings page
-    var exploreitemView = Parse.View.extend({
-
-
+    var ExploreItemView = Parse.View.extend({
+    
         template: Handlebars.compile(exploreitemTemplate),
+        
         tagName: 'li',
+        
         events:{
             'click .subscribebutton' : 'subscribe' 
         },
@@ -18,6 +18,7 @@ define([
             _.bindAll(this,'render','clear');
         
         },
+        
         getImage: function(layerid) {
             switch(layerid) {
                 case 'users':
@@ -28,18 +29,21 @@ define([
                 //return 'scripts/images/green_75.png';
             }
         },
+        
         render: function() {
             var modelVariables = this.model.toJSON();
             this.$el.html(this.template(modelVariables));
             return this;
         },
+        
         clear: function() {
             this.model.destroy();
         },
+        
         subscribe: function() {
             console.log('subscribe clicked');
         }
     });
 
-    return exploreitemView;
+    return ExploreItemView;
 });
