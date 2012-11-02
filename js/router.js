@@ -8,7 +8,8 @@ define([
     'views/entityinfo',
     'views/map',
     'views/filterlayers',
-    'views/addentity'
+    'views/addentity',
+    'views/explore'
 ], function(
         Map,
         Layers,
@@ -19,8 +20,9 @@ define([
         EntityInfoView,
         MapView,
         FilterLayersView,
-        AddEntityView) {
-
+        AddEntityView,
+        ExploreView
+    ) {
     var AppRouter = Backbone.Router.extend({
 
         routes: {
@@ -30,7 +32,8 @@ define([
             'layers': 'layers',
             'add_entity': 'add_entity',
             'sign_up': 'sign_up',
-            'entity_info': 'entity_info'
+            'entity_info': 'entity_info',
+            'explore': 'explore'
         },
 
         initialize: function() {
@@ -67,6 +70,7 @@ define([
             this.addEntityView = new AddEntityView({
                 collection: addedEntities
             });
+            this.exploreView = new ExploreView();
 
             this.firstPage = true;
         },
@@ -117,6 +121,10 @@ define([
             } else {
                 this.navigate('', {trigger: true});
             }
+        },
+        explore : function() {
+            console.log('#explore');
+            this.changePage(this.exploreView);
         },
 
         changePage: function(page) {
