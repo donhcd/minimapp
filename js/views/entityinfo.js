@@ -13,6 +13,12 @@ define([
                 this.collection.remove(entity);
             }, this);
         },
+        events: {
+            "click .subscribe_entity": "subscribeEntity"
+        },
+        subscribeEntity: function(e){
+            console.log("subscribe entity clicked");
+        },       
 
         events: {
             'click .subscribe_entity': 'subscribeEntity'
@@ -38,4 +44,3 @@ define([
 
     return EntityInfoView;
 });
-
