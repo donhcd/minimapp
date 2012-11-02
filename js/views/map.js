@@ -31,7 +31,7 @@ define([
 
             this.getCurrentLatLng({
                 success: function(latLng) {
-                    gmap.setCenter(gmap);
+                    gmap.setCenter(latLng);
                 }
             });
 

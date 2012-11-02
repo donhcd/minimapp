@@ -22,6 +22,14 @@ define([
             console.log('subscribe entity clicked');
         },
 
+        events: {
+            'click .subscribe_entity': 'subscribeEntity'
+        },
+
+        subscribeEntity: function(e){
+            console.log('subscribe entity clicked');
+        },
+
         render: function() {
             var modelVariables = this.model.toJSON();
 
