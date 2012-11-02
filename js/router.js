@@ -2,6 +2,7 @@ define([
     'models/map',
     'collections/layers',
     'collections/entityset',
+    'collections/explorelist',
     'views/login',
     'views/signup',
     'views/settings',
@@ -14,6 +15,7 @@ define([
         Map,
         Layers,
         EntitySet,
+        ExploreList,
         LoginView,
         SignupView,
         SettingsView,
@@ -50,6 +52,7 @@ define([
             var layers = new Layers();
             var map = new Map({layers: layers});
             var addedEntities = new EntitySet();
+            var exploreList = new ExploreList();
             var entitiesToDisplay = new EntitySet();
 
             // Instantiate all the views
@@ -70,7 +73,9 @@ define([
             this.addEntityView = new AddEntityView({
                 collection: addedEntities
             });
-            this.exploreView = new ExploreView();
+            this.exploreView = new ExploreView({
+                collection: exploreList
+            });
 
             this.firstPage = true;
         },
