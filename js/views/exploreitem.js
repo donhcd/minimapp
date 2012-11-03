@@ -11,7 +11,8 @@ define([
         tagName: 'li',
         
         events:{
-            'click .subscribebutton' : 'subscribe' 
+            'click .subscribebutton' : 'subscribe' ,
+            'click .listitem' : 'displayEntity'
         },
 
         initialize: function() {
@@ -52,6 +53,11 @@ define([
         
         subscribe: function() {
             console.log('subscribe clicked');
+        },
+        
+        displayEntity: function(){
+            // TODO: DON open up entity info window with clicked entity
+            // entity = this.model
         }
     });
 

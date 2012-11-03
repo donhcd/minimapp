@@ -69,6 +69,7 @@ define([
             console.log(this.$('#entity-list'));
             this.exploreitems.each(this.addOne);
         }
+        
     });
 
     return ExploreView;
