@@ -31,6 +31,7 @@ define([
 
             this.getCurrentLatLng({
                 success: function(latLng) {
+                    console.log("successfully detected geolocation");
                     gmap.setCenter(latLng);
                 }
             });

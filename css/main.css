@@ -2,3 +2,22 @@
 #map-canvas {
   background: white url(http://google-web-toolkit.googlecode.com/svn-history/r8457/trunk/user/src/com/google/gwt/cell/client/loading.gif) no-repeat 50% 50%;
 }
+
+
+.ui-li-has-thumb .ui-btn-inner {
+    min-height: 100px;
+    min-width: 200px;
+    padding-left: 5px;
+}
+
+.ui-li {
+    height : 100px;
+}
+
+.ui-li-desc {
+			overflow:show;
+			text-overflow:clip;
+			white-space:normal;
+			height:28px;
+			margin-bottom:0px;
+		}
