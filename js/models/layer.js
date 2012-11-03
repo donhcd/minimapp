@@ -16,10 +16,10 @@ define([
 
         getImage: function() {
             switch(this.get('layerid')) {
-                case 'users':
+                case 'tips':
                     return 'images/markers/man.png';
                 //return 'scripts/images/person_generic.png';
-                case 'landmarks':
+                case 'events':
                     return 'images/markers/landmark.png';
                 //return 'scripts/images/green_75.png';
             }

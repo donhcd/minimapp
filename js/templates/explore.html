@@ -7,11 +7,12 @@
   <!-- navigation bar -->
   <div data-role='navbar' data-theme='a' data-iconpos='right'>
     <ul>
-        <li><a>filter options...</a></li>
-		<li><a>Subscribed Events</a></li>
+        <li><a id='TipsTab' data-tab='Tips' >Tips</a></li>
+		<li><a id='EventsTab' data-tab='Events' >Events</a></li>
+	    <li><a id='SubscribedTab' data-tab='Subscribed' >Subscribed</a></li>
 	</ul>
   </div>
-  <h2> Nearest happenings </h2>
+  <h2> Nearest {{tab}} </h2>
   <!-- entity list -->
   <ul id='entity-list' data-role='listview' data-split-icon='star' data-split-theme='a'>
     <div style='text-align:center'>    
