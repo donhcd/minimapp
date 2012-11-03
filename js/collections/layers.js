@@ -9,15 +9,15 @@ define([
         initialize: function() {
             _.bindAll(this, 'addEntity');
             this.add(new Layer({
-                layerid: 'users',
-                layerName: 'People',
-                layerNameSingular: 'Person',
+                layerid: 'tips',
+                layerName: 'Tips',
+                layerNameSingular: 'Tip',
                 shown: true
             }));
             this.add(new Layer({
-                layerid: 'landmarks',
-                layerName: 'Landmarks',
-                layerNameSingular: 'Landmark',
+                layerid: 'events',
+                layerName: 'Events',
+                layerNameSingular: 'Event',
                 shown: true
             }));
             this.each(function(layer) {
