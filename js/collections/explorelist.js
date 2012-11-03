@@ -13,11 +13,9 @@ define(['models/entity'], function(Entity) {
             this.filters = {layer: 'tips'};
             // load objects into collection
             this.filterFetch();
-            //this.on('change this.filters', this.reFetch);  
         },
         
         put: function(prop, value) {
-            console.log('put called');
             this.filters[prop] = value;
             console.log(this.filters);
             if (prop == 'layer' ) this.filterFetch();
@@ -31,6 +29,7 @@ define(['models/entity'], function(Entity) {
         
             // construct the query
             this.query = new Parse.Query(Entity);
+            // add filter for layer
             this.query.equalTo('layerid', this.filters['layer'] );
             this.fetch({
                     success: function(entities) {
