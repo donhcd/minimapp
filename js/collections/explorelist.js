@@ -34,19 +34,43 @@ define(['models/entity'], function(Entity) {
             // add filter for layer
             this.query.equalTo('layerid', this.filters['layer'] );
             this.fetch({
-                    success: function(entities) {
-                        console.log('successfully fetched from server');
-                        console.log(entities);
-                        entities.each(function(entity) {
-                            entity.initialize();
-                        });
-                    },
-                    error: function(entities) {
-                        alert('fuck, got an error');
-                    }
-                });
+                success: function(entities) {
+                    console.log('successfully fetched from server');
+                    console.log(entities);
+                    entities.each(function(entity) {
+                        entity.initialize();
+                    });
+                },
+                error: function(entities) {
+                    alert('fuck, got an error');
+                }
+            });
             console.log('filterfetch called');
             
+        },
+
+        comparator: function (entity) {
+            var entityLoc = new google.maps.LatLng(entity.get('lat'), entity.get('lng'));
+            var currentLoc = new google.maps.LatLng(40.4430322, -79.9429397);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(geopos) { // success
+                        console.log('Successfully got current position');
+                        currentLoc = (new google.maps.LatLng(
+                            geopos.coords.latitude,
+                            geopos.coords.longitude));
+                    },
+                    function() { // error
+                        console.log('Error getting the current position');
+                    }
+                );
+            }
+            else {
+                console.log('geolocation not enabled');
+            }
+
+            return google.maps.geometry.spherical.computeDistanceBetween(entityLoc, currentLoc);
+
         }
         
         /*

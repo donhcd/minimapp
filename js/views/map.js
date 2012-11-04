@@ -13,7 +13,6 @@ define([
             this.options.addedEntities.bind(
                 'add', this.prepareToAddEntity, this);
 
-            this.refreshEntities(this);
             var self = this;
             setInterval(function () {self.refreshEntities(self) }, 900000);
         },
@@ -78,6 +77,9 @@ define([
                 }
             }, this);
 
+            //console.log(this);
+            this.refreshEntities(this);
+
             this.delegateEvents();
             return this;
         },
@@ -85,10 +87,11 @@ define([
         refreshEntities: function (self) {
             //TODO(tzx): move logic into entity, change to event listen/trigger.
             //console.log("init refresh");
-            //console.log(this);
+            //console.log(self);
             self.model.get('layers').each(function (layer) {
+                //console.log(layer.entities);
                 layer.entities.each(function (entity) {
-                    //console.log(entity);
+                    console.log(entity);
                     var end = new Date(entity.get('endtime'));
                     var current = new Date();
                     //console.log(end);
