@@ -29,7 +29,7 @@ define([
 
             var gmap = this.gmap = new google.maps.Map(this.$('#map-canvas')[0], {
                 center: new google.maps.LatLng(40.4430322, -79.9429397),
-                zoom: 17,
+                zoom: 18,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
@@ -39,6 +39,13 @@ define([
                     gmap.setCenter(latLng);
                 }
             });
+
+            //Listener is fired after the map becomes idle after zooming/panning
+            google.maps.event.addListener(gmap, "idle", function () {
+                google.maps.event.trigger(gmap, 'resize');
+            });
+
+            this.gmap.setZoom(this.gmap.getZoom() - 1);
 
             // TODO(donaldh) this is kind of terrible, so figure out a better way
             var interval = setInterval((function() {
