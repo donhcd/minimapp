@@ -25,11 +25,26 @@ define([
         },
 
         events: {
-            'click .subscribe_entity': 'subscribeEntity'
+            'click .subscribe_entity': 'subscribeEntity',
+            'click #remove-element-button': 'removeElement'
         },
 
         subscribeEntity: function(e){
             console.log('subscribe entity clicked');
+        },
+
+        removeElement: function (e) {
+            console.log(e);
+            console.log("in function");
+            if (this.model.get('ownerId') == Parse.User.current().id) {
+                console.log(this);
+                this.model.collection.remove();
+                this.model.destroy();
+            }
+            else {
+                console.log("Not the right user! Uh oh.");
+            }
+            
         },
 
         render: function() {
@@ -41,8 +56,13 @@ define([
                             'center=' + posStr +
                             '&zoom=13&size=450x120&sensor=false' + markerStr;
             $.extend(modelVariables, {markerMapUri: staticMap});
-
             this.$el.html(this.template(modelVariables));
+            if (this.model.get('ownerId') == Parse.User.current().id) {
+                console.log('changing');
+                console.log(this.$('#remove-element-button').css('display'));
+                this.$('#remove-element-button').css('display', 'block');
+                console.log(this.$('#remove-element-button').css('display'));
+            }
         }
     });
 
