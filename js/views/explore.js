@@ -34,7 +34,6 @@ define([
                 tab: this.tab
             }));
             this.addAll(this.exploreitems);
-            console.log(this.$el);
             this.$el.trigger('create');
         },
         
@@ -64,6 +63,7 @@ define([
                 model : entity,
                 collection: this.options.entitiesToDisplay
             });
+            
             this.$('#entity-list').append(view.render().el);
         },
         

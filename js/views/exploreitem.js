@@ -11,13 +11,13 @@ define([
         tagName: 'li',
         
         events:{
-            'click .subscribebutton' : 'subscribe' ,
+            'click .subscribebutton' : 'addStar' ,
             'click .listitem' : 'displayEntity'
         },
 
         initialize: function() {
-            _.bindAll(this,'render','clear','displayEntity');
-        
+            _.bindAll(this,'render','clear','displayEntity','addStar');
+            
         },
         
         getImage: function(layerid) {
@@ -32,6 +32,7 @@ define([
         },
         
         render: function() {
+            
             var posStr = this.model.get('lat') + ',' + this.model.get('lng') ;
             var markerStr = '&markers=color:blue%7Clabel:S%7C' + posStr;
             var staticMap = 'http://maps.googleapis.com/maps/api/staticmap?' +
@@ -40,9 +41,7 @@ define([
         
         
             var modelVariables = this.model.toJSON();
-            
             $.extend(modelVariables, {markerMapUri: staticMap});
-            
             this.$el.html(this.template(modelVariables));
             return this;
         },
@@ -51,8 +50,25 @@ define([
             this.model.destroy();
         },
         
-        subscribe: function() {
-            console.log('subscribe clicked');
+        addStar: function() {
+            console.log('add star');
+            console.log(this.model.get('popularity'));
+            this.model.save({
+                popularity: this.model.get('popularity')+1
+            }, {
+                success: function(gameScore) {
+                    console.log('saved');
+                    // The object was saved successfully.
+                },
+                error: function(gameScore, error) {
+                    console.log('error trying to save');
+                    // The save failed.
+                    // error is a Parse.Error with an error code and description.
+                }
+            });
+            // TODO(Jim) refresh the item
+            
+            
         },
         
         displayEntity: function(){
