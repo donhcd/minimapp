@@ -38,7 +38,6 @@ define([
             console.log("in function");
             if (this.model.get('ownerId') == Parse.User.current().id) {
                 console.log(this);
-                this.model.collection.remove();
                 this.model.destroy();
             }
             else {

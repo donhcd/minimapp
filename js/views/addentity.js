@@ -18,13 +18,16 @@ define([
             // Go to home,
             // Merges date and time together.
             var startDate = this.$('#startDate').data('datebox').theDate;
-            startDate.setHours(this.$('#startTime').data('datebox').theDate.getHours());
-            startDate.setMinutes(this.$('#startTime').data('datebox').theDate.getMinutes());
-            startDate.setMilliseconds(this.$('#startTime').data('datebox').theDate.getMilliseconds());
-            var endDate = this.$('#endDate').data('datebox').theDate
-            endDate.setHours(this.$('#endTime').data('datebox').theDate.getHours());
-            endDate.setMinutes(this.$('#endTime').data('datebox').theDate.getMinutes());
-            endDate.setMilliseconds(this.$('#endTime').data('datebox').theDate.getMilliseconds());
+            var endDate = this.$('#endDate').data('datebox').theDate;
+            var startTime = this.$('#startTime').data('datebox').theDate;
+            var endTime = this.$('#endTime').data('datebox').theDate;
+
+            startDate.setHours(startTime.getHours());
+            startDate.setMinutes(startTime.getMinutes());
+            startDate.setMilliseconds(startTime.getMilliseconds());
+            endDate.setHours(endTime.getHours());
+            endDate.setMinutes(endTime.getMinutes());
+            endDate.setMilliseconds(endTime.getMilliseconds());
             var variables = {
                 name: this.$('#marker-name').val(),
                 layerNameSingular: this.$('#layer-select').val(),

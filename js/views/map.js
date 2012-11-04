@@ -13,7 +13,6 @@ define([
             this.options.addedEntities.bind(
                 'add', this.prepareToAddEntity, this);
 
-            //TODO: Place this into its own function. tzx
             this.refreshEntities(this);
             var self = this;
             setInterval(function () {self.refreshEntities(self) }, 900000);
@@ -77,6 +76,7 @@ define([
         },
 
         refreshEntities: function (self) {
+            //TODO(tzx): move logic into entity, change to event listen/trigger.
             //console.log("init refresh");
             //console.log(this);
             self.model.get('layers').each(function (layer) {
