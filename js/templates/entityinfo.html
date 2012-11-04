@@ -3,6 +3,7 @@
 <!-- Content -->
 <div style='text-align:center' data-role='content'>
   <h1> {{name}} </h1>
+  <h3> {{layerNameSingular}}</h3>
   <h5> {{ownerUsername}}</h5>
   <!-- image -->
   <img src= {{markerMapUri}} >
@@ -12,10 +13,21 @@
       <h3> 0 People </h3>
     </div>
     <div class='ui-block-b'>
-      <h3> {{layerNameSingular}}</h3>
+      <h3> Start time: {{time}} </h3>
     </div>
     <div class='ui-block-c'>
-      <h3> time: {{time}} </h3>
+      <h3> End time: {{endtime}} </h3>
+    </div>
+    <div class="ui-block-d">
+    </div>
+    <div class="ui-block-e">
+      <a
+        id='remove-element-button'
+        data-role='button'
+        href='#'
+        style="display:none">
+        Remove
+      </a>
     </div>
   </div>
   <!-- Description of Event -->
