@@ -41,6 +41,7 @@ define([
                 this.model.destroy();
             }
             else {
+                //TODO(tzx): Add message for user.
                 console.log("Not the right user! Uh oh.");
             }
             
