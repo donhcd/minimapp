@@ -9,7 +9,8 @@ define([
         template: Handlebars.compile(loginTemplate),
 
         events: {
-            'submit form.login-form': 'logIn'
+            'submit form.login-form': 'logIn',
+            'click .guestSignIn': 'guestLogIn'
         },
 
         initialize: function() {
@@ -32,6 +33,25 @@ define([
                     // REVIEW(donaldh) not sure if this stuff is necessary but
                     // whatever
                     self.undelegateEvents();
+                },
+                error: function(user, error) {
+                    this.$('.login-form .error')
+                        .html('Invalid username or password. Please try again.')
+                        .show();
+                    this.$('.login-form button').removeAttr('disabled');
+                    console.log('log in failure!');
+                }
+            });
+
+            //this.$('.login-form button').attr('disabled', 'disabled');
+            return false;
+        },
+        
+        guestLogIn: function(e){
+            Parse.User.logIn('guest', 'guest', {
+                success: function(user) {
+                    console.log('log in succeded!');
+                    $(document).trigger('goto', '');
                 },
                 error: function(user, error) {
                     this.$('.login-form .error')
