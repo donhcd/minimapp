@@ -1,12 +1,12 @@
 <!-- header -->
 <div data-role='header' data-theme='c'>
-  <h1>Add new entity</h1>
+  <h1>Add to minimapp</h1>
 </div>
 <!-- content -->
 <div style="text-align:center" data-role='content' data-theme='c'>
   <form class='add-entity-form' action=''>
     <!-- marker name -->
-    <label for='basic'>Name of marker:</label>
+    <label for='basic'> What would you like to add? </label>
     <input type='text' name='marker-name' id='marker-name' value='' />
     <!-- drop down for layer -->
     <div data-role='fieldcontain'>
@@ -16,7 +16,7 @@
         <option value='Event'>Event</option>
       </select>
     </div>
-    <label>Choose Time</label>
+    <label>Choose a Time (Leave empty for defaults) </label>
     <!-- time select -->
     <div data-role="fieldcontain" data-theme="c" data-content-theme="d">
       Start:<br />
@@ -25,12 +25,14 @@
       id="startDate"
       type="text"
       data-role="datebox"
+      placeholder="now"
       data-options='{"mode":"flipbox", "useNewStyle":true}'/>
       <input
       name="startTime"
       id="startTime"
       type="text"
       data-role="datebox"
+      placeholder="now"
       data-options='{"mode":"timeflipbox", "useNewStyle":true}'/><br />
       <br />End:<br />
       <input
@@ -38,12 +40,14 @@
       id="endDate"
       type="text"
       data-role="datebox"
+      placeholder="never"
       data-options='{"mode":"flipbox", "useNewStyle":true}'/>
       <input
       name="endTime"
       id="endTime"
       type="text"
       data-role="datebox"
+      placeholder="never"
       data-options='{"mode":"timeflipbox", "useNewStyle":true}'/>
     </div>
     <label>Short Description (optional) :</label>

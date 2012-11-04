@@ -23,3 +23,8 @@
     position: relative;
     top:100px;
 }
+
+/* centers placeholder text for time */
+input.placeholder {
+    text-align: center;
+}
