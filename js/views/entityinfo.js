@@ -17,20 +17,28 @@ define([
         },
 
         events: {
-            'click .subscribe_entity': 'subscribeEntity'
-        },
-
-        subscribeEntity: function(e){
-            console.log('subscribe entity clicked');
-        },
-
-        events: {
-            'click .subscribe_entity': 'subscribeEntity',
+            'click .subscribe_entity': 'starEntity',
             'click #remove-element-button': 'removeElement'
         },
 
-        subscribeEntity: function(e){
-            console.log('subscribe entity clicked');
+        starEntity: function(e){
+            console.log('add star');
+            console.log(this.model.get('popularity'));
+            this.model.save({
+                popularity: this.model.get('popularity')+1
+            }, {
+                success: function(gameScore) {
+                    console.log('saved');
+                    // The object was saved successfully.
+                },
+                error: function(gameScore, error) {
+                    console.log('error trying to save');
+                    // The save failed.
+                    // error is a Parse.Error with an error code and description.
+                }
+            });
+            this.render();
+            
         },
 
         removeElement: function (e) {
@@ -63,6 +71,7 @@ define([
                 this.$('#remove-element-button').css('display', 'block');
                 console.log(this.$('#remove-element-button').css('display'));
             }
+            this.$el.trigger('create');
         }
     });
 

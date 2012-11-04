@@ -36,7 +36,8 @@ define([
                 ownerId: Parse.User.current().id,
                 ownerUsername: Parse.User.current().getUsername(),
                 text: this.$('#textarea').val(),
-                useLocation: $('input[name="use-position"]:checked').length > 0
+                useLocation: $('input[name="use-position"]:checked').length > 0,
+                popularity: 0
             };
             this.collection.add(new Entity(variables));
             console.log(variables);
