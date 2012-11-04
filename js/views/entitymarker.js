@@ -3,6 +3,7 @@ define([], function() {
     var EntityMarkerView = Parse.View.extend({
 
         initialize: function() {
+            console.log('entity marker view initialize');
             var self = this;
             this.model.bind('change:lat change:lng', function() {
                 this.marker.setPosition(new google.maps.LatLng(

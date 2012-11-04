@@ -8,6 +8,8 @@ define([
         template: Handlebars.compile(entityinfoTemplate),
 
         initialize: function() {
+        
+            
             this.collection.bind('add', function(entity) {
                 this.model = entity;
                 this.collection.remove(entity);

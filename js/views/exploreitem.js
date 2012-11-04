@@ -11,11 +11,12 @@ define([
         tagName: 'li',
         
         events:{
-            'click .subscribebutton' : 'subscribe' 
+            'click .subscribebutton' : 'subscribe' ,
+            'click .listitem' : 'displayEntity'
         },
 
         initialize: function() {
-            _.bindAll(this,'render','clear');
+            _.bindAll(this,'render','clear','displayEntity');
         
         },
         
@@ -52,6 +53,12 @@ define([
         
         subscribe: function() {
             console.log('subscribe clicked');
+        },
+        
+        displayEntity: function(){
+            this.options.collection.add(this.model);
+            
+            $(document).trigger('goto', '#/entity_info');
         }
     });
 
