@@ -16,7 +16,7 @@ define([
         },
 
         initialize: function() {
-            _.bindAll(this,'render','clear');
+            _.bindAll(this,'render','clear','displayEntity');
         
         },
         
@@ -56,7 +56,6 @@ define([
         },
         
         displayEntity: function(){
-            // TODO: DON open up entity info window with clicked entity
             this.options.collection.add(this.model);
             
             $(document).trigger('goto', '#/entity_info');
