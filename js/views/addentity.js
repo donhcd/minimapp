@@ -16,10 +16,20 @@ define([
         save: function(e) {
             console.log('saving entity');
             // Go to home,
+            // Merges date and time together.
+            var startDate = this.$('#startDate').data('datebox').theDate;
+            startDate.setHours(this.$('#startTime').data('datebox').theDate.getHours());
+            startDate.setMinutes(this.$('#startTime').data('datebox').theDate.getMinutes());
+            startDate.setMilliseconds(this.$('#startTime').data('datebox').theDate.getMilliseconds());
+            var endDate = this.$('#endDate').data('datebox').theDate
+            endDate.setHours(this.$('#endTime').data('datebox').theDate.getHours());
+            endDate.setMinutes(this.$('#endTime').data('datebox').theDate.getMinutes());
+            endDate.setMilliseconds(this.$('#endTime').data('datebox').theDate.getMilliseconds());
             var variables = {
                 name: this.$('#marker-name').val(),
                 layerNameSingular: this.$('#layer-select').val(),
-                time: this.$('time').val(),
+                time: startDate.toLocaleString(),
+                endtime: endDate.toLocaleString(),
                 ownerId: Parse.User.current().id,
                 ownerUsername: Parse.User.current().getUsername(),
                 text: this.$('#textarea').val(),

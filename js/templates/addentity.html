@@ -19,9 +19,29 @@
     <label>Choose Time</label>
     <!-- time select -->
     <div data-role="fieldcontain" data-theme="c" data-content-theme="d">
+      Start:<br />
       <input
-      name="mode7"
-      id="mode7"
+      name="startDate"
+      id="startDate"
+      type="text"
+      data-role="datebox"
+      data-options='{"mode":"flipbox", "useNewStyle":true}'/>
+      <input
+      name="startTime"
+      id="startTime"
+      type="text"
+      data-role="datebox"
+      data-options='{"mode":"timeflipbox", "useNewStyle":true}'/><br />
+      <br />End:<br />
+      <input
+      name="endDate"
+      id="endDate"
+      type="text"
+      data-role="datebox"
+      data-options='{"mode":"flipbox", "useNewStyle":true}'/>
+      <input
+      name="endTime"
+      id="endTime"
       type="text"
       data-role="datebox"
       data-options='{"mode":"timeflipbox", "useNewStyle":true}'/>

@@ -12,6 +12,11 @@ define([
         initialize: function() {
             this.options.addedEntities.bind(
                 'add', this.prepareToAddEntity, this);
+
+            //TODO: Place this into its own function. tzx
+            this.refreshEntities(this);
+            var self = this;
+            setInterval(function () {self.refreshEntities(self) }, 900000);
         },
 
         render: function() {
@@ -48,6 +53,7 @@ define([
                 };
             })(), 100);
 
+           
             if (this.stuffToDo) {
                 this.stuffToDo();
                 this.stuffToDo = null;
@@ -68,6 +74,27 @@ define([
 
             this.delegateEvents();
             return this;
+        },
+
+        refreshEntities: function (self) {
+            //console.log("init refresh");
+            //console.log(this);
+            self.model.get('layers').each(function (layer) {
+                layer.entities.each(function (entity) {
+                    //console.log(entity);
+                    var end = new Date(entity.get('endtime'));
+                    var current = new Date();
+                    //console.log(end);
+                    //console.log(current);
+                    if (end < current) {
+                        layer.entities.removeEntity(entity);
+                        if (layer.get('shown')) {
+                            self.layerViews[layer.get('layerid')].entityViews[entity.get('name')].remove();
+                            self.layerViews[layer.get('layerid')].model = layer;
+                        }
+                    }
+                });
+            });
         },
 
         prepareToAddEntity: function(entity) {
