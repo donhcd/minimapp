@@ -40,6 +40,13 @@ define([
                 }
             });
 
+            google.maps.event.addListener(gmap, "idle", function () {
+                google.maps.event.trigger(gmap, 'resize');
+            });
+
+            this.gmap.setZoom(this.gmap.getZoom() - 1);
+            this.gmap.setZoom(this.gmap.getZoom() + 1);
+
             // TODO(donaldh) this is kind of terrible, so figure out a better way
             var interval = setInterval((function() {
                 var i = 0;
