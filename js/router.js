@@ -74,7 +74,8 @@ define([
                 collection: addedEntities
             });
             this.ExploreView = new ExploreView({
-                collection: exploreList
+                collection: exploreList,
+                entitiesToDisplay: entitiesToDisplay
             });
 
             this.firstPage = true;

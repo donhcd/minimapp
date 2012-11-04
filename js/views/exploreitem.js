@@ -57,7 +57,9 @@ define([
         
         displayEntity: function(){
             // TODO: DON open up entity info window with clicked entity
-            // entity = this.model
+            this.options.collection.add(this.model);
+            
+            $(document).trigger('goto', '#/entity_info');
         }
     });
 

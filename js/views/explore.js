@@ -60,7 +60,8 @@ define([
         },
         
         addOne: function(entity) {
-            var view = new ExploreItem({model : entity});
+            var view = new ExploreItem({model : entity,
+                                        collection: this.options.entitiesToDisplay});
             this.$('#entity-list').append(view.render().el);
         },
         
