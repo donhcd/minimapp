@@ -17,7 +17,7 @@ define([
         getImage: function() {
             switch(this.get('layerid')) {
                 case 'tips':
-                    return 'images/markers/man.png';
+                    return 'images/markers/bluecircle.png';
                 //return 'scripts/images/person_generic.png';
                 case 'events':
                     return 'images/markers/landmark.png';
