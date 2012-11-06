@@ -1,1 +1,1 @@
-minimapp, nigguh
+minimapp!

@@ -10,11 +10,12 @@ define([
         template: Handlebars.compile(mapTemplate),
 
         initialize: function() {
+            _.bindAll(this, 'refreshEntities');
             this.options.addedEntities.bind(
                 'add', this.prepareToAddEntity, this);
 
             var self = this;
-            setInterval(function () {self.refreshEntities(self) }, 900000);
+            setInterval(function() {self.refreshEntities(self);}, 900000);
         },
 
         render: function() {
@@ -40,7 +41,7 @@ define([
             });
 
             //Listener is fired after the map becomes idle after zooming/panning
-            google.maps.event.addListener(gmap, "idle", function () {
+            google.maps.event.addListener(gmap, "idle", function() {
                 google.maps.event.trigger(gmap, 'resize');
             });
 
@@ -84,14 +85,14 @@ define([
             return this;
         },
 
-        //TODO(tzx): Bind this using BindAll.
-        refreshEntities: function (self) {
+        refreshEntities: function() {
+            var self = this;
             //TODO(tzx): move logic into entity, change to event listen/trigger.
             //console.log("init refresh");
             //console.log(self);
-            self.model.get('layers').each(function (layer) {
+            self.model.get('layers').each(function(layer) {
                 //console.log(layer.entities);
-                layer.entities.each(function (entity) {
+                layer.entities.each(function(entity) {
                     console.log(entity);
                     var end = new Date(entity.get('endtime'));
                     var current = new Date();
@@ -100,7 +101,8 @@ define([
                     if (end < current) {
                         layer.entities.removeEntity(entity);
                         if (layer.get('shown')) {
-                            self.layerViews[layer.get('layerid')].entityViews[entity.get('name')].remove();
+                            self.layerViews[layer.get('layerid')]
+                                .entityViews[entity.get('name')].remove();
                             self.layerViews[layer.get('layerid')].model = layer;
                         }
                     }
