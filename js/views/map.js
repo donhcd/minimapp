@@ -84,6 +84,7 @@ define([
             return this;
         },
 
+        //TODO(tzx): Bind this using BindAll.
         refreshEntities: function (self) {
             //TODO(tzx): move logic into entity, change to event listen/trigger.
             //console.log("init refresh");

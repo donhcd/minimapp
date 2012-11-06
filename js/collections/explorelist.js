@@ -49,6 +49,7 @@ define(['models/entity'], function(Entity) {
             
         },
 
+        //TODO(tzx): Get geolocate to actually work. Global variable/etc.
         comparator: function (entity) {
             var entityLoc = new google.maps.LatLng(entity.get('lat'), entity.get('lng'));
             var currentLoc = new google.maps.LatLng(40.4430322, -79.9429397);
