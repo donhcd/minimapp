@@ -1,4 +1,7 @@
-define(['models/entity'], function(Entity) {
+define([
+    'models/entity',
+    'util/geolocation'
+], function(Entity, Geolocation) {
 
     /* expect a layerid field */
     var ExploreList = Parse.Collection.extend({
@@ -49,34 +52,16 @@ define(['models/entity'], function(Entity) {
 
         },
 
-        // TODO(tzx): Get geolocate to actually work:
-        // use a global variable to hold the current position and have the
-        // geolocator update that current position every few minutes. Here,
-        // just use the current value that we have for the current position.
-        comparator: function (entity) {
+        computeDistanceTo: function (entity) {
             var entityLoc = new google.maps.LatLng(
                 entity.get('lat'), entity.get('lng'));
-            var currentLoc = new google.maps.LatLng(40.4430322, -79.9429397);
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(geopos) { // success
-                        console.log('Successfully got current position');
-                        currentLoc = (new google.maps.LatLng(
-                            geopos.coords.latitude,
-                            geopos.coords.longitude));
-                    },
-                    function() { // error
-                        console.log('Error getting the current position');
-                    }
-                );
+            var defaultLoc = new google.maps.LatLng(40.4430322, -79.9429397);
+            var currentLoc = Geolocation.getLatestLocation() || defaultLoc;
+            if (currentLoc === defaultLoc) {
+                console.log('geolocation failed');
             }
-            else {
-                console.log('geolocation not enabled');
-            }
-
             return google.maps.geometry.spherical.computeDistanceBetween(
                 entityLoc, currentLoc);
-
         }
 
         /*

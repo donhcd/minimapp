@@ -2,8 +2,9 @@
 define([
     'handlebars',
     'views/layer',
+    'util/geolocation',
     'text!templates/map.html'
-], function(Handlebars, LayerView, mapTemplate) {
+], function(Handlebars, LayerView, Geolocation, mapTemplate) {
 
     var MapView = Parse.View.extend({
 
@@ -29,25 +30,28 @@ define([
             //     $('#footer').height());
             this.$('#map-canvas').height(400);
 
-            var gmap = this.gmap = new google.maps.Map(this.$('#map-canvas')[0], {
+            var gmap = new google.maps.Map(this.$('#map-canvas')[0], {
                 center: new google.maps.LatLng(40.4430322, -79.9429397),
                 zoom: 18,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
-            this.getCurrentLatLng({
-                success: function(latLng) {
-                    console.log("successfully detected geolocation");
+            if (Geolocation.getLatestLocation()) {
+                gmap.setCenter(Geolocation.getLatestLocation());
+            } else {
+                Geolocation.enqueueTodo(function(latLng) {
                     gmap.setCenter(latLng);
-                }
-            });
+                });
+            }
 
-            //Listener is fired after the map becomes idle after zooming/panning
+            // Listener is fired after the map becomes idle after
+            // zooming/panning
             google.maps.event.addListener(gmap, "idle", function() {
                 google.maps.event.trigger(gmap, 'resize');
             });
 
-            this.gmap.setZoom(this.gmap.getZoom() - 1);
+            gmap.setZoom(gmap.getZoom() - 1);
+            this.gmap = gmap;
 
             // TODO(donaldh) this is kind of terrible, so figure out a better way
             var interval = setInterval((function() {
