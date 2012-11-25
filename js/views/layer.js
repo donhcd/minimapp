@@ -10,6 +10,7 @@ define(['views/entitymarker'], function(EntityMarkerView) {
         },
 
         render: function() {
+            this.delegateEvents();
             this.entityViews = {};
             this.collection.each(this.drawEntity);
         },

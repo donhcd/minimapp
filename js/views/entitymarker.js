@@ -13,6 +13,7 @@ define([], function() {
         },
 
         render: function() {
+            this.delegateEvents();
             this.marker = this.marker || new MarkerWithLabel({
                 title: this.model.get('name'),
                 labelContent: this.model.get('name'),

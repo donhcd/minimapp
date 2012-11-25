@@ -8,7 +8,8 @@ define([
         template: Handlebars.compile(entityinfoTemplate),
 
         events: {
-            'click .subscribe_entity': 'starEntity'
+            'click .subscribe_entity': 'starEntity',
+            'click #remove-element-button': 'removeElement'
         },
 
         initialize: function() {
@@ -41,11 +42,7 @@ define([
         },
 
         removeElement: function (e) {
-            console.log('in removeElement, event=');
-            console.log(e);
             if (this.model.get('ownerId') == Parse.User.current().id) {
-                alert('removed this shit');
-                console.log(this);
                 this.model.destroy();
             }
             else {
@@ -56,6 +53,7 @@ define([
         },
 
         render: function() {
+            this.delegateEvents();
             var modelVariables = this.model.toJSON();
 
             var posStr = this.model.get('lat') + ',' + this.model.get('lng') ;
@@ -72,10 +70,6 @@ define([
                 console.log(this.$('#remove-element-button').css('display'));
             }
             this.$el.trigger('create');
-
-            // TODO(donaldh) not sure why we can't put this in events, but it
-            // currently doesn't work
-            this.$('#remove-element-button').click(this.removeElement);
         }
     });
 

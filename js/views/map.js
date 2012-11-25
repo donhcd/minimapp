@@ -22,6 +22,7 @@ define([
         },
 
         render: function() {
+            this.delegateEvents();
             this.$el.html(this.template({
                 user : Parse.User.current().getUsername()
             }));
@@ -65,7 +66,6 @@ define([
                 };
             })(), 100);
 
-           
             if (this.stuffToDo) {
                 this.stuffToDo();
                 this.stuffToDo = null;
@@ -83,11 +83,7 @@ define([
                     this.layerViews[layer.get('layerid')] = layerView;
                 }
             }, this);
-
-            //console.log(this);
             this.refreshEntities(this);
-
-            this.delegateEvents();
             return this;
         },
 
