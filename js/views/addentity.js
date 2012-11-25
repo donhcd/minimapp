@@ -13,6 +13,8 @@ define([
             'submit form.add-entity-form': 'save'
         },
 
+        defaultDuration: 7*24*60*60*1000,
+
         save: function(e) {
             console.log('saving entity');
             // Go to home,
@@ -30,7 +32,8 @@ define([
                 this.$('#endTime').val() === '') {
                 console.log("endDate/endTime blank");
                 endDateString =
-                    new Date(startDate.getTime() + 24*60*60*1000).toString();
+                    new Date(startDate.getTime() +
+                             this.defaultDuration).toString();
                 // TODO(donaldh) add more cases...
             }
             else {
@@ -62,7 +65,39 @@ define([
 
         render: function() {
             this.delegateEvents();
+            function makeNDigits(num, n) {
+                numString = num.toString();
+                while (numString.length < 2) {
+                    numString = '0' + numString;
+                }
+                return numString;
+            }
+            function dateToDateString(date) {
+                return makeNDigits(date.getMonth(), 2) + '/' +
+                    makeNDigits(date.getDate(), 2) + '/' +
+                    makeNDigits(date.getFullYear(), 4);
+            }
+            function dateToTimeString(date) {
+                var hour = date.getHours();
+                if (1 <= hour && hour <= 12) {
+                    return makeNDigits(hour, 2) + ':' +
+                        makeNDigits(date.getMinutes(), 2) + ' AM';
+                } else {
+                    if (hour === 0) {
+                        hour = 12;
+                    }
+                    return makeNDigits(hour, 2) + ':' +
+                        makeNDigits(date.getMinutes(), 2) + ' PM';
+                }
+            }
+            var currentTime = new Date();
+            var currentTimePlusWeek =
+                new Date(currentTime.getTime() + this.defaultDuration);
             this.$el.html(this.template({
+                defaultStartDate: dateToDateString(currentTime),
+                defaultStartTime: dateToTimeString(currentTime),
+                defaultEndDate: dateToDateString(currentTimePlusWeek),
+                defaultEndTime: dateToTimeString(currentTimePlusWeek)
             }));
             console.log('rendered add entity view');
         }

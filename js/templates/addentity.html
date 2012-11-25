@@ -3,7 +3,7 @@
   <h1>Add to minimapp</h1>
 </div>
 <!-- content -->
-<div style="text-align:center" data-role='content' data-theme='c'>
+<div style='text-align:center' data-role='content' data-theme='c'>
   <form class='add-entity-form' action=''>
     <!-- marker name -->
     <label for='basic'> What would you like to add? </label>
@@ -18,40 +18,40 @@
     </div>
     <label>Choose a Time (Leave empty for defaults) </label>
     <!-- time select -->
-    <div data-role="fieldcontain" data-theme="c" data-content-theme="d">
+    <div data-role='fieldcontain' data-theme='c' data-content-theme='d'>
       Start:<br />
       <input
-      name="startDate"
-      id="startDate"
-      type="text"
-      data-role="datebox"
-      placeholder="now"
+      name='startDate'
+      id='startDate'
+      type='text'
+      data-role='datebox'
+      placeholder='{{ defaultStartDate }}'
       data-options='{"mode":"flipbox", "useNewStyle":true}'/>
       <input
-      name="startTime"
-      id="startTime"
-      type="text"
-      data-role="datebox"
-      placeholder="now"
+      name='startTime'
+      id='startTime'
+      type='text'
+      data-role='datebox'
+      placeholder='{{ defaultStartTime }}'
       data-options='{"mode":"timeflipbox", "useNewStyle":true}'/><br />
       <br />End:<br />
       <input
-      name="endDate"
-      id="endDate"
-      type="text"
-      data-role="datebox"
-      placeholder="never"
+      name='endDate'
+      id='endDate'
+      type='text'
+      data-role='datebox'
+      placeholder='{{ defaultEndDate }}'
       data-options='{"mode":"flipbox", "useNewStyle":true}'/>
       <input
-      name="endTime"
-      id="endTime"
-      type="text"
-      data-role="datebox"
-      placeholder="never"
+      name='endTime'
+      id='endTime'
+      type='text'
+      data-role='datebox'
+      placeholder='{{ defaultEndTime }}'
       data-options='{"mode":"timeflipbox", "useNewStyle":true}'/>
     </div>
     <label>Short Description (optional) :</label>
-    <textarea name="textarea" id="textarea"></textarea>
+    <textarea name='textarea' id='textarea'></textarea>
     <!-- checkbox to enable geolocaiton -->
     <label>
       <input type='checkbox' name='use-position' data-inline='true' />
