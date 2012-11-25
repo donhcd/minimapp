@@ -26,9 +26,12 @@ define([
 
             var endDateString;
 
-            if (this.$('#endDate').val() == "" && this.$('#endTime').val() == "") {
-                console.log("blank");
-                endDateString = "";
+            if (this.$('#endDate').val() === '' &&
+                this.$('#endTime').val() === '') {
+                console.log("endDate/endTime blank");
+                endDateString =
+                    new Date(startDate.getTime() + 24*60*60*1000).toString();
+                // TODO(donaldh) add more cases...
             }
             else {
                 var endDate = this.$('#endDate').data('datebox').theDate;
