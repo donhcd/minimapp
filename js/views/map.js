@@ -13,6 +13,8 @@ define([
             _.bindAll(this, 'refreshEntities');
             this.options.addedEntities.bind(
                 'add', this.prepareToAddEntity, this);
+//            this.options.addedEntities.bind(
+//                'destroy', this.prepareToAddEntity, this);
 
             var self = this;
             setInterval(function() {self.refreshEntities(self);}, 900000);

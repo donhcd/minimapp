@@ -7,23 +7,24 @@ define([
 
         template: Handlebars.compile(entityinfoTemplate),
 
+        events: {
+            'click .subscribe_entity': 'starEntity'
+        },
+
         initialize: function() {
+            _.bindAll(this, 'starEntity', 'removeElement', 'render');
             this.collection.bind('add', function(entity) {
                 this.model = entity;
                 this.collection.remove(entity);
             }, this);
-        },
-
-        events: {
-            'click .subscribe_entity': 'starEntity',
-            'click #remove-element-button': 'removeElement'
+            console.log(this.$('#remove-element-button'));
         },
 
         starEntity: function(e){
             console.log('add star');
             console.log(this.model.get('popularity'));
             this.model.save({
-                popularity: this.model.get('popularity')+1
+                popularity: this.model.get('popularity') + 1
             }, {
                 success: function(gameScore) {
                     console.log('saved');
@@ -40,9 +41,10 @@ define([
         },
 
         removeElement: function (e) {
+            console.log('in removeElement, event=');
             console.log(e);
-            console.log("in function");
             if (this.model.get('ownerId') == Parse.User.current().id) {
+                alert('removed this shit');
                 console.log(this);
                 this.model.destroy();
             }
@@ -50,7 +52,7 @@ define([
                 alert('If not an admin, you may only remove' +
                       'your own entities');
             }
-
+            return true;
         },
 
         render: function() {
@@ -70,6 +72,10 @@ define([
                 console.log(this.$('#remove-element-button').css('display'));
             }
             this.$el.trigger('create');
+
+            // TODO(donaldh) not sure why we can't put this in events, but it
+            // currently doesn't work
+            this.$('#remove-element-button').click(this.removeElement);
         }
     });
 
