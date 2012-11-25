@@ -8,8 +8,6 @@ define([
         template: Handlebars.compile(entityinfoTemplate),
 
         initialize: function() {
-        
-            
             this.collection.bind('add', function(entity) {
                 this.model = entity;
                 this.collection.remove(entity);
@@ -38,7 +36,7 @@ define([
                 }
             });
             this.render();
-            
+
         },
 
         removeElement: function (e) {
@@ -49,10 +47,10 @@ define([
                 this.model.destroy();
             }
             else {
-                //TODO(tzx): Add message for user.
-                console.log("Not the right user! Uh oh.");
+                alert('If not an admin, you may only remove' +
+                      'your own entities');
             }
-            
+
         },
 
         render: function() {
