@@ -12,8 +12,7 @@ define([
         },
 
         initialize: function() {
-            console.log('initialized SignupView');
-            _.bindAll(this, 'signUp');
+            _.bindAll(this, 'signUp', 'render');
         },
 
         signUp: function(e) {

@@ -9,9 +9,8 @@ define([
         model: Entity,
 
         initialize: function() {
-            _.bindAll(this, 'put','filterFetch');
-            console.log('initialized explorelist');
-
+            _.bindAll(this, 'put', 'getFilter', 'filterFetch',
+                      'computeDistanceTo');
             // use meta data storage for collections
             this.filters = {layer: 'tips'};
             // load objects into collection
@@ -20,9 +19,7 @@ define([
         },
 
         put: function(prop, value) {
-            console.log('put called');
             this.filters[prop] = value;
-            console.log(this.filters);
             if (prop == 'layer' ) this.filterFetch();
         },
 
@@ -44,11 +41,9 @@ define([
                     });
                 },
                 error: function(entities) {
-                    alert('fuck, got an error');
+                    //alert('fuck, got an error');
                 }
             });
-            console.log('filterfetch called');
-
         },
 
         computeDistanceTo: function (entity) {

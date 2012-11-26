@@ -18,7 +18,6 @@ define([
                 this.model = entity;
                 this.collection.remove(entity);
             }, this);
-            console.log(this.$('#remove-element-button'));
         },
 
         starEntity: function(e){

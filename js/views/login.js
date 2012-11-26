@@ -14,7 +14,6 @@ define([
         },
 
         initialize: function() {
-            console.log('initialized LoginView');
             _.bindAll(this, 'logIn');
         },
 

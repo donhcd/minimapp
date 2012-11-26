@@ -26,7 +26,6 @@ define([], function() {
         navigator.geolocation.getCurrentPosition(
             function(geopos) {
                 // success
-                console.log('Successfully got current position');
                 geolocator.currentLatLng = new google.maps.LatLng(
                     geopos.coords.latitude,
                     geopos.coords.longitude);

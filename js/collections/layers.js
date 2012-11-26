@@ -31,7 +31,6 @@ define([
                         //alert('fuck, got an error');
                     }
                 });
-                console.log('stringify initialize entity' + JSON.stringify(layer));
             }); 
         },
 

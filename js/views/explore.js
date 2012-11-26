@@ -11,21 +11,21 @@ define([
         template: Handlebars.compile(exploreTemplate),
         
         events: {
+            // FIXME(donaldh) why are these ids so much different from ids
+            // for every other template?
             "click #TipsTab" : "changeTab",
             "click #EventsTab" : "changeTab",
             "click #SubscribedTab" : "changeTab"
         },
 
         initialize: function() {
-            _.bindAll(this,'render','addOne','addAll');   
+            _.bindAll(this, 'render', 'addOne', 'addAll', 'changeTab');   
             // tracks current tab
             this.tab = 'Tips';
             // create collection of entities
             this.exploreitems = new ExploreList();
             // re-render every time fetch is called
             this.exploreitems.bind('reset', this.render);
-            
-            console.log('initialized exploreView');                 
         },
 
         render: function() {
@@ -69,7 +69,6 @@ define([
         
         addAll: function(collection) {
             this.$('#entity-list').html('');
-            console.log(this.$('#entity-list'));
             this.exploreitems.each(this.addOne);
         }
         

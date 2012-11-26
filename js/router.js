@@ -128,6 +128,7 @@ define([
                 this.navigate('', {trigger: true});
             }
         },
+
         explore : function() {
             console.log('#explore');
             this.changePage(this.ExploreView);
@@ -153,7 +154,6 @@ define([
     });
 
     var initialize = function () {
-        console.log('document ready');
         app = new AppRouter();
         $(document).bind('goto', function(e, uri) {
             e.preventDefault();

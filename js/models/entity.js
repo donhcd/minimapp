@@ -24,8 +24,6 @@ define([], function() {
                 //       'provided to the constructor for an Entity';
                 return;
             }
-            console.log('saving entity:');
-            console.log(this.attributes);
             this.save();
         }
     });
