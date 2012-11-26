@@ -16,8 +16,6 @@ define([
         defaultDuration: 7*24*60*60*1000,
 
         save: function(e) {
-            console.log('saving entity');
-            // Go to home,
             // Merges date and time together.
             var startDate = this.$('#startDate').data('datebox').theDate;
             var startTime = this.$('#startTime').data('datebox').theDate;
@@ -45,7 +43,7 @@ define([
                 endDate.setMilliseconds(endTime.getMilliseconds());
                 endDateString = endDate.toLocaleString();
             }
-            var variables = {
+            this.collection.add(new Entity({
                 name: this.$('#marker-name').val(),
                 layerNameSingular: this.$('#layer-select').val(),
                 time: startDate.toLocaleString(),
@@ -53,12 +51,11 @@ define([
                 ownerId: Parse.User.current().id,
                 ownerUsername: Parse.User.current().getUsername(),
                 text: this.$('#textarea').val(),
-                useLocation: $('input[name="use-position"]:checked').length > 0,
+                useLocation:
+                    this.$('#use-position:checked').val() ? true : false,
                 popularity: 0
-            };
-            this.collection.add(new Entity(variables));
-            console.log(variables);
-            // TODO(donaldh) add entity with the above variables.
+            }));
+            // Go to home
             $(document).trigger('goto', '');
             return false;
         },
