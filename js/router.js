@@ -43,7 +43,6 @@ define([
                 'kYL6S1PIaKAIegXbLXzR0L42GbPpj2yBb9jwwU3A',
                 'Pte0sHTQQ7FV5ylo3rSCpSTaBlhBs35JY74ZkZtD');
 
-
             // Handle back button throughout the application
             // $('.back').live('click', function(event) {
             //     window.history.back();
@@ -51,6 +50,16 @@ define([
             // });
 
             var layers = new Layers();
+            function removeOldEntities() {
+                var toRemove = [];
+                layers.each(function(layer) {
+                    layer.entities.each(function(entity) {
+                        return;
+                    });
+                });
+            }
+            setInterval(removeOldEntities, 5*60*1000);
+
             var map = new Map({layers: layers});
             var addedEntities = new EntitySet();
             var exploreList = new ExploreList();
