@@ -31,7 +31,6 @@ define([
         },
 
         filterFetch: function() {
-
             // construct the query
             this.query = new Parse.Query(Entity);
             // add filter for layer
@@ -56,7 +55,10 @@ define([
             var entityLoc = new google.maps.LatLng(
                 entity.get('lat'), entity.get('lng'));
             var defaultLoc = new google.maps.LatLng(40.4430322, -79.9429397);
-            var currentLoc = Geolocation.getLatestLocation() || defaultLoc;
+            var currentLoc;
+            Geolocation.enqueueTodo(function(latLng) {
+                currentLoc = latLng;
+            }, defaultLoc);
             if (currentLoc === defaultLoc) {
                 console.log('geolocation failed');
             }

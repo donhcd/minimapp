@@ -9,11 +9,16 @@ define([], function() {
     geolocator = {
         todoFns: [],
         currentLatLng: null,
-        enqueueTodo: function(todoFn) {
-            geolocator.todoFns.push(todoFn);
-        },
-        getLatestLocation: function() {
-            return geolocator.currentLatLng;
+        enqueueTodo: function(todoFn, defaultLocation) {
+            if (geolocator.currentLatLng) {
+                todoFn(geolocator.currentLatLng);
+            } else {
+                if (defaultLocation) {
+                    todoFn(defaultLocation);
+                } else {
+                    geolocator.todoFns.push(todoFn);
+                }
+            }
         }
     };
 

@@ -24,7 +24,7 @@ define([
         render: function() {
             this.delegateEvents();
             this.$el.html(this.template({
-                user : Parse.User.current().getUsername()
+                user: Parse.User.current().getUsername()
             }));
             // this.$('#map-canvas').height(
             //     window.innerHeight - this.$('#header').height() -
@@ -37,13 +37,9 @@ define([
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
-            if (Geolocation.getLatestLocation()) {
-                gmap.setCenter(Geolocation.getLatestLocation());
-            } else {
-                Geolocation.enqueueTodo(function(latLng) {
-                    gmap.setCenter(latLng);
-                });
-            }
+            Geolocation.enqueueTodo(function(latLng) {
+                gmap.setCenter(latLng);
+            });
 
             // Listener is fired after the map becomes idle after
             // zooming/panning
@@ -122,37 +118,16 @@ define([
                 self.model.addEntity(entity);
             }
             if (entity.get('useLocation')) {
-                self.getCurrentLatLng({ success: todoWithLatLng });
+                Geolocation.enqueueTodo(todoWithLatLng);
             } else {
                 self.stuffToDo = function() {
                     google.maps.event.addListener(
                         self.gmap, 'click', function(e) {
-                            google.maps.event.clearListeners(self.gmap, 'click');
+                            google.maps.event.clearListeners(
+                                self.gmap, 'click');
                             todoWithLatLng(e.latLng);
                         });
                 };
-            }
-        },
-
-        getCurrentLatLng: function(options) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(geopos) { // success
-                        console.log('Successfully got current position');
-                        options.success(new google.maps.LatLng(
-                            geopos.coords.latitude,
-                            geopos.coords.longitude));
-                    },
-                    function() { // error
-                        if (options.error) {
-                            options.error();
-                        } else {
-                            console.log('Error getting the current position');
-                        }
-                    }
-                );
-            } else {
-                console.log('geolocation not enabled');
             }
         }
     });
