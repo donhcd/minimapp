@@ -95,7 +95,6 @@ define([
             self.model.get('layers').each(function(layer) {
                 //console.log(layer.entities);
                 layer.entities.each(function(entity) {
-                    console.log(entity);
                     var end = new Date(entity.get('endtime'));
                     var current = new Date();
                     //console.log(end);
@@ -115,25 +114,21 @@ define([
         prepareToAddEntity: function(entity) {
             var self = this;
             self.options.addedEntities.remove(entity);
-            if (entity.get('useLocation')) {
-                self.getCurrentLatLng({
-                    success: function(latLng) {
-                        entity.set('latLng', latLng);
-                        entity.set('lat', latLng.lat());
-                        entity.set('lng', latLng.lng());
-                        self.model.addEntity(entity);
-                    }
+            function todoWithLatLng(latLng) {
+                entity.set({
+                    lat: latLng.lat(),
+                    lng: latLng.lng()
                 });
+                self.model.addEntity(entity);
+            }
+            if (entity.get('useLocation')) {
+                self.getCurrentLatLng({ success: todoWithLatLng });
             } else {
                 self.stuffToDo = function() {
                     google.maps.event.addListener(
                         self.gmap, 'click', function(e) {
                             google.maps.event.clearListeners(self.gmap, 'click');
-                            entity.set({
-                                lat: e.latLng.lat(),
-                                lng: e.latLng.lng()
-                            });
-                            self.model.addEntity(entity);
+                            todoWithLatLng(e.latLng);
                         });
                 };
             }
