@@ -24,35 +24,35 @@ define([
             startDate.setMinutes(startTime.getMinutes());
             startDate.setMilliseconds(startTime.getMilliseconds());
 
-            var endDateString;
+            var endDate;
 
             if (this.$('#endDate').val() === '' &&
                 this.$('#endTime').val() === '') {
                 console.log("endDate/endTime blank");
-                endDateString =
-                    new Date(startDate.getTime() +
-                             this.defaultDuration).toString();
+                endDate = new Date(startDate.getTime() + this.defaultDuration);
                 // TODO(donaldh) add more cases...
             }
             else {
-                var endDate = this.$('#endDate').data('datebox').theDate;
+                endDate = this.$('#endDate').data('datebox').theDate;
                 var endTime = this.$('#endTime').data('datebox').theDate;
 
                 endDate.setHours(endTime.getHours());
                 endDate.setMinutes(endTime.getMinutes());
                 endDate.setMilliseconds(endTime.getMilliseconds());
-                endDateString = endDate.toLocaleString();
             }
             this.collection.add(new Entity({
                 name: this.$('#marker-name').val(),
                 layerNameSingular: this.$('#layer-select').val(),
-                time: startDate.toLocaleString(),
-                endtime: endDateString,
+                time: startDate,
+                endtime: endDate,
+                // TODO(donaldh) this stringifying should only be done
+                // when displaying entityinfo.
+                timeString: startDate.toLocaleString(),
+                endtimeString: endDate.toLocaleString(),
                 ownerId: Parse.User.current().id,
                 ownerUsername: Parse.User.current().getUsername(),
                 text: this.$('#textarea').val(),
-                useLocation:
-                    this.$('#use-position:checked').val() ? true : false,
+                useLocation: this.$('#use-position:checked').val(),
                 popularity: 0
             }));
             // Go to home

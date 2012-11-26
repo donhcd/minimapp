@@ -40,8 +40,9 @@ define([
 
         initialize: function() {
             Parse.initialize(
-                'Q6TCdTd0MUgW5M3GYkuTwTRYiOBQZJIsClO8X6U5',
-                '6nvtUl1BW2fJKDfs3XPS3DDDdR1qBDWFsI88a0cK');
+                'kYL6S1PIaKAIegXbLXzR0L42GbPpj2yBb9jwwU3A',
+                'Pte0sHTQQ7FV5ylo3rSCpSTaBlhBs35JY74ZkZtD');
+
 
             // Handle back button throughout the application
             // $('.back').live('click', function(event) {
