@@ -6,6 +6,8 @@ define([
     'text!templates/explore.html'
 ], function(Handlebars, ExploreList, entity, ExploreItem, exploreTemplate) {
     // Handle Settings page
+    // FIXME(donaldh) this should definitely be using the same collections
+    // as the mapview... Right now this is terrible.
     var ExploreView = Parse.View.extend({
 
         template: Handlebars.compile(exploreTemplate),
@@ -19,13 +21,16 @@ define([
         },
 
         initialize: function() {
-            _.bindAll(this, 'render', 'addOne', 'addAll', 'changeTab');   
+            _.bindAll(this, 'render', 'addOne', 'addAll', 'changeTab',
+                      'removeEntity');
+            this.entityViewsShown = {};
             // tracks current tab
             this.tab = 'Tips';
             // create collection of entities
             this.exploreitems = new ExploreList();
             // re-render every time fetch is called
             this.exploreitems.bind('reset', this.render);
+            this.exploreitems.bind('destroy', this.removeEntity);
         },
 
         render: function() {
@@ -63,15 +68,20 @@ define([
                 model : entity,
                 collection: this.options.entitiesToDisplay
             });
-            
+            this.entityViewsShown[entity.get('name')] = view;
             this.$('#entity-list').append(view.render().el);
         },
         
         addAll: function(collection) {
             this.$('#entity-list').html('');
             this.exploreitems.each(this.addOne);
+        },
+
+        removeEntity: function(entity) {
+            alert('hi from removeEntity');
+            this.entityViewsShown[entity.get('name')].remove();
+            this.entityViewsShown[entity.get('name')] = null;
         }
-        
     });
 
     return ExploreView;

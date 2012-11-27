@@ -43,16 +43,13 @@ define([
             this.collection.add(new Entity({
                 name: this.$('#marker-name').val(),
                 layerNameSingular: this.$('#layer-select').val(),
-                time: startDate,
-                endtime: endDate,
-                // TODO(donaldh) this stringifying should only be done
-                // when displaying entityinfo.
-                timeString: startDate.toLocaleString(),
-                endtimeString: endDate.toLocaleString(),
+                time: startDate.getTime(),
+                endtime: endDate.getTime(),
                 ownerId: Parse.User.current().id,
                 ownerUsername: Parse.User.current().getUsername(),
                 text: this.$('#textarea').val(),
-                useLocation: this.$('#use-position:checked').val(),
+                useLocation:
+                    this.$('#use-position:checked').val() ? true : false,
                 popularity: 0
             }));
             // Go to home

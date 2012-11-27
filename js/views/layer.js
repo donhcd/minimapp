@@ -4,8 +4,9 @@ define(['views/entitymarker'], function(EntityMarkerView) {
 
         initialize: function() {
             this.collection = this.model.entities;
-            _.bindAll(this, 'render', 'drawEntity');
+            _.bindAll(this, 'render', 'drawEntity', 'removeEntity');
             this.collection.bind('add', this.drawEntity);
+            this.collection.bind('destroy', this.removeEntity);
             this.collection.bind('reset', this.render);
         },
 
@@ -24,6 +25,10 @@ define(['views/entitymarker'], function(EntityMarkerView) {
             });
             entityView.render();
             this.entityViews[entity.get('name')] = entityView;
+        },
+
+        removeEntity: function(entity) {
+            this.entityViews[entity.get('name')].remove();
         }
 
     });

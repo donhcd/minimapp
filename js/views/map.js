@@ -11,12 +11,9 @@ define([
         template: Handlebars.compile(mapTemplate),
 
         initialize: function() {
-            _.bindAll(this, 'refreshEntities');
+            _.bindAll(this, 'refreshEntities', 'prepareToAddEntity');
             this.options.addedEntities.bind(
                 'add', this.prepareToAddEntity, this);
-//            this.options.addedEntities.bind(
-//                'destroy', this.prepareToAddEntity, this);
-
             var self = this;
             setInterval(function() {self.refreshEntities(self);}, 900000);
         },
@@ -85,16 +82,13 @@ define([
 
         refreshEntities: function() {
             var self = this;
-            //TODO(tzx): move logic into entity, change to event listen/trigger.
-            //console.log("init refresh");
-            //console.log(self);
+            // TODO(tzx): move logic into entity, change to
+            // event listen/trigger.
             self.model.get('layers').each(function(layer) {
                 //console.log(layer.entities);
                 layer.entities.each(function(entity) {
                     var end = new Date(entity.get('endtime'));
                     var current = new Date();
-                    //console.log(end);
-                    //console.log(current);
                     if (end < current) {
                         layer.entities.removeEntity(entity);
                         if (layer.get('shown')) {

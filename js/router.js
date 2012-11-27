@@ -40,8 +40,8 @@ define([
 
         initialize: function() {
             Parse.initialize(
-                'kYL6S1PIaKAIegXbLXzR0L42GbPpj2yBb9jwwU3A',
-                'Pte0sHTQQ7FV5ylo3rSCpSTaBlhBs35JY74ZkZtD');
+                'Q6TCdTd0MUgW5M3GYkuTwTRYiOBQZJIsClO8X6U5',
+                '6nvtUl1BW2fJKDfs3XPS3DDDdR1qBDWFsI88a0cK');
 
             // Handle back button throughout the application
             // $('.back').live('click', function(event) {
@@ -52,13 +52,21 @@ define([
             var layers = new Layers();
             function removeOldEntities() {
                 var toRemove = [];
+                var currentTime = new Date();
                 layers.each(function(layer) {
                     layer.entities.each(function(entity) {
-                        return;
+                        if (entity.get('endtime') < currentTime.getTime()) {
+                            toRemove.push(entity);
+                        }
                     });
                 });
+                _.each(toRemove, function(entity) {
+                    entity.destroy();
+                });
             }
-            setInterval(removeOldEntities, 5*60*1000);
+            // TODO(donaldh) maybe this should actually be on the server
+            // or somewhere else...
+            setInterval(removeOldEntities, /*5*60*/1000);
 
             var map = new Map({layers: layers});
             var addedEntities = new EntitySet();

@@ -60,7 +60,13 @@ define([
             var staticMap = 'http://maps.googleapis.com/maps/api/staticmap?' +
                             'center=' + posStr +
                             '&zoom=13&size=450x120&sensor=false' + markerStr;
-            $.extend(modelVariables, {markerMapUri: staticMap});
+            $.extend(modelVariables, {
+                markerMapUri: staticMap,
+                timeString:
+                    new Date(this.model.get('time')).toLocaleString(),
+                endtimeString:
+                    new Date(this.model.get('endtime')).toLocaleString()
+            });
             this.$el.html(this.template(modelVariables));
             if (this.model.get('ownerId') == Parse.User.current().id) {
                 console.log('changing');
