@@ -34,9 +34,9 @@ define([
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
 
-            Geolocation.enqueueTodo(function(latLng) {
-                gmap.setCenter(latLng);
-            });
+//            Geolocation.enqueueTodo(function(latLng) {
+//                gmap.setCenter(latLng);
+//            });
 
             // Listener is fired after the map becomes idle after
             // zooming/panning
